@@ -1,0 +1,15 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "blob.Submit",
+  "params": [
+    [
+      {
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z",
+        "data": "VGhpcyBpcyBhbiBleGFtcGxlIG9mIHNvbWUgYmxvYiBkYXRh",
+        "share_version": 0
+      }
+    ],
+    0.002
+  ]
+}

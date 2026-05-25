@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: Celestia Node Admin API
+  version: 0.30.x
+  description: |
+    JSON-RPC methods in the `node` module of celestia-node. Provides administrative
+    introspection over the running node including type, version, log control, and
+    auth token issuance for delegating capability-scoped access to other API modules.
+  license:
+    name: Apache-2.0
+servers:
+  - url: http://localhost:26658
+tags:
+  - name: Node
+    description: Node introspection and auth-token management.
+paths:
+  /:
+    post:
+      tags: [Node]
+      summary: Invoke Node JSON-RPC Method
+      description: |
+        Exposes the `node.*` namespace including `node.Info`, `node.Ready`,
+        `node.LogLevelSet`, `node.AuthVerify`, and `node.AuthNew`.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+      responses:
+        '200':
+          description: JSON-RPC response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, method, id]
+      properties:
+        jsonrpc:
+          type: string
+          enum: ["2.0"]
+        id:
+          oneOf: [{type: integer}, {type: string}]
+        method:
+          type: string
+          enum:
+            - node.Info
+            - node.Ready
+            - node.LogLevelSet
+            - node.AuthVerify
+            - node.AuthNew
+        params:
+          type: array
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc: {type: string}
+        id: {}
+        result: {}
+        error:
+          type: object
+          properties:
+            code: {type: integer}
+            message: {type: string}

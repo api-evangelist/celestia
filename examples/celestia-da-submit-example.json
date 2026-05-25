@@ -1,0 +1,12 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "da.Submit",
+  "params": [
+    [
+      "VGhpcyBpcyBhbiBleGFtcGxlIG9mIHNvbWUgYmxvYiBkYXRh"
+    ],
+    0.002,
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z"
+  ]
+}

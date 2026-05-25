@@ -1,0 +1,74 @@
+openapi: 3.1.0
+info:
+  title: Celestia Node Blobstream API
+  version: 0.30.x
+  description: |
+    JSON-RPC methods in the `blobstream` module of celestia-node. Generates
+    inclusion proofs against Blobstream data commitments so EVM and other
+    foreign chains can verify, via the Blobstream(X) bridge contracts, that a
+    given blob was published to Celestia at a specific height.
+  license:
+    name: Apache-2.0
+servers:
+  - url: http://localhost:26658
+tags:
+  - name: Blobstream
+    description: Inclusion proofs for the EVM Blobstream(X) bridge.
+paths:
+  /:
+    post:
+      tags: [Blobstream]
+      summary: Invoke Blobstream JSON-RPC Method
+      description: |
+        Exposes the `blobstream.*` namespace including `blobstream.GetDataRootTupleRoot`,
+        `blobstream.GetDataRootTupleInclusionProof`, and
+        `blobstream.GetShareProof`.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+      responses:
+        '200':
+          description: JSON-RPC response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, method, id]
+      properties:
+        jsonrpc:
+          type: string
+          enum: ["2.0"]
+        id:
+          oneOf: [{type: integer}, {type: string}]
+        method:
+          type: string
+          enum:
+            - blobstream.GetDataRootTupleRoot
+            - blobstream.GetDataRootTupleInclusionProof
+            - blobstream.GetShareProof
+        params:
+          type: array
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc: {type: string}
+        id: {}
+        result: {}
+        error:
+          type: object
+          properties:
+            code: {type: integer}
+            message: {type: string}

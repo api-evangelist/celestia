@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: Celestia Node Blob API
+  version: 0.30.x
+  description: |
+    JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+    and other applications using Celestia for DA.
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
+servers:
+  - url: http://localhost:26658
+    description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
+tags:
+  - name: Blob
+    description: Submit, retrieve, and prove blobs against Celestia namespaces.
+paths:
+  /:
+    post:
+      tags: [Blob]
+      summary: Invoke Blob JSON-RPC Method
+      description: |
+        Single JSON-RPC entrypoint exposing the `blob.*` namespace including
+        `blob.Submit`, `blob.Get`, `blob.GetAll`, `blob.GetProof`, `blob.Included`,
+        and `blob.Subscribe`. Authenticate with a bearer token generated via
+        `celestia <node-type> auth <permissions>`.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+            examples:
+              submit:
+                summary: Submit a blob
+                value:
+                  jsonrpc: "2.0"
+                  id: 1
+                  method: blob.Submit
+                  params:
+                    - - namespace: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z"
+                        data: "VGhpcyBpcyBhbiBleGFtcGxlIG9mIHNvbWUgYmxvYiBkYXRh"
+                        share_version: 0
+                      - 0.002
+              get:
+                summary: Retrieve a blob
+                value:
+                  jsonrpc: "2.0"
+                  id: 1
+                  method: blob.Get
+                  params:
+                    - 1234567
+                    - "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z"
+                    - "0x..."
+      responses:
+        '200':
+          description: JSON-RPC response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, method, id]
+      properties:
+        jsonrpc:
+          type: string
+          enum: ["2.0"]
+        id:
+          oneOf: [{type: integer}, {type: string}]
+        method:
+          type: string
+          enum:
+            - blob.Submit
+            - blob.Get
+            - blob.GetAll
+            - blob.GetProof
+            - blob.Included
+            - blob.Subscribe
+        params:
+          type: array
+    JsonRpcResponse:
+      type: object
+      required: [jsonrpc, id]
+      properties:
+        jsonrpc:
+          type: string
+        id:
+          oneOf: [{type: integer}, {type: string}, {type: 'null'}]
+        result: {}
+        error:
+          type: object
+          properties:
+            code: {type: integer}
+            message: {type: string}
+    Blob:
+      type: object
+      properties:
+        namespace:
+          type: string
+          description: Base64-encoded 29-byte namespace identifier.
+        data:
+          type: string
+          description: Base64-encoded blob payload.
+        share_version:
+          type: integer
+          enum: [0, 1]
+        commitment:
+          type: string
+          description: Subtree-root commitment to the blob.
+        index:
+          type: integer
+          description: Share index where the blob starts.

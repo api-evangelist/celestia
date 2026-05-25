@@ -1,0 +1,58 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Celestia Node API — Blob
+  description: 'Celestia Node Blob JSON-RPC capability. Submit, retrieve, and prove blobs against namespaces on the Celestia data availability layer. Self-contained Naftiko capability covering one Celestia business surface.'
+  tags:
+    - Celestia
+    - Blob
+    - DataAvailability
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+  - namespace: env
+    keys:
+      CELESTIA_NODE_AUTH_TOKEN: CELESTIA_NODE_AUTH_TOKEN
+      CELESTIA_NODE_URL: CELESTIA_NODE_URL
+capability:
+  consumes:
+    - type: http
+      namespace: blob-blob
+      baseUri: ${CELESTIA_NODE_URL}
+      description: Celestia Node JSON-RPC over HTTP. Default endpoint is http://localhost:26658.
+      resources:
+        - name: blob-submit
+          path: /
+          operations:
+            - name: submitblob
+              method: POST
+              description: Submit one or more blobs to Celestia via blob.Submit.
+              outputRawFormat: json
+              outputParameters:
+                - name: height
+                  type: integer
+                  value: $.result
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  description: JSON-RPC envelope with method blob.Submit.
+                  required: true
+        - name: blob-get
+          path: /
+          operations:
+            - name: getblob
+              method: POST
+              description: Retrieve a blob at height under a namespace via blob.Get.
+              outputRawFormat: json
+              outputParameters:
+                - name: blob
+                  type: object
+                  value: $.result
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  description: JSON-RPC envelope with method blob.Get.
+                  required: true
+    authentication:
+      type: bearer

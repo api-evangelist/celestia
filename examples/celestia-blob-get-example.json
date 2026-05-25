@@ -1,0 +1,10 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "blob.Get",
+  "params": [
+    1234567,
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z",
+    "0x9c4e6f7d8a2b1c5e9a3f6d8b7c4e2a1f5d3c8b6a4e9f7d2b1c5a8e6f4d3c2b1a"
+  ]
+}

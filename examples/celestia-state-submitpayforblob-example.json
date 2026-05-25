@@ -1,0 +1,18 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "state.SubmitPayForBlob",
+  "params": [
+    [
+      {
+        "namespace": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z",
+        "data": "VGhpcyBpcyBhbiBleGFtcGxlIG9mIHNvbWUgYmxvYiBkYXRh",
+        "share_version": 0
+      }
+    ],
+    {
+      "gas_price": 0.002,
+      "gas": 200000
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/celestia/main/json-schema/celestia-blob-schema.json",
+  "title": "Celestia Blob",
+  "description": "A blob is an opaque payload published to the Celestia data availability layer under a specific namespace. Blobs are the canonical unit for rollups and applications using Celestia for DA.",
+  "type": "object",
+  "required": ["namespace", "data"],
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "description": "Base64-encoded 29-byte namespace identifier. First byte is the namespace version; remaining 28 bytes are the namespace ID.",
+      "minLength": 1
+    },
+    "data": {
+      "type": "string",
+      "description": "Base64-encoded blob payload."
+    },
+    "share_version": {
+      "type": "integer",
+      "description": "Blob share version. 0 is the original version; 1 adds a signer field for accountable signature.",
+      "enum": [0, 1]
+    },
+    "commitment": {
+      "type": "string",
+      "description": "Subtree-root commitment to the blob (base64 or hex)."
+    },
+    "index": {
+      "type": "integer",
+      "description": "Share index where the blob starts in the extended data square."
+    },
+    "signer": {
+      "type": "string",
+      "description": "Bech32 celestia1... address of the signer for share_version 1 blobs."
+    }
+  }
+}

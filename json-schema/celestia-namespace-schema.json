@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/celestia/main/json-schema/celestia-namespace-schema.json",
+  "title": "Celestia Namespace",
+  "description": "A 29-byte namespace identifier. First byte is the namespace version; remaining 28 bytes are the namespace ID. Namespaces partition Celestia blockspace so each rollup or application can read only the data relevant to it via Namespaced Merkle Trees (NMT).",
+  "type": "object",
+  "required": ["version", "id"],
+  "properties": {
+    "version": {
+      "type": "integer",
+      "description": "Namespace version byte (0 = primary user namespace).",
+      "minimum": 0,
+      "maximum": 255
+    },
+    "id": {
+      "type": "string",
+      "description": "Hex- or base64-encoded 28-byte namespace ID."
+    },
+    "raw": {
+      "type": "string",
+      "description": "Full 29-byte namespace (version || id) encoded in hex or base64."
+    }
+  }
+}

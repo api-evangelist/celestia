@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Celestia Node P2P API
+  version: 0.30.x
+  description: |
+    JSON-RPC methods in the `p2p` module of celestia-node. Provides libp2p-level
+    introspection and control over the Celestia DA network including peer info,
+    connection management, NAT status, bandwidth stats, pubsub topics, and the
+    private/protected peer lists.
+  license:
+    name: Apache-2.0
+servers:
+  - url: http://localhost:26658
+tags:
+  - name: P2P
+    description: libp2p peer, connection, NAT, and pubsub control.
+paths:
+  /:
+    post:
+      tags: [P2P]
+      summary: Invoke P2P JSON-RPC Method
+      description: |
+        Exposes the `p2p.*` namespace including `p2p.Info`, `p2p.Peers`,
+        `p2p.PeerInfo`, `p2p.Connect`, `p2p.ClosePeer`, `p2p.Connectedness`,
+        `p2p.NATStatus`, `p2p.BlockPeer`, `p2p.UnblockPeer`, `p2p.ListBlockedPeers`,
+        `p2p.Protect`, `p2p.Unprotect`, `p2p.IsProtected`, `p2p.BandwidthStats`,
+        `p2p.BandwidthForPeer`, `p2p.BandwidthForProtocol`, `p2p.ResourceState`,
+        `p2p.PubSubPeers`, and `p2p.PubSubTopics`.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+      responses:
+        '200':
+          description: JSON-RPC response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, method, id]
+      properties:
+        jsonrpc:
+          type: string
+          enum: ["2.0"]
+        id:
+          oneOf: [{type: integer}, {type: string}]
+        method:
+          type: string
+        params:
+          type: array
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc: {type: string}
+        id: {}
+        result: {}
+        error:
+          type: object
+          properties:
+            code: {type: integer}
+            message: {type: string}

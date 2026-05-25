@@ -1,0 +1,75 @@
+aid: celestia-vocabulary
+name: Celestia Vocabulary
+description: |
+  Domain vocabulary for the Celestia modular data availability network. Covers
+  the core protocol concepts (namespaces, blobs, shares, extended data square,
+  data availability sampling), node roles, transactions, and the Blobstream
+  bridge so that this vocabulary can be referenced from JSON-LD contexts,
+  OpenAPI descriptions, and capability definitions across rollups, DA clients,
+  and bridge contracts.
+url: https://raw.githubusercontent.com/api-evangelist/celestia/main/vocabulary/celestia-vocabulary.yml
+license: Apache-2.0
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+    url: https://apievangelist.com
+concepts:
+  - term: Network
+    definition: A deployed Celestia blockchain instance. Mainnet Beta (celestia), Mocha-4 testnet, and Arabica devnet are the canonical networks.
+  - term: DataAvailabilityLayer
+    definition: The role Celestia plays for execution and settlement layers above it — ordering blobs and keeping them retrievable for a sampling window.
+  - term: Namespace
+    definition: A 29-byte identifier (1 version byte + 28 ID bytes) that partitions Celestia blockspace so each application reads only relevant data via Namespaced Merkle Trees.
+  - term: Blob
+    definition: An opaque payload submitted to Celestia under a namespace via a PayForBlobs transaction. The canonical DA unit for rollups.
+  - term: Share
+    definition: A fixed-size (512-byte) chunk of blob or compact-share data. Shares are the leaves of the namespaced Merkle tree per row and column of the extended data square.
+  - term: ExtendedDataSquare
+    definition: The 2D Reed-Solomon erasure-coded square (EDS) of shares used to make data availability sampling efficient and tamper-evident.
+  - term: DataAvailabilityHeader
+    definition: The row and column roots over the extended data square, included in each Celestia block header.
+  - term: NamespaceMerkleTree
+    definition: A modified Merkle tree (NMT) whose interior nodes carry the min/max namespace of their leaves, enabling efficient namespace-scoped inclusion and exclusion proofs.
+  - term: DataAvailabilitySampling
+    definition: The probabilistic procedure light nodes run to verify that block data is published and retrievable without downloading the full block.
+  - term: PayForBlobs
+    definition: The MsgPayForBlobs Cosmos SDK message used to commit to and submit blobs under one or more namespaces.
+  - term: Blobstream
+    definition: The Celestia-to-EVM bridge attesting to Celestia data commitments on Ethereum and other chains. Operated as Blobstream X using ZK proofs.
+  - term: FraudProof
+    definition: A succinct proof (currently BadEncoding) that a Celestia bridge node propagated incorrectly erasure-coded block data, enabling slashing.
+  - term: Rollup
+    definition: An execution layer (optimistic, ZK, or sovereign) that posts its transaction data as blobs to Celestia for data availability.
+  - term: LightNode
+    definition: A celestia-node operating in `light` mode that performs DA sampling and tracks headers without storing full block data.
+  - term: BridgeNode
+    definition: A celestia-node operating in `bridge` mode that relays blocks from the consensus network to the DA network.
+  - term: FullNode
+    definition: A celestia-node operating in `full` mode that downloads, stores, and re-distributes full extended data squares.
+  - term: ConsensusNode
+    definition: A celestia-app node that participates in CometBFT consensus, executes PayForBlobs transactions, and produces blocks.
+  - term: Validator
+    definition: A staking participant that signs Celestia blocks, secured by bonded TIA.
+  - term: TIA
+    definition: The native staking and fee-payment asset of the Celestia network.
+properties:
+  - term: height
+    definition: Block height of a Celestia ExtendedHeader.
+  - term: chainId
+    definition: Identifier of the Celestia network (e.g. celestia, mocha-4, arabica-11).
+  - term: namespace
+    definition: 29-byte namespace under which a blob is published.
+  - term: commitment
+    definition: Subtree-root commitment to a blob, computed over its shares.
+  - term: shareVersion
+    definition: Blob share version (0 or 1; v1 carries a signer field).
+  - term: signer
+    definition: Bech32 address of the signer for share_version 1 blobs.
+  - term: dataRoot
+    definition: The root of the DataAvailabilityHeader committed in the CometBFT block header.
+  - term: rowRoots
+    definition: NMT roots over each row of the extended data square.
+  - term: columnRoots
+    definition: NMT roots over each column of the extended data square.
+  - term: squareSize
+    definition: Side length of the original (non-extended) data square for a block.

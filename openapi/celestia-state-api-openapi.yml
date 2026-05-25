@@ -1,0 +1,88 @@
+openapi: 3.1.0
+info:
+  title: Celestia Node State API
+  version: 0.30.x
+  description: |
+    JSON-RPC methods in the `state` module of celestia-node. Exposes state-level
+    operations including account balances, transactions, delegations, transfers,
+    and submitting PayForBlobs transactions. Acts as a thin client over the
+    underlying celestia-app (Cosmos SDK) state machine.
+  license:
+    name: Apache-2.0
+servers:
+  - url: http://localhost:26658
+tags:
+  - name: State
+    description: Account, balance, transfer, delegation, and PayForBlobs operations.
+paths:
+  /:
+    post:
+      tags: [State]
+      summary: Invoke State JSON-RPC Method
+      description: |
+        Exposes the `state.*` namespace including `state.AccountAddress`,
+        `state.Balance`, `state.BalanceForAddress`, `state.Transfer`,
+        `state.SubmitPayForBlob`, `state.Delegate`, `state.Undelegate`,
+        `state.BeginRedelegate`, `state.CancelUnbondingDelegation`,
+        `state.QueryDelegation`, `state.QueryUnbonding`, `state.QueryRedelegations`,
+        and `state.GrantFee` / `state.RevokeGrantFee`.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+      responses:
+        '200':
+          description: JSON-RPC response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, method, id]
+      properties:
+        jsonrpc:
+          type: string
+          enum: ["2.0"]
+        id:
+          oneOf: [{type: integer}, {type: string}]
+        method:
+          type: string
+          enum:
+            - state.AccountAddress
+            - state.Balance
+            - state.BalanceForAddress
+            - state.Transfer
+            - state.SubmitPayForBlob
+            - state.Delegate
+            - state.Undelegate
+            - state.BeginRedelegate
+            - state.CancelUnbondingDelegation
+            - state.QueryDelegation
+            - state.QueryUnbonding
+            - state.QueryRedelegations
+            - state.GrantFee
+            - state.RevokeGrantFee
+        params:
+          type: array
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc: {type: string}
+        id: {}
+        result: {}
+        error:
+          type: object
+          properties:
+            code: {type: integer}
+            message: {type: string}

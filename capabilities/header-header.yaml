@@ -1,0 +1,55 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Celestia Node API — Header
+  description: 'Celestia Node Header JSON-RPC capability. Query Celestia extended headers, network head, sync state, and subscribe to new headers.'
+  tags:
+    - Celestia
+    - Header
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+  - namespace: env
+    keys:
+      CELESTIA_NODE_AUTH_TOKEN: CELESTIA_NODE_AUTH_TOKEN
+      CELESTIA_NODE_URL: CELESTIA_NODE_URL
+capability:
+  consumes:
+    - type: http
+      namespace: header-header
+      baseUri: ${CELESTIA_NODE_URL}
+      description: Celestia Node JSON-RPC over HTTP for the header.* namespace.
+      resources:
+        - name: header-localhead
+          path: /
+          operations:
+            - name: localhead
+              method: POST
+              description: Get the local head ExtendedHeader via header.LocalHead.
+              outputRawFormat: json
+              outputParameters:
+                - name: header
+                  type: object
+                  value: $.result
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+        - name: header-getbyheight
+          path: /
+          operations:
+            - name: getbyheight
+              method: POST
+              description: Get an ExtendedHeader by height via header.GetByHeight.
+              outputRawFormat: json
+              outputParameters:
+                - name: header
+                  type: object
+                  value: $.result
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+    authentication:
+      type: bearer

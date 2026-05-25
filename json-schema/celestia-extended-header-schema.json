@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/celestia/main/json-schema/celestia-extended-header-schema.json",
+  "title": "Celestia Extended Header",
+  "description": "A Celestia ExtendedHeader bundles the underlying CometBFT header, validator set, last commit, and the Data Availability Header (DAH) of erasure-coded row and column roots over the extended data square (EDS).",
+  "type": "object",
+  "required": ["header", "dah"],
+  "properties": {
+    "header": {
+      "type": "object",
+      "description": "Tendermint/CometBFT block header.",
+      "properties": {
+        "version": {"type": "object"},
+        "chain_id": {"type": "string"},
+        "height": {"type": "integer"},
+        "time": {"type": "string", "format": "date-time"},
+        "last_block_id": {"type": "object"},
+        "last_commit_hash": {"type": "string"},
+        "data_hash": {"type": "string"},
+        "validators_hash": {"type": "string"},
+        "next_validators_hash": {"type": "string"},
+        "consensus_hash": {"type": "string"},
+        "app_hash": {"type": "string"},
+        "last_results_hash": {"type": "string"},
+        "evidence_hash": {"type": "string"},
+        "proposer_address": {"type": "string"}
+      }
+    },
+    "validator_set": {
+      "type": "object",
+      "description": "Active validator set used to verify the commit."
+    },
+    "commit": {
+      "type": "object",
+      "description": "Block commit (signatures) attesting to the header."
+    },
+    "dah": {
+      "type": "object",
+      "description": "Data Availability Header. Roots over the rows and columns of the erasure-coded extended data square.",
+      "required": ["row_roots", "column_roots"],
+      "properties": {
+        "row_roots": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "column_roots": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  }
+}

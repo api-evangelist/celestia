@@ -1,0 +1,70 @@
+openapi: 3.1.0
+info:
+  title: Celestia Node Fraud API
+  version: 0.30.x
+  description: |
+    JSON-RPC methods in the `fraud` module of celestia-node. Exposes fraud proof
+    retrieval and subscription for the BadEncoding fraud proof type used to slash
+    malicious bridge nodes that propagate incorrectly erasure-coded blocks.
+  license:
+    name: Apache-2.0
+servers:
+  - url: http://localhost:26658
+tags:
+  - name: Fraud
+    description: Fraud proof retrieval and subscription.
+paths:
+  /:
+    post:
+      tags: [Fraud]
+      summary: Invoke Fraud JSON-RPC Method
+      description: |
+        Exposes the `fraud.*` namespace including `fraud.Get` and `fraud.Subscribe`.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonRpcRequest'
+      responses:
+        '200':
+          description: JSON-RPC response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JsonRpcResponse'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, method, id]
+      properties:
+        jsonrpc:
+          type: string
+          enum: ["2.0"]
+        id:
+          oneOf: [{type: integer}, {type: string}]
+        method:
+          type: string
+          enum:
+            - fraud.Get
+            - fraud.Subscribe
+        params:
+          type: array
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc: {type: string}
+        id: {}
+        result: {}
+        error:
+          type: object
+          properties:
+            code: {type: integer}
+            message: {type: string}

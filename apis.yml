@@ -1,0 +1,321 @@
+aid: celestia
+url: https://raw.githubusercontent.com/api-evangelist/celestia/refs/heads/main/apis.yml
+apis:
+  - aid: celestia:celestia-blob-api
+    name: Celestia Node Blob API
+    tags:
+      - Blob
+      - Celestia
+      - DataAvailability
+      - JSONRPC
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-blob-api-openapi.yml
+        type: OpenAPI
+      - url: json-schema/celestia-blob-schema.json
+        type: JSONSchema
+      - url: json-schema/celestia-namespace-schema.json
+        type: JSONSchema
+      - url: json-structure/celestia-blob-structure.json
+        type: JSONStructure
+      - url: json-ld/celestia-context.jsonld
+        type: JSONLD
+      - url: examples/celestia-blob-submit-example.json
+        type: Example
+      - url: examples/celestia-blob-get-example.json
+        type: Example
+      - type: NaftikoCapability
+        url: capabilities/blob-blob.yaml
+    description: JSON-RPC methods in the blob module of celestia-node. Submit blobs to one or more namespaces with blob.Submit, retrieve them by height with blob.Get and blob.GetAll, generate inclusion proofs with blob.GetProof, check inclusion with blob.Included, and subscribe to namespace blobs with blob.Subscribe. The canonical surface for rollups and applications publishing data to Celestia.
+  - aid: celestia:celestia-header-api
+    name: Celestia Node Header API
+    tags:
+      - Celestia
+      - Header
+      - JSONRPC
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-header-api-openapi.yml
+        type: OpenAPI
+      - url: json-schema/celestia-extended-header-schema.json
+        type: JSONSchema
+      - url: examples/celestia-header-getbyheight-example.json
+        type: Example
+      - type: NaftikoCapability
+        url: capabilities/header-header.yaml
+    description: JSON-RPC methods in the header module of celestia-node. Query ExtendedHeaders with header.LocalHead, header.NetworkHead, header.GetByHeight, header.GetByHash, and header.GetRangeByHeight; track sync state with header.SyncState and header.SyncWait; and subscribe to new headers with header.Subscribe.
+  - aid: celestia:celestia-da-api
+    name: Celestia Node DA API
+    tags:
+      - Celestia
+      - DataAvailability
+      - JSONRPC
+      - Rollup
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-da-api-openapi.yml
+        type: OpenAPI
+      - url: examples/celestia-da-submit-example.json
+        type: Example
+      - type: NaftikoCapability
+        url: capabilities/da-da.yaml
+    description: JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit, da.Get, da.GetIDs, da.GetProofs, da.Commit, da.Validate, and da.MaxBlobSize.
+  - aid: celestia:celestia-share-api
+    name: Celestia Node Share API
+    tags:
+      - Celestia
+      - DataAvailability
+      - JSONRPC
+      - Share
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-share-api-openapi.yml
+        type: OpenAPI
+      - url: examples/celestia-share-getnamespacedata-example.json
+        type: Example
+      - type: NaftikoCapability
+        url: capabilities/share-share.yaml
+    description: JSON-RPC methods in the share module of celestia-node. Provides direct access to Celestia's share-level data, the extended data square (EDS), namespaced shares, and share proofs via share.SharesAvailable, share.GetShare, share.GetEDS, share.GetNamespaceData, share.GetRange, and share.GetSamples.
+  - aid: celestia:celestia-state-api
+    name: Celestia Node State API
+    tags:
+      - Celestia
+      - JSONRPC
+      - PayForBlobs
+      - State
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-state-api-openapi.yml
+        type: OpenAPI
+      - url: examples/celestia-state-submitpayforblob-example.json
+        type: Example
+      - type: NaftikoCapability
+        url: capabilities/state-payforblobs.yaml
+    description: JSON-RPC methods in the state module of celestia-node. Exposes state-level operations including account balances, transfers, delegations, and most importantly state.SubmitPayForBlob, the canonical entrypoint for submitting PayForBlobs transactions to the celestia-app state machine.
+  - aid: celestia:celestia-das-api
+    name: Celestia Node DAS API
+    tags:
+      - Celestia
+      - DAS
+      - DataAvailabilitySampling
+      - JSONRPC
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-das-api-openapi.yml
+        type: OpenAPI
+    description: JSON-RPC methods in the das module of celestia-node. Operational introspection over the Data Availability Sampling subsystem that light nodes run to probabilistically verify block data availability. Exposes das.SamplingStats and das.WaitCatchUp.
+  - aid: celestia:celestia-fraud-api
+    name: Celestia Node Fraud API
+    tags:
+      - Celestia
+      - FraudProof
+      - JSONRPC
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-fraud-api-openapi.yml
+        type: OpenAPI
+    description: JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription for the BadEncoding fraud proof type used to slash bridge nodes that propagate incorrectly erasure-coded blocks. Methods include fraud.Get and fraud.Subscribe.
+  - aid: celestia:celestia-p2p-api
+    name: Celestia Node P2P API
+    tags:
+      - Celestia
+      - JSONRPC
+      - LibP2P
+      - P2P
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-p2p-api-openapi.yml
+        type: OpenAPI
+    description: JSON-RPC methods in the p2p module of celestia-node. libp2p-level introspection and control over the Celestia DA network including peer info, NAT status, connection management, bandwidth stats, pubsub topics, and the private/protected peer lists.
+  - aid: celestia:celestia-node-api
+    name: Celestia Node Admin API
+    tags:
+      - Administrative
+      - Auth
+      - Celestia
+      - JSONRPC
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-node-api-openapi.yml
+        type: OpenAPI
+    description: JSON-RPC methods in the node module of celestia-node. Provides administrative introspection over the running node including node.Info, node.Ready, node.LogLevelSet, and the auth-token issuance methods node.AuthNew and node.AuthVerify used to delegate capability-scoped access to other API modules (public, read, write, admin).
+  - aid: celestia:celestia-blobstream-api
+    name: Celestia Node Blobstream API
+    tags:
+      - Blobstream
+      - Bridge
+      - Celestia
+      - EVM
+      - JSONRPC
+    humanURL: https://node-rpc-docs.celestia.org/
+    properties:
+      - url: https://node-rpc-docs.celestia.org/
+        type: Documentation
+      - url: openapi/celestia-blobstream-api-openapi.yml
+        type: OpenAPI
+      - type: NaftikoCapability
+        url: capabilities/blobstream-blobstream.yaml
+    description: JSON-RPC methods in the blobstream module of celestia-node. Generates inclusion proofs against Blobstream data commitments so EVM chains can verify, via the Blobstream(X) bridge contracts, that a given blob was published to Celestia at a specific height. Methods include blobstream.GetDataRootTupleRoot, blobstream.GetDataRootTupleInclusionProof, and blobstream.GetShareProof.
+common:
+  - url: https://celestia.org
+    type: Portal
+  - url: https://docs.celestia.org
+    type: Documentation
+  - url: https://node-rpc-docs.celestia.org/
+    name: Celestia Node API Reference
+    type: Documentation
+  - url: https://docs.celestia.org/learn/celestia-101/data-availability/
+    name: Celestia 101 - Data Availability
+    type: GettingStarted
+  - url: https://docs.celestia.org/build/quick-start
+    name: Build Quick Start
+    type: GettingStarted
+  - url: https://blog.celestia.org
+    type: Blog
+  - url: https://forum.celestia.org
+    type: Forum
+  - url: https://discord.com/invite/YsnTPcSfWQ
+    name: Celestia Discord
+    type: Forum
+  - url: https://x.com/CelestiaOrg
+    type: Twitter
+  - url: https://github.com/celestiaorg
+    name: Celestia GitHub Organization
+    type: GitHubOrganization
+  - url: https://github.com/celestiaorg/celestia-node
+    name: celestia-node (DA node, Go)
+    type: SDK
+  - url: https://github.com/celestiaorg/celestia-app
+    name: celestia-app (consensus node, Go / Cosmos SDK)
+    type: SDK
+  - url: https://github.com/celestiaorg/celestia-core
+    name: celestia-core (CometBFT fork)
+    type: SDK
+  - url: https://github.com/celestiaorg/celestia-openrpc
+    name: celestia-openrpc (Go client, no celestia-node deps)
+    type: SDK
+  - url: https://github.com/celestiaorg/celestia-ts
+    name: celestia-ts (TypeScript client)
+    type: SDK
+  - url: https://github.com/celestiaorg/celestia-node-client-rs
+    name: celestia-node-client-rs (Rust REST client)
+    type: SDK
+  - url: https://docs.rs/celestia-rpc
+    name: celestia-rpc (Rust RPC client crate)
+    type: SDK
+  - url: https://github.com/celestiaorg/lumina
+    name: Lumina (Wasm-friendly Rust light node)
+    type: SDK
+  - url: https://github.com/celestiaorg/nmt
+    name: Namespaced Merkle Tree (NMT)
+    type: Tool
+  - url: https://github.com/celestiaorg/rsmt2d
+    name: rsmt2d - 2D Reed-Solomon Merkle Tree
+    type: Tool
+  - url: https://github.com/celestiaorg/go-square
+    name: go-square - blob encoding into 2D square
+    type: Tool
+  - url: https://github.com/celestiaorg/blobstream-contracts
+    name: Blobstream EVM bridge contracts
+    type: Tool
+  - url: https://github.com/celestiaorg/orchestrator-relayer
+    name: Blobstream orchestrator-relayer
+    type: Tool
+  - url: https://github.com/celestiaorg/op-alt-da
+    name: Celestia DA provider for Optimism Alt-DA
+    type: Integration
+  - url: https://github.com/celestiaorg/nitro-das-celestia
+    name: Celestia DA provider for Arbitrum Nitro
+    type: Integration
+  - url: https://github.com/rollkit/celestia-da
+    name: celestia-da modular DA implementation (Rollkit)
+    type: Integration
+  - url: https://github.com/celestiaorg/celestia-specs
+    name: Celestia Specifications
+    type: Specification
+  - url: https://github.com/celestiaorg/CIPs
+    name: Celestia Improvement Proposals
+    type: Specification
+  - url: https://github.com/celestiaorg/docs
+    name: Documentation source
+    type: Documentation
+  - url: https://github.com/celestiaorg/awesome-celestia
+    name: Awesome Celestia
+    type: CodeExamples
+  - url: https://github.com/celestiaorg/networks
+    name: networks - public Celestia network configs
+    type: Documentation
+  - url: https://github.com/celestiaorg/helm-charts
+    name: Celestia Helm charts
+    type: Tool
+  - url: https://www.apache.org/licenses/LICENSE-2.0
+    type: License
+  - type: Features
+    data:
+      - First production modular data availability layer; separates consensus + DA from execution and settlement
+      - Mainnet Beta launched October 2023; chain id celestia
+      - Mocha-4 public testnet and Arabica devnet for application developers
+      - PayForBlobs (MsgPayForBlobs) transactions for publishing namespaced blob data
+      - Namespaced Merkle Trees (NMT) so each rollup only downloads data for its namespace
+      - 2D Reed-Solomon erasure coding over the extended data square (EDS)
+      - Data Availability Sampling (DAS) lets light nodes verify availability without downloading full blocks
+      - Bridge, full, and light celestia-node modes
+      - JSON-RPC over HTTP (default :26658) with bearer-token auth and four permission scopes (public, read, write, admin)
+      - WebSocket subscriptions for blob.Subscribe, header.Subscribe, fraud.Subscribe
+      - Modular DA interface (da.*) compatible with Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, OP-Succinct, Kona, Hana
+      - celestia-app exposes Cosmos SDK gRPC (:9090), REST (:1317), and CometBFT RPC (:26657) for consensus-level queries
+      - Blobstream and Blobstream X bridge to Ethereum and EVM chains for cross-chain data root verification
+      - Lumina Rust+Wasm light node runs in the browser
+      - Funded by TIA staking and PayForBlobs gas fees; no central API key or commercial pricing tier
+      - Reference implementations in Go (celestia-node, celestia-app) and Rust (lumina, celestia-rpc)
+      - Apache-2.0 licensed across the celestia-node, celestia-app, celestia-core, and tooling repos
+      - Active CIP (Celestia Improvement Proposal) process for protocol governance
+      - Ecosystem rollups include Manta Pacific, Eclipse, Movement, Lightlink, Polygon CDK Validium, Astria, Hyperliquid (DA usage), and many more
+    sources:
+      - https://celestia.org
+      - https://docs.celestia.org
+      - https://node-rpc-docs.celestia.org/
+      - https://github.com/celestiaorg
+      - https://github.com/celestiaorg/celestia-node
+      - https://github.com/celestiaorg/celestia-app
+      - https://github.com/celestiaorg/CIPs
+    updated: '2026-05-24'
+created: '2026-05-24T00:00:00.000Z'
+modified: '2026-05-24'
+position: Producing
+description: |
+  Celestia is the first production modular data availability blockchain. It separates
+  consensus and data availability from execution and settlement, letting rollups,
+  sovereign chains, and other execution layers post their transaction data as blobs
+  to Celestia under namespaces while running their own state machines. Light nodes
+  use Data Availability Sampling and Namespaced Merkle Trees to verify availability
+  without downloading full blocks, and the Blobstream / Blobstream X bridge attests
+  Celestia data commitments on Ethereum and other EVM chains. The reference stack —
+  celestia-app (consensus, Cosmos SDK + CometBFT) and celestia-node (DA bridge/full/
+  light nodes) — exposes a JSON-RPC API with nine modules (blob, header, share,
+  state, das, fraud, p2p, node, da, blobstream), plus a modular DA interface used
+  by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks.
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
+    X: apievangelist
+    url: https://apievangelist.com
+specificationVersion: '0.16'

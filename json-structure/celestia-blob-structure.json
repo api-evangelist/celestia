@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/draft-01",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/celestia/main/json-structure/celestia-blob-structure.json",
+  "title": "Celestia Blob Structure",
+  "description": "Structural definition for the canonical Celestia blob, as submitted via blob.Submit / state.SubmitPayForBlob and retrieved via blob.Get.",
+  "type": "object",
+  "properties": {
+    "namespace": {
+      "type": "string",
+      "documentation": "Base64-encoded 29-byte namespace identifier."
+    },
+    "data": {
+      "type": "string",
+      "documentation": "Base64-encoded blob payload."
+    },
+    "share_version": {
+      "type": "integer",
+      "documentation": "Blob share version (0 or 1)."
+    },
+    "commitment": {
+      "type": "string",
+      "documentation": "Subtree-root commitment to the blob."
+    },
+    "index": {
+      "type": "integer",
+      "documentation": "Share index where the blob starts in the extended data square."
+    },
+    "signer": {
+      "type": "string",
+      "documentation": "Bech32 signer address for share_version 1 blobs."
+    }
+  },
+  "required": ["namespace", "data"]
+}

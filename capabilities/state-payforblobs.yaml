@@ -1,0 +1,40 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Celestia Node API — State PayForBlobs
+  description: 'Celestia Node State JSON-RPC capability for PayForBlobs transactions. Submit blobs together with their fee via state.SubmitPayForBlob.'
+  tags:
+    - Celestia
+    - State
+    - PayForBlobs
+  created: '2026-05-24'
+  modified: '2026-05-24'
+binds:
+  - namespace: env
+    keys:
+      CELESTIA_NODE_AUTH_TOKEN: CELESTIA_NODE_AUTH_TOKEN
+      CELESTIA_NODE_URL: CELESTIA_NODE_URL
+capability:
+  consumes:
+    - type: http
+      namespace: state-payforblobs
+      baseUri: ${CELESTIA_NODE_URL}
+      description: Celestia Node JSON-RPC over HTTP for the state.* namespace.
+      resources:
+        - name: state-submitpayforblob
+          path: /
+          operations:
+            - name: submitpayforblob
+              method: POST
+              description: Submit a PayForBlobs transaction via state.SubmitPayForBlob.
+              outputRawFormat: json
+              outputParameters:
+                - name: txResponse
+                  type: object
+                  value: $.result
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+    authentication:
+      type: bearer
