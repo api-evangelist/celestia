@@ -1,0 +1,620 @@
+asyncapi: '2.6.0'
+id: 'urn:celestia:celestia-node:subscriptions'
+info:
+  title: Celestia Node Subscriptions
+  version: 0.30.x
+  description: |
+    AsyncAPI definition for the WebSocket/JSON-RPC subscriptions exposed by
+    celestia-node. The JSON-RPC server (built on `github.com/filecoin-project/
+    go-jsonrpc`) listens on a single HTTP endpoint (default `:26658/`) that
+    accepts both plain JSON-RPC over HTTP POST and a WebSocket upgrade on the
+    same path. Subscription methods - which return Go channels in the Go API -
+    are only usable over the WebSocket transport; calling them over HTTP returns
+    an error from the underlying go-jsonrpc transport.
+
+    Three modules expose channel-returning subscription methods:
+      - `header.Subscribe`  - new ExtendedHeaders as they are received from the network
+      - `blob.Subscribe`    - blobs published under a given namespace as they are included
+      - `fraud.Subscribe`   - fraud proofs of a given type as they are observed
+
+    The `das` and `header` modules also expose long-running blocking calls
+    (`das.WaitCatchUp`, `header.SyncWait`, `header.WaitForHeight`) and a point
+    query for sampling progress (`das.SamplingStats`) that are commonly issued
+    over the same WebSocket connection by operator dashboards. They are unary
+    request/reply rather than push subscriptions, and are modeled here as
+    correlated send/receive operations on dedicated channels.
+
+    Authentication uses a JWT bearer token issued by `node.AuthNew`, presented
+    in the `Authorization: Bearer <token>` header on the initial WebSocket
+    handshake. Permission scopes are `public`, `read`, `write`, and `admin`.
+    All subscriptions documented here require the `read` scope.
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Node API Reference
+    url: https://node-rpc-docs.celestia.org/
+defaultContentType: application/json
+servers:
+  local:
+    url: ws://localhost:26658/
+    protocol: ws
+    description: |
+      Default plaintext celestia-node JSON-RPC over WebSocket endpoint. The same
+      HTTP listener serves JSON-RPC over POST and accepts a WebSocket upgrade on
+      `/`. Subscription methods require the WS transport.
+    security:
+      - bearerAuth: []
+  localTls:
+    url: wss://localhost:26658/
+    protocol: wss
+    description: |
+      TLS-enabled celestia-node JSON-RPC over WebSocket endpoint. Used when the
+      node is started with `--rpc.tls`, terminated behind a reverse proxy, or
+      exposed publicly.
+    security:
+      - bearerAuth: []
+tags:
+  - name: header
+    description: New extended block headers from the celestia-node header subscription.
+  - name: blob
+    description: Namespace-scoped blob notifications from the celestia-node blob subscription.
+  - name: fraud
+    description: Fraud proof notifications from the celestia-node fraud subscription.
+  - name: das
+    description: Data Availability Sampling progress queries.
+channels:
+  header.Subscribe:
+    description: |
+      Subscribe to recent ExtendedHeaders from the network. Maps to the Go
+      method `header.Module.Subscribe(ctx) (<-chan *ExtendedHeader, error)`.
+      Each header that the local node accepts from its header subscription
+      pipeline is delivered as a JSON-RPC notification frame on the WebSocket
+      until the client closes the connection or cancels the subscription.
+    bindings:
+      ws:
+        bindingVersion: '0.1.0'
+    subscribe:
+      operationId: subscribeHeader
+      summary: Stream new ExtendedHeaders.
+      tags:
+        - name: header
+      message:
+        $ref: '#/components/messages/HeaderNotification'
+    publish:
+      operationId: callHeaderSubscribe
+      summary: Open a header.Subscribe subscription.
+      tags:
+        - name: header
+      message:
+        $ref: '#/components/messages/HeaderSubscribeRequest'
+  blob.Subscribe:
+    description: |
+      Subscribe to blobs published under a single namespace as they are included.
+      Maps to the Go method `blob.Module.Subscribe(ctx, namespace) (<-chan
+      *SubscriptionResponse, error)`. Each notification carries the height and
+      the list of blobs in the requested namespace at that height.
+    bindings:
+      ws:
+        bindingVersion: '0.1.0'
+    subscribe:
+      operationId: subscribeBlob
+      summary: Stream namespace blob inclusions.
+      tags:
+        - name: blob
+      message:
+        $ref: '#/components/messages/BlobNotification'
+    publish:
+      operationId: callBlobSubscribe
+      summary: Open a blob.Subscribe subscription on a namespace.
+      tags:
+        - name: blob
+      message:
+        $ref: '#/components/messages/BlobSubscribeRequest'
+  fraud.Subscribe:
+    description: |
+      Subscribe to fraud proofs of a given proof type. Maps to the Go method
+      `fraud.API.Subscribe(ctx, ProofType) (<-chan *Proof, error)` in the
+      celestia-openrpc client. The only documented proof type is
+      `badencoding`, used to attest that a bridge node propagated an
+      incorrectly erasure-coded block.
+    bindings:
+      ws:
+        bindingVersion: '0.1.0'
+    subscribe:
+      operationId: subscribeFraud
+      summary: Stream fraud proofs of the requested type.
+      tags:
+        - name: fraud
+      message:
+        $ref: '#/components/messages/FraudNotification'
+    publish:
+      operationId: callFraudSubscribe
+      summary: Open a fraud.Subscribe subscription for a proof type.
+      tags:
+        - name: fraud
+      message:
+        $ref: '#/components/messages/FraudSubscribeRequest'
+  das.SamplingStats:
+    description: |
+      Request/reply call for the current Data Availability Sampling statistics.
+      Not a push subscription - this is the unary `das.SamplingStats` method
+      issued over the same WebSocket connection. Dashboards typically call it
+      on an interval to render DAS progress for light nodes.
+    bindings:
+      ws:
+        bindingVersion: '0.1.0'
+    publish:
+      operationId: callDasSamplingStats
+      summary: Query current DAS sampling progress.
+      tags:
+        - name: das
+      message:
+        $ref: '#/components/messages/DasSamplingStatsRequest'
+    subscribe:
+      operationId: receiveDasSamplingStats
+      summary: Receive the DAS sampling stats reply.
+      tags:
+        - name: das
+      message:
+        $ref: '#/components/messages/DasSamplingStatsReply'
+  das.WaitCatchUp:
+    description: |
+      Long-running blocking call that returns once the DASer has caught up to
+      the network head. Modeled here because it is commonly issued over the
+      same persistent WebSocket connection alongside `das.SamplingStats`.
+    bindings:
+      ws:
+        bindingVersion: '0.1.0'
+    publish:
+      operationId: callDasWaitCatchUp
+      summary: Block until DAS catches up to network head.
+      tags:
+        - name: das
+      message:
+        $ref: '#/components/messages/DasWaitCatchUpRequest'
+    subscribe:
+      operationId: receiveDasWaitCatchUp
+      summary: Receive the DAS catch-up completion reply.
+      tags:
+        - name: das
+      message:
+        $ref: '#/components/messages/DasWaitCatchUpReply'
+  header.SyncWait:
+    description: |
+      Long-running blocking call that returns once the header Syncer is in sync
+      with the network head. Like `das.WaitCatchUp`, this is unary not push,
+      but is included here because clients run it on the same WebSocket
+      connection used for `header.Subscribe`.
+    bindings:
+      ws:
+        bindingVersion: '0.1.0'
+    publish:
+      operationId: callHeaderSyncWait
+      summary: Block until header Syncer reaches network head.
+      tags:
+        - name: header
+      message:
+        $ref: '#/components/messages/HeaderSyncWaitRequest'
+    subscribe:
+      operationId: receiveHeaderSyncWait
+      summary: Receive the SyncWait completion reply.
+      tags:
+        - name: header
+      message:
+        $ref: '#/components/messages/HeaderSyncWaitReply'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: httpApiKey
+      name: Authorization
+      in: header
+      description: |
+        JWT bearer token issued by `node.AuthNew`. Sent as
+        `Authorization: Bearer <token>` on the WebSocket upgrade request.
+  messages:
+    HeaderSubscribeRequest:
+      name: HeaderSubscribeRequest
+      title: header.Subscribe request
+      summary: JSON-RPC request frame opening a header subscription.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/JsonRpcSubscribeRequest'
+      examples:
+        - name: HeaderSubscribe
+          summary: Open a header subscription.
+          payload:
+            jsonrpc: '2.0'
+            id: 1
+            method: header.Subscribe
+            params: []
+    HeaderNotification:
+      name: HeaderNotification
+      title: header.Subscribe notification
+      summary: ExtendedHeader pushed as a JSON-RPC response frame on the WS.
+      contentType: application/json
+      payload:
+        type: object
+        required: [jsonrpc, result]
+        properties:
+          jsonrpc:
+            type: string
+            const: '2.0'
+          id:
+            description: Correlation id of the originating subscribe call.
+            oneOf:
+              - type: integer
+              - type: string
+          result:
+            $ref: '#/components/schemas/ExtendedHeader'
+    BlobSubscribeRequest:
+      name: BlobSubscribeRequest
+      title: blob.Subscribe request
+      summary: JSON-RPC request frame opening a per-namespace blob subscription.
+      contentType: application/json
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/JsonRpcSubscribeRequest'
+          - type: object
+            properties:
+              params:
+                type: array
+                description: Single positional parameter - the target namespace.
+                minItems: 1
+                maxItems: 1
+                items:
+                  $ref: '#/components/schemas/Namespace'
+      examples:
+        - name: BlobSubscribe
+          summary: Open a blob subscription on a namespace.
+          payload:
+            jsonrpc: '2.0'
+            id: 1
+            method: blob.Subscribe
+            params:
+              - 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=='
+    BlobNotification:
+      name: BlobNotification
+      title: blob.Subscribe notification
+      summary: SubscriptionResponse pushed when blobs in the namespace are included.
+      contentType: application/json
+      payload:
+        type: object
+        required: [jsonrpc, result]
+        properties:
+          jsonrpc:
+            type: string
+            const: '2.0'
+          id:
+            oneOf:
+              - type: integer
+              - type: string
+          result:
+            $ref: '#/components/schemas/BlobSubscriptionResponse'
+    FraudSubscribeRequest:
+      name: FraudSubscribeRequest
+      title: fraud.Subscribe request
+      summary: JSON-RPC request frame opening a fraud proof subscription.
+      contentType: application/json
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/JsonRpcSubscribeRequest'
+          - type: object
+            properties:
+              params:
+                type: array
+                description: Single positional parameter - the fraud proof type.
+                minItems: 1
+                maxItems: 1
+                items:
+                  $ref: '#/components/schemas/FraudProofType'
+      examples:
+        - name: FraudSubscribeBadEncoding
+          summary: Subscribe to BadEncoding fraud proofs.
+          payload:
+            jsonrpc: '2.0'
+            id: 1
+            method: fraud.Subscribe
+            params:
+              - badencoding
+    FraudNotification:
+      name: FraudNotification
+      title: fraud.Subscribe notification
+      summary: Fraud Proof envelope pushed when a matching proof is observed.
+      contentType: application/json
+      payload:
+        type: object
+        required: [jsonrpc, result]
+        properties:
+          jsonrpc:
+            type: string
+            const: '2.0'
+          id:
+            oneOf:
+              - type: integer
+              - type: string
+          result:
+            $ref: '#/components/schemas/FraudProof'
+    DasSamplingStatsRequest:
+      name: DasSamplingStatsRequest
+      title: das.SamplingStats request
+      contentType: application/json
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/JsonRpcRequest'
+          - type: object
+            properties:
+              method:
+                const: das.SamplingStats
+              params:
+                type: array
+                maxItems: 0
+      examples:
+        - name: SamplingStats
+          payload:
+            jsonrpc: '2.0'
+            id: 1
+            method: das.SamplingStats
+            params: []
+    DasSamplingStatsReply:
+      name: DasSamplingStatsReply
+      title: das.SamplingStats reply
+      contentType: application/json
+      payload:
+        type: object
+        required: [jsonrpc, result]
+        properties:
+          jsonrpc:
+            type: string
+            const: '2.0'
+          id:
+            oneOf: [{ type: integer }, { type: string }]
+          result:
+            $ref: '#/components/schemas/DasSamplingStats'
+    DasWaitCatchUpRequest:
+      name: DasWaitCatchUpRequest
+      title: das.WaitCatchUp request
+      contentType: application/json
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/JsonRpcRequest'
+          - type: object
+            properties:
+              method:
+                const: das.WaitCatchUp
+              params:
+                type: array
+                maxItems: 0
+    DasWaitCatchUpReply:
+      name: DasWaitCatchUpReply
+      title: das.WaitCatchUp reply
+      contentType: application/json
+      payload:
+        type: object
+        required: [jsonrpc]
+        properties:
+          jsonrpc:
+            type: string
+            const: '2.0'
+          id:
+            oneOf: [{ type: integer }, { type: string }]
+          result:
+            description: Null on success - the call returns only an error value.
+            type: 'null'
+          error:
+            $ref: '#/components/schemas/JsonRpcError'
+    HeaderSyncWaitRequest:
+      name: HeaderSyncWaitRequest
+      title: header.SyncWait request
+      contentType: application/json
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/JsonRpcRequest'
+          - type: object
+            properties:
+              method:
+                const: header.SyncWait
+              params:
+                type: array
+                maxItems: 0
+    HeaderSyncWaitReply:
+      name: HeaderSyncWaitReply
+      title: header.SyncWait reply
+      contentType: application/json
+      payload:
+        type: object
+        required: [jsonrpc]
+        properties:
+          jsonrpc:
+            type: string
+            const: '2.0'
+          id:
+            oneOf: [{ type: integer }, { type: string }]
+          result:
+            description: Null on success - the call returns only an error value.
+            type: 'null'
+          error:
+            $ref: '#/components/schemas/JsonRpcError'
+  schemas:
+    JsonRpcRequest:
+      type: object
+      required: [jsonrpc, id, method]
+      properties:
+        jsonrpc:
+          type: string
+          const: '2.0'
+        id:
+          oneOf:
+            - type: integer
+            - type: string
+        method:
+          type: string
+        params:
+          type: array
+    JsonRpcSubscribeRequest:
+      allOf:
+        - $ref: '#/components/schemas/JsonRpcRequest'
+        - type: object
+          properties:
+            method:
+              type: string
+              enum:
+                - header.Subscribe
+                - blob.Subscribe
+                - fraud.Subscribe
+    JsonRpcError:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data: {}
+    Namespace:
+      type: string
+      description: |
+        Base64-encoded 29-byte namespace identifier (1 version byte ||
+        28 id bytes). See celestia-namespace-schema.json for the structured form.
+    FraudProofType:
+      type: string
+      description: |
+        Fraud proof topic. The only documented value at this revision is
+        `badencoding`, used for proofs that a bridge node propagated an
+        incorrectly erasure-coded extended data square.
+      enum:
+        - badencoding
+    ExtendedHeader:
+      type: object
+      description: |
+        Celestia ExtendedHeader - a CometBFT block header wrapped with the
+        Data Availability Header (NMT row/column roots over the extended data
+        square). Same payload as celestia-extended-header-schema.json.
+      required: [header, commit, validator_set, dah]
+      properties:
+        header:
+          type: object
+          description: Underlying CometBFT block header.
+          properties:
+            height:
+              type: integer
+            time:
+              type: string
+              format: date-time
+            chain_id:
+              type: string
+            data_hash:
+              type: string
+        commit:
+          type: object
+        validator_set:
+          type: object
+        dah:
+          type: object
+          description: Data Availability Header (NMT row/column roots over the EDS).
+          properties:
+            row_roots:
+              type: array
+              items:
+                type: string
+            column_roots:
+              type: array
+              items:
+                type: string
+    Blob:
+      type: object
+      required: [namespace, data, share_version, commitment]
+      properties:
+        namespace:
+          $ref: '#/components/schemas/Namespace'
+        data:
+          type: string
+          description: Base64-encoded blob payload.
+        share_version:
+          type: integer
+        commitment:
+          type: string
+          description: Base64-encoded Merkle subtree root commitment.
+        index:
+          type: integer
+          description: Index of the blob's first share in the EDS, or -1 if unknown.
+    BlobSubscriptionResponse:
+      type: object
+      description: |
+        Notification body for `blob.Subscribe`. Matches the Go type
+        `blob.SubscriptionResponse{Blobs, Height}`.
+      required: [Height]
+      properties:
+        Height:
+          type: integer
+          description: Block height at which the blobs were included.
+        Blobs:
+          type: array
+          description: Blobs in the subscribed namespace at the given height.
+          items:
+            $ref: '#/components/schemas/Blob'
+    FraudProof:
+      type: object
+      description: |
+        JSON-encoded fraud.Proof envelope. The concrete shape is determined by
+        the underlying go-fraud Proof interface; only `badencoding` is
+        currently documented as a proof type.
+      properties:
+        proofType:
+          type: string
+        height:
+          type: integer
+        data: {}
+    DasSamplingStats:
+      type: object
+      description: Result of `das.SamplingStats` - current DASer state.
+      required:
+        - head_of_sampled_chain
+        - head_of_catchup
+        - network_head_height
+        - concurrency
+        - catch_up_done
+        - is_running
+      properties:
+        head_of_sampled_chain:
+          type: integer
+          description: All headers below this height have been successfully sampled.
+        head_of_catchup:
+          type: integer
+          description: All headers below this height have been queued to sampling workers.
+        network_head_height:
+          type: integer
+          description: Height of the most recent header in the network.
+        failed:
+          type: object
+          description: Map of header height to try count for failed samples.
+          additionalProperties:
+            type: integer
+        workers:
+          type: array
+          description: Per-worker stats for currently running sampling workers.
+          items:
+            $ref: '#/components/schemas/DasWorkerStats'
+        concurrency:
+          type: integer
+          description: Number of currently running parallel sampling workers.
+        catch_up_done:
+          type: boolean
+          description: True once all known headers have been sampled.
+        is_running:
+          type: boolean
+          description: True while the DASer service is running.
+    DasWorkerStats:
+      type: object
+      required: [job_type, current, from, to]
+      properties:
+        job_type:
+          type: string
+        current:
+          type: integer
+        from:
+          type: integer
+        to:
+          type: integer
+        error:
+          type: string
