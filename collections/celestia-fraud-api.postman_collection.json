@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "8d53508f-4b81-4fe6-ad1e-434dffb2c7a6",
+      "name": "Fraud",
+      "description": {
+        "content": "Fraud proof retrieval and subscription.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7f98f591-afc4-4d64-9af5-1b7873b7dfd8",
+          "name": "Invoke Fraud JSON-RPC Method",
+          "request": {
+            "name": "Invoke Fraud JSON-RPC Method",
+            "description": {
+              "content": "Exposes the `fraud.*` namespace including `fraud.Get` and `fraud.Subscribe`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dde55e25-c73a-4ca1-a523-62443f69cecb",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9228,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "240082ee-4e38-4846-baf1-5d5f75c202cb",
+    "name": "Celestia Node Fraud API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `fraud` module of celestia-node. Exposes fraud proof\nretrieval and subscription for the BadEncoding fraud proof type used to slash\nmalicious bridge nodes that propagate incorrectly erasure-coded blocks.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Celestia Node State API",
+    "version": "0.30.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "State",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke State JSON-RPC Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:26658/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exposes the `state.*` namespace including `state.AccountAddress`,\n`state.Balance`, `state.BalanceForAddress`, `state.Transfer`,\n`state.SubmitPayForBlob`, `state.Delegate`, `state.Undelegate`,\n`state.BeginRedelegate`, `state.CancelUnbondingDelegation`,\n`state.QueryDelegation`, `state.QueryUnbonding`, `state.QueryRedelegations`,\nand `state.GrantFee` / `state.RevokeGrantFee`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

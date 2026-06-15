@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "162c8bb6-fd39-40a2-9abc-c125feb2d086",
+      "name": "Blob",
+      "description": {
+        "content": "Submit, retrieve, and prove blobs against Celestia namespaces.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e08c98a4-2b44-40fd-9575-812adc75d33c",
+          "name": "Invoke Blob JSON-RPC Method",
+          "request": {
+            "name": "Invoke Blob JSON-RPC Method",
+            "description": {
+              "content": "Single JSON-RPC entrypoint exposing the `blob.*` namespace including\n`blob.Submit`, `blob.Get`, `blob.GetAll`, `blob.GetProof`, `blob.Included`,\nand `blob.Subscribe`. Authenticate with a bearer token generated via\n`celestia <node-type> auth <permissions>`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "78389464-7963-4e06-84e2-7fd59445a30f",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"blob.Submit\",\n  \"params\": [\n    [\n      {\n        \"namespace\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc29tZW5z\",\n        \"data\": \"VGhpcyBpcyBhbiBleGFtcGxlIG9mIHNvbWUgYmxvYiBkYXRh\",\n        \"share_version\": 0\n      },\n      0.002\n    ]\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": 2803,\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 1441,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f30ed249-6a05-455f-b82c-eb9193420d2c",
+    "name": "Celestia Node Blob API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
+      "type": "text/plain"
+    }
+  }
+}

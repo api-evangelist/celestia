@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "8a249e81-c65c-4ada-bc95-e1a63f929820",
+      "name": "DA",
+      "description": {
+        "content": "Modular DA interface for blob submit, get, commit, and validate.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "89a64a30-1306-443b-a861-b93d307bc50a",
+          "name": "Invoke DA JSON-RPC Method",
+          "request": {
+            "name": "Invoke DA JSON-RPC Method",
+            "description": {
+              "content": "Exposes the `da.*` namespace including `da.MaxBlobSize`, `da.Get`, `da.GetIDs`,\n`da.GetProofs`, `da.Commit`, `da.Validate`, and `da.Submit`. Compatible with the\nmodular DA interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS,\nand other rollup frameworks.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d26b2901-ee14-48cf-a77a-fa830dd787a1",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 4152,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7d2dd408-5935-41b3-a346-22bc29763a2d",
+    "name": "Celestia Node DA API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `da` module of celestia-node. Implements the modular\nData Availability interface (https://github.com/rollkit/go-da) so that rollups\nand other execution layers can post blobs to and retrieve them from Celestia\nwithout coupling to celestia-node internals.\n",
+      "type": "text/plain"
+    }
+  }
+}

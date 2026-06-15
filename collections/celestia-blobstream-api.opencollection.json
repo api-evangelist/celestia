@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Celestia Node Blobstream API",
+    "version": "0.30.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Blobstream",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke Blobstream JSON-RPC Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:26658/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exposes the `blobstream.*` namespace including `blobstream.GetDataRootTupleRoot`,\n`blobstream.GetDataRootTupleInclusionProof`, and\n`blobstream.GetShareProof`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

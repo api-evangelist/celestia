@@ -1,0 +1,9 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Celestia Node Subscriptions",
+    "version": "0.30.x"
+  },
+  "items": [],
+  "bundled": true
+}

@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Celestia Node Header API",
+    "version": "0.30.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Header",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke Header JSON-RPC Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:26658/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Single JSON-RPC entrypoint exposing the `header.*` namespace including\n`header.LocalHead`, `header.NetworkHead`, `header.GetByHeight`,\n`header.GetByHash`, `header.GetRangeByHeight`, `header.SyncState`,\n`header.SyncWait`, `header.WaitForHeight`, and `header.Subscribe`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

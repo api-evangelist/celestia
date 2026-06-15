@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "7c352955-a55b-4233-9f51-7561542ca6b5",
+      "name": "Share",
+      "description": {
+        "content": "Share-level data access, EDS retrieval, and namespace proofs.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a4245de2-680b-42cd-9cf3-fe77d3cfdced",
+          "name": "Invoke Share JSON-RPC Method",
+          "request": {
+            "name": "Invoke Share JSON-RPC Method",
+            "description": {
+              "content": "Exposes the `share.*` namespace including `share.SharesAvailable`,\n`share.GetShare`, `share.GetEDS`, `share.GetNamespaceData`, `share.GetRange`,\nand `share.GetSamples`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "893a39d3-1b8c-4d14-8254-7b8e157dda56",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9310,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e76dc9ff-b7f4-4e5d-af7e-53827c946fe9",
+    "name": "Celestia Node Share API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `share` module of celestia-node. Provides direct access\nto Celestia's share-level data: namespaced shares, share proofs, range proofs,\nand the extended data square (EDS) for any height. Used by light nodes performing\ndata availability sampling and by rollups verifying inclusion of namespaced data.\n",
+      "type": "text/plain"
+    }
+  }
+}

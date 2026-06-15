@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "fc5c380f-6733-42f8-aa39-2a077e8fe7c9",
+      "name": "State",
+      "description": {
+        "content": "Account, balance, transfer, delegation, and PayForBlobs operations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8a66a438-38cf-4915-ac8e-d1c6accba1ea",
+          "name": "Invoke State JSON-RPC Method",
+          "request": {
+            "name": "Invoke State JSON-RPC Method",
+            "description": {
+              "content": "Exposes the `state.*` namespace including `state.AccountAddress`,\n`state.Balance`, `state.BalanceForAddress`, `state.Transfer`,\n`state.SubmitPayForBlob`, `state.Delegate`, `state.Undelegate`,\n`state.BeginRedelegate`, `state.CancelUnbondingDelegation`,\n`state.QueryDelegation`, `state.QueryUnbonding`, `state.QueryRedelegations`,\nand `state.GrantFee` / `state.RevokeGrantFee`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6846da9d-f9b3-4975-8449-edae0b040b67",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 4021,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "775f6122-920f-4688-8d40-eb73bd4e47cc",
+    "name": "Celestia Node State API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `state` module of celestia-node. Exposes state-level\noperations including account balances, transactions, delegations, transfers,\nand submitting PayForBlobs transactions. Acts as a thin client over the\nunderlying celestia-app (Cosmos SDK) state machine.\n",
+      "type": "text/plain"
+    }
+  }
+}

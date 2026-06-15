@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "9203e9cc-c0b0-404a-b198-c183f3279c42",
+      "name": "Header",
+      "description": {
+        "content": "Query and subscribe to Celestia extended block headers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04ab0b8f-83d0-4347-bf56-11b838390e36",
+          "name": "Invoke Header JSON-RPC Method",
+          "request": {
+            "name": "Invoke Header JSON-RPC Method",
+            "description": {
+              "content": "Single JSON-RPC entrypoint exposing the `header.*` namespace including\n`header.LocalHead`, `header.NetworkHead`, `header.GetByHeight`,\n`header.GetByHash`, `header.GetRangeByHeight`, `header.SyncState`,\n`header.SyncWait`, `header.WaitForHeight`, and `header.Subscribe`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "434b509d-244b-4de1-bbe7-52ff6c5e53bb",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"header.LocalHead\",\n  \"params\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9802,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ff1493d8-1761-4908-af11-7a56722893e7",
+    "name": "Celestia Node Header API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `header` module of celestia-node. Provides access to\nCelestia extended block headers, sync state, and header subscription. Used by\nlight clients, rollups, and indexers to track the canonical Celestia chain head\nand verify data availability commitments per height.\n",
+      "type": "text/plain"
+    }
+  }
+}

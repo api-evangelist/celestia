@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Celestia Node P2P API",
+    "version": "0.30.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "P2P",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke P2P JSON-RPC Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:26658/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exposes the `p2p.*` namespace including `p2p.Info`, `p2p.Peers`,\n`p2p.PeerInfo`, `p2p.Connect`, `p2p.ClosePeer`, `p2p.Connectedness`,\n`p2p.NATStatus`, `p2p.BlockPeer`, `p2p.UnblockPeer`, `p2p.ListBlockedPeers`,\n`p2p.Protect`, `p2p.Unprotect`, `p2p.IsProtected`, `p2p.BandwidthStats`,\n`p2p.BandwidthForPeer`, `p2p.BandwidthForProtocol`, `p2p.ResourceState`,\n`p2p.PubSubPeers`, and `p2p.PubSubTopics`.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

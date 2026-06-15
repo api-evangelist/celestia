@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Celestia Node DA API",
+    "version": "0.30.x"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DA",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invoke DA JSON-RPC Method",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://localhost:26658/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Exposes the `da.*` namespace including `da.MaxBlobSize`, `da.Get`, `da.GetIDs`,\n`da.GetProofs`, `da.Commit`, `da.Validate`, and `da.Submit`. Compatible with the\nmodular DA interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS,\nand other rollup frameworks.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

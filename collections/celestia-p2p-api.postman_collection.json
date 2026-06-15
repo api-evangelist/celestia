@@ -1,0 +1,139 @@
+{
+  "item": [
+    {
+      "id": "d0bfe6a1-1adb-488f-8d5a-c92eb643ffae",
+      "name": "P2P",
+      "description": {
+        "content": "libp2p peer, connection, NAT, and pubsub control.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "94a6542a-c1cb-4778-bbcf-ce4aa0423222",
+          "name": "Invoke P2P JSON-RPC Method",
+          "request": {
+            "name": "Invoke P2P JSON-RPC Method",
+            "description": {
+              "content": "Exposes the `p2p.*` namespace including `p2p.Info`, `p2p.Peers`,\n`p2p.PeerInfo`, `p2p.Connect`, `p2p.ClosePeer`, `p2p.Connectedness`,\n`p2p.NATStatus`, `p2p.BlockPeer`, `p2p.UnblockPeer`, `p2p.ListBlockedPeers`,\n`p2p.Protect`, `p2p.Unprotect`, `p2p.IsProtected`, `p2p.BandwidthStats`,\n`p2p.BandwidthForPeer`, `p2p.BandwidthForProtocol`, `p2p.ResourceState`,\n`p2p.PubSubPeers`, and `p2p.PubSubTopics`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c043f6fd-5869-4aea-a5d8-a4d4f73226fb",
+              "name": "JSON-RPC response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"jsonrpc\": \"<string>\",\n  \"method\": \"<string>\",\n  \"id\": \"<integer>\",\n  \"params\": \"<array>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 3036,\n    \"message\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://localhost:26658",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4c88885b-6876-468a-bd95-f1d78b7120fc",
+    "name": "Celestia Node P2P API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "JSON-RPC methods in the `p2p` module of celestia-node. Provides libp2p-level\nintrospection and control over the Celestia DA network including peer info,\nconnection management, NAT status, bandwidth stats, pubsub topics, and the\nprivate/protected peer lists.\n",
+      "type": "text/plain"
+    }
+  }
+}
