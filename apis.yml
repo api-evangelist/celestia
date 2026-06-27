@@ -25,9 +25,9 @@ apis:
       - url: json-ld/celestia-context.jsonld
         type: JSONLD
       - url: examples/celestia-blob-submit-example.json
-        type: Example
+        type: Examples
       - url: examples/celestia-blob-get-example.json
-        type: Example
+        type: Examples
     description: >-
       JSON-RPC methods in the blob module of celestia-node. Submit blobs to one or more namespaces with blob.Submit,
       retrieve them by height with blob.Get and blob.GetAll, generate inclusion proofs with blob.GetProof, check
@@ -50,7 +50,7 @@ apis:
       - url: json-schema/celestia-extended-header-schema.json
         type: JSONSchema
       - url: examples/celestia-header-getbyheight-example.json
-        type: Example
+        type: Examples
     description: >-
       JSON-RPC methods in the header module of celestia-node. Query ExtendedHeaders with header.LocalHead,
       header.NetworkHead, header.GetByHeight, header.GetByHash, and header.GetRangeByHeight; track sync state with
@@ -69,7 +69,7 @@ apis:
       - url: openapi/celestia-da-api-openapi.yml
         type: OpenAPI
       - url: examples/celestia-da-submit-example.json
-        type: Example
+        type: Examples
     description: >-
       JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface used by
       Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit, da.Get, da.GetIDs,
@@ -88,7 +88,7 @@ apis:
       - url: openapi/celestia-share-api-openapi.yml
         type: OpenAPI
       - url: examples/celestia-share-getnamespacedata-example.json
-        type: Example
+        type: Examples
     description: >-
       JSON-RPC methods in the share module of celestia-node. Provides direct access to Celestia's share-level data, the
       extended data square (EDS), namespaced shares, and share proofs via share.SharesAvailable, share.GetShare,
@@ -107,7 +107,7 @@ apis:
       - url: openapi/celestia-state-api-openapi.yml
         type: OpenAPI
       - url: examples/celestia-state-submitpayforblob-example.json
-        type: Example
+        type: Examples
     description: >-
       JSON-RPC methods in the state module of celestia-node. Exposes state-level operations including account balances,
       transfers, delegations, and most importantly state.SubmitPayForBlob, the canonical entrypoint for submitting
@@ -219,10 +219,10 @@ common:
   - url: https://blog.celestia.org
     type: Blog
   - url: https://forum.celestia.org
-    type: Forum
+    type: Forums
   - url: https://discord.com/invite/YsnTPcSfWQ
     name: Celestia Discord
-    type: Forum
+    type: Forums
   - url: https://x.com/CelestiaOrg
     type: Twitter
   - url: https://github.com/celestiaorg
@@ -230,52 +230,52 @@ common:
     type: GitHubOrganization
   - url: https://github.com/celestiaorg/celestia-node
     name: celestia-node (DA node, Go)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/celestia-app
     name: celestia-app (consensus node, Go / Cosmos SDK)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/celestia-core
     name: celestia-core (CometBFT fork)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/celestia-openrpc
     name: celestia-openrpc (Go client, no celestia-node deps)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/celestia-ts
     name: celestia-ts (TypeScript client)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/celestia-node-client-rs
     name: celestia-node-client-rs (Rust REST client)
-    type: SDK
+    type: SDKs
   - url: https://docs.rs/celestia-rpc
     name: celestia-rpc (Rust RPC client crate)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/lumina
     name: Lumina (Wasm-friendly Rust light node)
-    type: SDK
+    type: SDKs
   - url: https://github.com/celestiaorg/nmt
     name: Namespaced Merkle Tree (NMT)
-    type: Tool
+    type: Tools
   - url: https://github.com/celestiaorg/rsmt2d
     name: rsmt2d - 2D Reed-Solomon Merkle Tree
-    type: Tool
+    type: Tools
   - url: https://github.com/celestiaorg/go-square
     name: go-square - blob encoding into 2D square
-    type: Tool
+    type: Tools
   - url: https://github.com/celestiaorg/blobstream-contracts
     name: Blobstream EVM bridge contracts
-    type: Tool
+    type: Tools
   - url: https://github.com/celestiaorg/orchestrator-relayer
     name: Blobstream orchestrator-relayer
-    type: Tool
+    type: Tools
   - url: https://github.com/celestiaorg/op-alt-da
     name: Celestia DA provider for Optimism Alt-DA
-    type: Integration
+    type: Integrations
   - url: https://github.com/celestiaorg/nitro-das-celestia
     name: Celestia DA provider for Arbitrum Nitro
-    type: Integration
+    type: Integrations
   - url: https://github.com/rollkit/celestia-da
     name: celestia-da modular DA implementation (Rollkit)
-    type: Integration
+    type: Integrations
   - url: https://github.com/celestiaorg/celestia-specs
     name: Celestia Specifications
     type: Specification
@@ -293,7 +293,7 @@ common:
     type: Documentation
   - url: https://github.com/celestiaorg/helm-charts
     name: Celestia Helm charts
-    type: Tool
+    type: Tools
   - url: https://www.apache.org/licenses/LICENSE-2.0
     type: License
   - type: Features
