@@ -203,6 +203,10 @@ apis:
       Celestia at a specific height. Methods include blobstream.GetDataRootTupleRoot,
       blobstream.GetDataRootTupleInclusionProof, and blobstream.GetShareProof.
 common:
+  - type: DomainSecurity
+    url: security/celestia-domain-security.yml
+  - type: Authentication
+    url: authentication/celestia-authentication.yml
   - url: https://celestia.org
     type: Portal
   - url: https://docs.celestia.org
