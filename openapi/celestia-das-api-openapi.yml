@@ -1,29 +1,41 @@
 openapi: 3.1.0
 info:
-  title: Celestia Node DAS API
+  title: Celestia Node Blob DAS API
   version: 0.30.x
-  description: |
-    JSON-RPC methods in the `das` module of celestia-node. Provides operational
-    introspection over the Data Availability Sampling subsystem that light nodes
-    run to probabilistically verify that block data has been published to the
-    Celestia network without downloading full blocks.
+  description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+
+    and other applications using Celestia for DA.
+
+    '
   license:
     name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
 servers:
-  - url: http://localhost:26658
+- url: http://localhost:26658
+  description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-  - name: DAS
-    description: Data Availability Sampling stats, sync state, and worker control.
+- name: DAS
+  description: Data Availability Sampling stats, sync state, and worker control.
 paths:
   /:
     post:
-      tags: [DAS]
+      tags:
+      - DAS
       summary: Invoke DAS JSON-RPC Method
-      description: |
-        Exposes the `das.*` namespace including `das.SamplingStats` and
+      description: 'Exposes the `das.*` namespace including `das.SamplingStats` and
+
         `das.WaitCatchUp`.
+
+        '
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -38,35 +50,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
   schemas:
-    JsonRpcRequest:
-      type: object
-      required: [jsonrpc, method, id]
-      properties:
-        jsonrpc:
-          type: string
-          enum: ["2.0"]
-        id:
-          oneOf: [{type: integer}, {type: string}]
-        method:
-          type: string
-          enum:
-            - das.SamplingStats
-            - das.WaitCatchUp
-        params:
-          type: array
     JsonRpcResponse:
       type: object
       properties:
-        jsonrpc: {type: string}
+        jsonrpc:
+          type: string
         id: {}
         result: {}
         error:
           type: object
           properties:
-            code: {type: integer}
-            message: {type: string}
+            code:
+              type: integer
+            message:
+              type: string
+    JsonRpcRequest:
+      type: object
+      required:
+      - jsonrpc
+      - method
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          enum:
+          - '2.0'
+        id:
+          oneOf:
+          - type: integer
+          - type: string
+        method:
+          type: string
+          enum:
+          - das.SamplingStats
+          - das.WaitCatchUp
+        params:
+          type: array
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -1,30 +1,43 @@
 openapi: 3.1.0
 info:
-  title: Celestia Node Share API
+  title: Celestia Node Blob Share API
   version: 0.30.x
-  description: |
-    JSON-RPC methods in the `share` module of celestia-node. Provides direct access
-    to Celestia's share-level data: namespaced shares, share proofs, range proofs,
-    and the extended data square (EDS) for any height. Used by light nodes performing
-    data availability sampling and by rollups verifying inclusion of namespaced data.
+  description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+
+    and other applications using Celestia for DA.
+
+    '
   license:
     name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
 servers:
-  - url: http://localhost:26658
+- url: http://localhost:26658
+  description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-  - name: Share
-    description: Share-level data access, EDS retrieval, and namespace proofs.
+- name: Share
+  description: Share-level data access, EDS retrieval, and namespace proofs.
 paths:
   /:
     post:
-      tags: [Share]
+      tags:
+      - Share
       summary: Invoke Share JSON-RPC Method
-      description: |
-        Exposes the `share.*` namespace including `share.SharesAvailable`,
+      description: 'Exposes the `share.*` namespace including `share.SharesAvailable`,
+
         `share.GetShare`, `share.GetEDS`, `share.GetNamespaceData`, `share.GetRange`,
+
         and `share.GetSamples`.
+
+        '
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -39,39 +52,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
   schemas:
-    JsonRpcRequest:
-      type: object
-      required: [jsonrpc, method, id]
-      properties:
-        jsonrpc:
-          type: string
-          enum: ["2.0"]
-        id:
-          oneOf: [{type: integer}, {type: string}]
-        method:
-          type: string
-          enum:
-            - share.SharesAvailable
-            - share.GetShare
-            - share.GetEDS
-            - share.GetNamespaceData
-            - share.GetRange
-            - share.GetSamples
-        params:
-          type: array
     JsonRpcResponse:
       type: object
       properties:
-        jsonrpc: {type: string}
+        jsonrpc:
+          type: string
         id: {}
         result: {}
         error:
           type: object
           properties:
-            code: {type: integer}
-            message: {type: string}
+            code:
+              type: integer
+            message:
+              type: string
+    JsonRpcRequest:
+      type: object
+      required:
+      - jsonrpc
+      - method
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          enum:
+          - '2.0'
+        id:
+          oneOf:
+          - type: integer
+          - type: string
+        method:
+          type: string
+          enum:
+          - share.SharesAvailable
+          - share.GetShare
+          - share.GetEDS
+          - share.GetNamespaceData
+          - share.GetRange
+          - share.GetSamples
+        params:
+          type: array
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

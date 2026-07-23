@@ -1,31 +1,45 @@
 openapi: 3.1.0
 info:
-  title: Celestia Node DA API
+  title: Celestia Node Blob DA API
   version: 0.30.x
-  description: |
-    JSON-RPC methods in the `da` module of celestia-node. Implements the modular
-    Data Availability interface (https://github.com/rollkit/go-da) so that rollups
-    and other execution layers can post blobs to and retrieve them from Celestia
-    without coupling to celestia-node internals.
+  description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+
+    and other applications using Celestia for DA.
+
+    '
   license:
     name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
 servers:
-  - url: http://localhost:26658
+- url: http://localhost:26658
+  description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-  - name: DA
-    description: Modular DA interface for blob submit, get, commit, and validate.
+- name: DA
+  description: Modular DA interface for blob submit, get, commit, and validate.
 paths:
   /:
     post:
-      tags: [DA]
+      tags:
+      - DA
       summary: Invoke DA JSON-RPC Method
-      description: |
-        Exposes the `da.*` namespace including `da.MaxBlobSize`, `da.Get`, `da.GetIDs`,
+      description: 'Exposes the `da.*` namespace including `da.MaxBlobSize`, `da.Get`, `da.GetIDs`,
+
         `da.GetProofs`, `da.Commit`, `da.Validate`, and `da.Submit`. Compatible with the
+
         modular DA interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS,
+
         and other rollup frameworks.
+
+        '
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -40,40 +54,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
   schemas:
-    JsonRpcRequest:
-      type: object
-      required: [jsonrpc, method, id]
-      properties:
-        jsonrpc:
-          type: string
-          enum: ["2.0"]
-        id:
-          oneOf: [{type: integer}, {type: string}]
-        method:
-          type: string
-          enum:
-            - da.MaxBlobSize
-            - da.Get
-            - da.GetIDs
-            - da.GetProofs
-            - da.Commit
-            - da.Validate
-            - da.Submit
-        params:
-          type: array
     JsonRpcResponse:
       type: object
       properties:
-        jsonrpc: {type: string}
+        jsonrpc:
+          type: string
         id: {}
         result: {}
         error:
           type: object
           properties:
-            code: {type: integer}
-            message: {type: string}
+            code:
+              type: integer
+            message:
+              type: string
+    JsonRpcRequest:
+      type: object
+      required:
+      - jsonrpc
+      - method
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          enum:
+          - '2.0'
+        id:
+          oneOf:
+          - type: integer
+          - type: string
+        method:
+          type: string
+          enum:
+          - da.MaxBlobSize
+          - da.Get
+          - da.GetIDs
+          - da.GetProofs
+          - da.Commit
+          - da.Validate
+          - da.Submit
+        params:
+          type: array
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

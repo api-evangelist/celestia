@@ -1,33 +1,49 @@
 openapi: 3.1.0
 info:
-  title: Celestia Node State API
+  title: Celestia Node Blob State API
   version: 0.30.x
-  description: |
-    JSON-RPC methods in the `state` module of celestia-node. Exposes state-level
-    operations including account balances, transactions, delegations, transfers,
-    and submitting PayForBlobs transactions. Acts as a thin client over the
-    underlying celestia-app (Cosmos SDK) state machine.
+  description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+
+    and other applications using Celestia for DA.
+
+    '
   license:
     name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
 servers:
-  - url: http://localhost:26658
+- url: http://localhost:26658
+  description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-  - name: State
-    description: Account, balance, transfer, delegation, and PayForBlobs operations.
+- name: State
+  description: Account, balance, transfer, delegation, and PayForBlobs operations.
 paths:
   /:
     post:
-      tags: [State]
+      tags:
+      - State
       summary: Invoke State JSON-RPC Method
-      description: |
-        Exposes the `state.*` namespace including `state.AccountAddress`,
+      description: 'Exposes the `state.*` namespace including `state.AccountAddress`,
+
         `state.Balance`, `state.BalanceForAddress`, `state.Transfer`,
+
         `state.SubmitPayForBlob`, `state.Delegate`, `state.Undelegate`,
+
         `state.BeginRedelegate`, `state.CancelUnbondingDelegation`,
+
         `state.QueryDelegation`, `state.QueryUnbonding`, `state.QueryRedelegations`,
+
         and `state.GrantFee` / `state.RevokeGrantFee`.
+
+        '
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -42,47 +58,56 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
   schemas:
-    JsonRpcRequest:
-      type: object
-      required: [jsonrpc, method, id]
-      properties:
-        jsonrpc:
-          type: string
-          enum: ["2.0"]
-        id:
-          oneOf: [{type: integer}, {type: string}]
-        method:
-          type: string
-          enum:
-            - state.AccountAddress
-            - state.Balance
-            - state.BalanceForAddress
-            - state.Transfer
-            - state.SubmitPayForBlob
-            - state.Delegate
-            - state.Undelegate
-            - state.BeginRedelegate
-            - state.CancelUnbondingDelegation
-            - state.QueryDelegation
-            - state.QueryUnbonding
-            - state.QueryRedelegations
-            - state.GrantFee
-            - state.RevokeGrantFee
-        params:
-          type: array
     JsonRpcResponse:
       type: object
       properties:
-        jsonrpc: {type: string}
+        jsonrpc:
+          type: string
         id: {}
         result: {}
         error:
           type: object
           properties:
-            code: {type: integer}
-            message: {type: string}
+            code:
+              type: integer
+            message:
+              type: string
+    JsonRpcRequest:
+      type: object
+      required:
+      - jsonrpc
+      - method
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          enum:
+          - '2.0'
+        id:
+          oneOf:
+          - type: integer
+          - type: string
+        method:
+          type: string
+          enum:
+          - state.AccountAddress
+          - state.Balance
+          - state.BalanceForAddress
+          - state.Transfer
+          - state.SubmitPayForBlob
+          - state.Delegate
+          - state.Undelegate
+          - state.BeginRedelegate
+          - state.CancelUnbondingDelegation
+          - state.QueryDelegation
+          - state.QueryUnbonding
+          - state.QueryRedelegations
+          - state.GrantFee
+          - state.RevokeGrantFee
+        params:
+          type: array
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

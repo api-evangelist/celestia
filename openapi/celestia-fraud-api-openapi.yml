@@ -1,27 +1,39 @@
 openapi: 3.1.0
 info:
-  title: Celestia Node Fraud API
+  title: Celestia Node Blob Fraud API
   version: 0.30.x
-  description: |
-    JSON-RPC methods in the `fraud` module of celestia-node. Exposes fraud proof
-    retrieval and subscription for the BadEncoding fraud proof type used to slash
-    malicious bridge nodes that propagate incorrectly erasure-coded blocks.
+  description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+
+    and other applications using Celestia for DA.
+
+    '
   license:
     name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
 servers:
-  - url: http://localhost:26658
+- url: http://localhost:26658
+  description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-  - name: Fraud
-    description: Fraud proof retrieval and subscription.
+- name: Fraud
+  description: Fraud proof retrieval and subscription.
 paths:
   /:
     post:
-      tags: [Fraud]
+      tags:
+      - Fraud
       summary: Invoke Fraud JSON-RPC Method
-      description: |
-        Exposes the `fraud.*` namespace including `fraud.Get` and `fraud.Subscribe`.
+      description: 'Exposes the `fraud.*` namespace including `fraud.Get` and `fraud.Subscribe`.
+
+        '
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -36,35 +48,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
   schemas:
-    JsonRpcRequest:
-      type: object
-      required: [jsonrpc, method, id]
-      properties:
-        jsonrpc:
-          type: string
-          enum: ["2.0"]
-        id:
-          oneOf: [{type: integer}, {type: string}]
-        method:
-          type: string
-          enum:
-            - fraud.Get
-            - fraud.Subscribe
-        params:
-          type: array
     JsonRpcResponse:
       type: object
       properties:
-        jsonrpc: {type: string}
+        jsonrpc:
+          type: string
         id: {}
         result: {}
         error:
           type: object
           properties:
-            code: {type: integer}
-            message: {type: string}
+            code:
+              type: integer
+            message:
+              type: string
+    JsonRpcRequest:
+      type: object
+      required:
+      - jsonrpc
+      - method
+      - id
+      properties:
+        jsonrpc:
+          type: string
+          enum:
+          - '2.0'
+        id:
+          oneOf:
+          - type: integer
+          - type: string
+        method:
+          type: string
+          enum:
+          - fraud.Get
+          - fraud.Subscribe
+        params:
+          type: array
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

@@ -1,33 +1,45 @@
 openapi: 3.1.0
 info:
-  title: Celestia Node Header API
+  title: Celestia Node Blob Header API
   version: 0.30.x
-  description: |
-    JSON-RPC methods in the `header` module of celestia-node. Provides access to
-    Celestia extended block headers, sync state, and header subscription. Used by
-    light clients, rollups, and indexers to track the canonical Celestia chain head
-    and verify data availability commitments per height.
+  description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
+
+    and prove blobs of arbitrary data published to the Celestia data availability layer
+
+    against one or more namespaces. Blobs are the canonical payload unit for rollups
+
+    and other applications using Celestia for DA.
+
+    '
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
+  contact:
+    name: Celestia Labs
+    url: https://celestia.org
 servers:
-  - url: http://localhost:26658
-    description: Default celestia-node JSON-RPC endpoint
+- url: http://localhost:26658
+  description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-  - name: Header
-    description: Query and subscribe to Celestia extended block headers.
+- name: Header
+  description: Query and subscribe to Celestia extended block headers.
 paths:
   /:
     post:
-      tags: [Header]
+      tags:
+      - Header
       summary: Invoke Header JSON-RPC Method
-      description: |
-        Single JSON-RPC entrypoint exposing the `header.*` namespace including
+      description: 'Single JSON-RPC entrypoint exposing the `header.*` namespace including
+
         `header.LocalHead`, `header.NetworkHead`, `header.GetByHeight`,
+
         `header.GetByHash`, `header.GetRangeByHeight`, `header.SyncState`,
+
         `header.SyncWait`, `header.WaitForHeight`, and `header.Subscribe`.
+
+        '
       security:
-        - BearerAuth: []
+      - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -38,17 +50,18 @@ paths:
               localHead:
                 summary: Get local head
                 value:
-                  jsonrpc: "2.0"
+                  jsonrpc: '2.0'
                   id: 1
                   method: header.LocalHead
                   params: []
               getByHeight:
                 summary: Get header by height
                 value:
-                  jsonrpc: "2.0"
+                  jsonrpc: '2.0'
                   id: 1
                   method: header.GetByHeight
-                  params: [1234567]
+                  params:
+                  - 1234567
       responses:
         '200':
           description: JSON-RPC response.
@@ -57,67 +70,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
 components:
-  securitySchemes:
-    BearerAuth:
-      type: http
-      scheme: bearer
   schemas:
-    JsonRpcRequest:
-      type: object
-      required: [jsonrpc, method, id]
-      properties:
-        jsonrpc:
-          type: string
-          enum: ["2.0"]
-        id:
-          oneOf: [{type: integer}, {type: string}]
-        method:
-          type: string
-          enum:
-            - header.LocalHead
-            - header.NetworkHead
-            - header.GetByHeight
-            - header.GetByHash
-            - header.GetRangeByHeight
-            - header.SyncState
-            - header.SyncWait
-            - header.WaitForHeight
-            - header.Subscribe
-        params:
-          type: array
     JsonRpcResponse:
       type: object
       properties:
-        jsonrpc: {type: string}
+        jsonrpc:
+          type: string
         id: {}
         result: {}
         error:
           type: object
           properties:
-            code: {type: integer}
-            message: {type: string}
-    ExtendedHeader:
+            code:
+              type: integer
+            message:
+              type: string
+    JsonRpcRequest:
       type: object
+      required:
+      - jsonrpc
+      - method
+      - id
       properties:
-        header:
-          type: object
-          description: Tendermint/CometBFT block header.
-          properties:
-            height: {type: integer}
-            time: {type: string, format: date-time}
-            chain_id: {type: string}
-            data_hash: {type: string}
-        commit:
-          type: object
-        validator_set:
-          type: object
-        dah:
-          type: object
-          description: Data Availability Header (row/column roots over the EDS).
-          properties:
-            row_roots:
-              type: array
-              items: {type: string}
-            column_roots:
-              type: array
-              items: {type: string}
+        jsonrpc:
+          type: string
+          enum:
+          - '2.0'
+        id:
+          oneOf:
+          - type: integer
+          - type: string
+        method:
+          type: string
+          enum:
+          - header.LocalHead
+          - header.NetworkHead
+          - header.GetByHeight
+          - header.GetByHash
+          - header.GetRangeByHeight
+          - header.SyncState
+          - header.SyncWait
+          - header.WaitForHeight
+          - header.Subscribe
+        params:
+          type: array
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
