@@ -1,0 +1,32 @@
+{
+  "provider": "celestia",
+  "sources": [
+    "celestia-blob-api-openapi.yml",
+    "celestia-blobstream-api-openapi.yml",
+    "celestia-da-api-openapi.yml",
+    "celestia-das-api-openapi.yml",
+    "celestia-fraud-api-openapi.yml",
+    "celestia-header-api-openapi.yml",
+    "celestia-node-api-openapi.yml",
+    "celestia-p2p-api-openapi.yml",
+    "celestia-share-api-openapi.yml",
+    "celestia-state-api-openapi.yml"
+  ],
+  "outputs": [
+    "celestia-blob-api-openapi.yml",
+    "celestia-blobstream-api-openapi.yml",
+    "celestia-da-api-openapi.yml",
+    "celestia-das-api-openapi.yml",
+    "celestia-fraud-api-openapi.yml",
+    "celestia-header-api-openapi.yml",
+    "celestia-node-api-openapi.yml",
+    "celestia-p2p-api-openapi.yml",
+    "celestia-share-api-openapi.yml",
+    "celestia-state-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
