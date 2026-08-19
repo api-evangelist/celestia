@@ -1,7 +1,7 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Celestia Node P2P API",
+    "name": "Celestia Node Blob P2P API",
     "version": "0.30.x"
   },
   "items": [

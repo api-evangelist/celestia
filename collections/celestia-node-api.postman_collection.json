@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "c28e6798-6d03-4b64-844c-7734dfeadaef",
+      "id": "4f7fa344-88fe-4308-bc00-ce055c64a5ce",
       "name": "Node",
       "description": {
         "content": "Node introspection and auth-token management.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "494b6785-5fb6-4b74-bd88-cec9744f6792",
+          "id": "e656c8d6-7fa6-439c-a329-7aae15865e9d",
           "name": "Invoke Node JSON-RPC Method",
           "request": {
             "name": "Invoke Node JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "73d9d155-7440-45ae-8456-974d66b213f1",
+              "id": "b13aca17-dc66-4dfb-88ac-6ad94932bb28",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 1715,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 7720,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "7113360f-5717-419c-8c5c-fa1b111731c2",
-    "name": "Celestia Node Admin API",
+    "_postman_id": "09249170-7582-4644-b182-721a53bd9125",
+    "name": "Celestia Blob Node API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `node` module of celestia-node. Provides administrative\nintrospection over the running node including type, version, log control, and\nauth token issuance for delegating capability-scoped access to other API modules.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }

@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "b227a4fa-7fd0-4fb5-bd57-684dca8e72ed",
+      "id": "f5007833-f204-4364-be95-f324cb03d7de",
       "name": "DAS",
       "description": {
         "content": "Data Availability Sampling stats, sync state, and worker control.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "950653d4-1ab1-46bf-b7dc-926571822692",
+          "id": "75a55b57-6d55-475f-8983-90ede1c93f25",
           "name": "Invoke DAS JSON-RPC Method",
           "request": {
             "name": "Invoke DAS JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "aaaae438-0472-49b4-86e2-3a701c161e6a",
+              "id": "87c55709-8446-4361-867d-6efb1a87a641",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9874,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 5317,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "3405c20b-f0a3-4c17-9c98-0983c5212c70",
-    "name": "Celestia Node DAS API",
+    "_postman_id": "dd0a4478-204f-4adf-9e45-5c57814e8d64",
+    "name": "Celestia Node Blob DAS API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `das` module of celestia-node. Provides operational\nintrospection over the Data Availability Sampling subsystem that light nodes\nrun to probabilistically verify that block data has been published to the\nCelestia network without downloading full blocks.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }

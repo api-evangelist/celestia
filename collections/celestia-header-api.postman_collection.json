@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "9203e9cc-c0b0-404a-b198-c183f3279c42",
+      "id": "b9019f09-bcbf-4a5c-86a9-1d5bce1282b4",
       "name": "Header",
       "description": {
         "content": "Query and subscribe to Celestia extended block headers.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "04ab0b8f-83d0-4347-bf56-11b838390e36",
+          "id": "b37b76fc-2437-4d34-a6d5-17529d1b4646",
           "name": "Invoke Header JSON-RPC Method",
           "request": {
             "name": "Invoke Header JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "434b509d-244b-4de1-bbe7-52ff6c5e53bb",
+              "id": "cfb0305b-3675-4ec6-9f42-b985eaab2a2e",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9802,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 5016,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "ff1493d8-1761-4908-af11-7a56722893e7",
-    "name": "Celestia Node Header API",
+    "_postman_id": "6ccb6337-3c70-4473-83e7-84e965e86706",
+    "name": "Celestia Node Blob Header API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `header` module of celestia-node. Provides access to\nCelestia extended block headers, sync state, and header subscription. Used by\nlight clients, rollups, and indexers to track the canonical Celestia chain head\nand verify data availability commitments per height.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }

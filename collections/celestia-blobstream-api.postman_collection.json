@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "361d3c90-92b2-46d2-9728-655571935305",
+      "id": "847d83a9-bfcf-4e72-b6df-e9db4f1a732c",
       "name": "Blobstream",
       "description": {
         "content": "Inclusion proofs for the EVM Blobstream(X) bridge.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "954aa236-5bd4-4038-9760-2faebc18db12",
+          "id": "20ee9572-cf06-47f7-a0a3-9871e09a2b5d",
           "name": "Invoke Blobstream JSON-RPC Method",
           "request": {
             "name": "Invoke Blobstream JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "011b0fff-3e6b-449e-97ea-079702582255",
+              "id": "88e7531d-cf56-4666-b800-8d502b7af91f",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 2485,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 7540,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "240a6810-7ffe-4ba3-9dfb-efd783b0f794",
-    "name": "Celestia Node Blobstream API",
+    "_postman_id": "fdb0f4e1-4e06-4eea-ad74-cf3e55583255",
+    "name": "Celestia Node Blob Blobstream API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `blobstream` module of celestia-node. Generates\ninclusion proofs against Blobstream data commitments so EVM and other\nforeign chains can verify, via the Blobstream(X) bridge contracts, that a\ngiven blob was published to Celestia at a specific height.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }

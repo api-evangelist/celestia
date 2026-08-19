@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "fc5c380f-6733-42f8-aa39-2a077e8fe7c9",
+      "id": "06f0accd-e973-49d9-a115-b508cb94b8b5",
       "name": "State",
       "description": {
         "content": "Account, balance, transfer, delegation, and PayForBlobs operations.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "8a66a438-38cf-4915-ac8e-d1c6accba1ea",
+          "id": "52bb635e-1027-4030-a728-851708de4e73",
           "name": "Invoke State JSON-RPC Method",
           "request": {
             "name": "Invoke State JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "6846da9d-f9b3-4975-8449-edae0b040b67",
+              "id": "ea661d6c-439b-48c4-95af-bba0abf33dbd",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 4021,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 4081,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "775f6122-920f-4688-8d40-eb73bd4e47cc",
-    "name": "Celestia Node State API",
+    "_postman_id": "bc6b2540-759b-48d7-9482-278cab0222c0",
+    "name": "Celestia Node Blob State API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `state` module of celestia-node. Exposes state-level\noperations including account balances, transactions, delegations, transfers,\nand submitting PayForBlobs transactions. Acts as a thin client over the\nunderlying celestia-app (Cosmos SDK) state machine.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }

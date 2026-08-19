@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "7c352955-a55b-4233-9f51-7561542ca6b5",
+      "id": "c8745000-d67a-4d2d-aa4e-7737f305d85c",
       "name": "Share",
       "description": {
         "content": "Share-level data access, EDS retrieval, and namespace proofs.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "a4245de2-680b-42cd-9cf3-fe77d3cfdced",
+          "id": "6a728678-0c00-4a15-ae2f-7718fe64589d",
           "name": "Invoke Share JSON-RPC Method",
           "request": {
             "name": "Invoke Share JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "893a39d3-1b8c-4d14-8254-7b8e157dda56",
+              "id": "61799946-7313-44c8-ba96-b6e9d8cdfa35",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9310,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9568,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "e76dc9ff-b7f4-4e5d-af7e-53827c946fe9",
-    "name": "Celestia Node Share API",
+    "_postman_id": "87ec2050-3c17-4f91-ba09-aab498bceb81",
+    "name": "Celestia Node Blob Share API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `share` module of celestia-node. Provides direct access\nto Celestia's share-level data: namespaced shares, share proofs, range proofs,\nand the extended data square (EDS) for any height. Used by light nodes performing\ndata availability sampling and by rollups verifying inclusion of namespaced data.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }

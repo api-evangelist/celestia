@@ -1,7 +1,7 @@
 {
   "opencollection": "1.0.0",
   "info": {
-    "name": "Celestia Node Fraud API",
+    "name": "Celestia Node Blob Fraud API",
     "version": "0.30.x"
   },
   "items": [

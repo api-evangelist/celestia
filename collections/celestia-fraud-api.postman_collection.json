@@ -1,7 +1,7 @@
 {
   "item": [
     {
-      "id": "8d53508f-4b81-4fe6-ad1e-434dffb2c7a6",
+      "id": "3ce5e445-cb39-496a-bc17-82a27e911285",
       "name": "Fraud",
       "description": {
         "content": "Fraud proof retrieval and subscription.",
@@ -9,7 +9,7 @@
       },
       "item": [
         {
-          "id": "7f98f591-afc4-4d64-9af5-1b7873b7dfd8",
+          "id": "a5c886c7-ecf3-4693-9f7e-b4de5ff48cc0",
           "name": "Invoke Fraud JSON-RPC Method",
           "request": {
             "name": "Invoke Fraud JSON-RPC Method",
@@ -59,7 +59,7 @@
           },
           "response": [
             {
-              "id": "dde55e25-c73a-4ca1-a523-62443f69cecb",
+              "id": "0db0f127-d261-4552-b439-7aded7692c98",
               "name": "JSON-RPC response.",
               "originalRequest": {
                 "url": {
@@ -105,7 +105,7 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 9228,\n    \"message\": \"string\"\n  }\n}",
+              "body": "{\n  \"jsonrpc\": \"string\",\n  \"id\": \"\",\n  \"result\": \"\",\n  \"error\": {\n    \"code\": 3309,\n    \"message\": \"string\"\n  }\n}",
               "cookie": [],
               "_postman_previewlanguage": "json"
             }
@@ -128,11 +128,11 @@
     }
   ],
   "info": {
-    "_postman_id": "240082ee-4e38-4846-baf1-5d5f75c202cb",
-    "name": "Celestia Node Fraud API",
+    "_postman_id": "7090258e-1216-46a3-b8f2-a9d906520b2e",
+    "name": "Celestia Node Blob Fraud API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "JSON-RPC methods in the `fraud` module of celestia-node. Exposes fraud proof\nretrieval and subscription for the BadEncoding fraud proof type used to slash\nmalicious bridge nodes that propagate incorrectly erasure-coded blocks.\n",
+      "content": "JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,\nand prove blobs of arbitrary data published to the Celestia data availability layer\nagainst one or more namespaces. Blobs are the canonical payload unit for rollups\nand other applications using Celestia for DA.\n\n\nContact Support:\n Name: Celestia Labs",
       "type": "text/plain"
     }
   }
