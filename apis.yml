@@ -19,6 +19,11 @@ apis:
     tags:
       - Blob
       - Celestia
+      - Data Availability
+      - JSON-RPC
+    tags_raw:
+      - Blob
+      - Celestia
       - DataAvailability
       - JSONRPC
     humanURL: https://node-rpc-docs.celestia.org/
@@ -51,6 +56,10 @@ apis:
     tags:
       - Celestia
       - Header
+      - JSON-RPC
+    tags_raw:
+      - Celestia
+      - Header
       - JSONRPC
     humanURL: https://node-rpc-docs.celestia.org/
     properties:
@@ -72,6 +81,11 @@ apis:
     name: Celestia Node DA API
     tags:
       - Celestia
+      - Data Availability
+      - JSON-RPC
+      - Rollup
+    tags_raw:
+      - Celestia
       - DataAvailability
       - JSONRPC
       - Rollup
@@ -91,6 +105,11 @@ apis:
     name: Celestia Node Share API
     tags:
       - Celestia
+      - Data Availability
+      - JSON-RPC
+      - Share
+    tags_raw:
+      - Celestia
       - DataAvailability
       - JSONRPC
       - Share
@@ -109,6 +128,11 @@ apis:
   - aid: celestia:celestia-state-api
     name: Celestia Node State API
     tags:
+      - Celestia
+      - JSON-RPC
+      - PayForBlobs
+      - States
+    tags_raw:
       - Celestia
       - JSONRPC
       - PayForBlobs
@@ -131,6 +155,11 @@ apis:
       - Celestia
       - DAS
       - DataAvailabilitySampling
+      - JSON-RPC
+    tags_raw:
+      - Celestia
+      - DAS
+      - DataAvailabilitySampling
       - JSONRPC
     humanURL: https://node-rpc-docs.celestia.org/
     properties:
@@ -147,6 +176,10 @@ apis:
   - aid: celestia:celestia-fraud-api
     name: Celestia Node Fraud API
     tags:
+      - Celestia
+      - FraudProof
+      - JSON-RPC
+    tags_raw:
       - Celestia
       - FraudProof
       - JSONRPC
@@ -166,6 +199,11 @@ apis:
     name: Celestia Node P2P API
     tags:
       - Celestia
+      - JSON-RPC
+      - LibP2P
+      - P2P
+    tags_raw:
+      - Celestia
       - JSONRPC
       - LibP2P
       - P2P
@@ -183,6 +221,11 @@ apis:
     name: Celestia Node Admin API
     tags:
       - Administrative
+      - Authentication
+      - Celestia
+      - JSON-RPC
+    tags_raw:
+      - Administrative
       - Auth
       - Celestia
       - JSONRPC
@@ -199,6 +242,12 @@ apis:
   - aid: celestia:celestia-blobstream-api
     name: Celestia Node Blobstream API
     tags:
+      - Blobstream
+      - Bridge
+      - Celestia
+      - EVM
+      - JSON-RPC
+    tags_raw:
       - Blobstream
       - Bridge
       - Celestia
