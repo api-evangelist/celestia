@@ -30,8 +30,8 @@ apis:
     tags:
       - Blob
       - Celestia
-      - DataAvailability
-      - JSONRPC
+      - Data Availability
+      - JSON-RPC
     tags_raw:
       - Blob
       - Celestia
@@ -67,7 +67,7 @@ apis:
     tags:
       - Celestia
       - Header
-      - JSONRPC
+      - JSON-RPC
     tags_raw:
       - Celestia
       - Header
@@ -92,8 +92,8 @@ apis:
     name: Celestia Node DA API
     tags:
       - Celestia
-      - DataAvailability
-      - JSONRPC
+      - Data Availability
+      - JSON-RPC
       - Rollup
     tags_raw:
       - Celestia
@@ -116,8 +116,8 @@ apis:
     name: Celestia Node Share API
     tags:
       - Celestia
-      - DataAvailability
-      - JSONRPC
+      - Data Availability
+      - JSON-RPC
       - Share
     tags_raw:
       - Celestia
@@ -140,7 +140,7 @@ apis:
     name: Celestia Node State API
     tags:
       - Celestia
-      - JSONRPC
+      - JSON-RPC
       - PayForBlobs
       - States
     tags_raw:
@@ -166,7 +166,7 @@ apis:
       - Celestia
       - DAS
       - DataAvailabilitySampling
-      - JSONRPC
+      - JSON-RPC
     tags_raw:
       - Celestia
       - DAS
@@ -189,7 +189,7 @@ apis:
     tags:
       - Celestia
       - FraudProof
-      - JSONRPC
+      - JSON-RPC
     tags_raw:
       - Celestia
       - FraudProof
@@ -210,7 +210,7 @@ apis:
     name: Celestia Node P2P API
     tags:
       - Celestia
-      - JSONRPC
+      - JSON-RPC
       - LibP2P
       - P2P
     tags_raw:
@@ -234,7 +234,7 @@ apis:
       - Administrative
       - Authentication
       - Celestia
-      - JSONRPC
+      - JSON-RPC
     tags_raw:
       - Administrative
       - Auth
@@ -257,7 +257,7 @@ apis:
       - Bridge
       - Celestia
       - EVM
-      - JSONRPC
+      - JSON-RPC
     tags_raw:
       - Blobstream
       - Bridge
