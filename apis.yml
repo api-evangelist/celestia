@@ -27,256 +27,246 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/celestia.png
 url: https://raw.githubusercontent.com/api-evangelist/celestia/refs/heads/main/apis.yml
 apis:
-  - aid: celestia:celestia-blob-api
-    name: Celestia Node Blob API
-    tags:
-      - Blob
-      - Celestia
-      - Data Availability
-      - JSON-RPC
-    tags_raw:
-      - Blob
-      - Celestia
-      - DataAvailability
-      - JSONRPC
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-blob-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/celestia-subscriptions-asyncapi.yml
-        type: AsyncAPI
-      - url: json-schema/celestia-blob-schema.json
-        type: JSONSchema
-      - url: json-schema/celestia-namespace-schema.json
-        type: JSONSchema
-      - url: json-structure/celestia-blob-structure.json
-        type: JSONStructure
-      - url: json-ld/celestia-context.jsonld
-        type: JSONLD
-      - url: examples/celestia-blob-submit-example.json
-        type: Examples
-      - url: examples/celestia-blob-get-example.json
-        type: Examples
-    description: >-
-      JSON-RPC methods in the blob module of celestia-node. Submit blobs to one or more namespaces with blob.Submit,
-      retrieve them by height with blob.Get and blob.GetAll, generate inclusion proofs with blob.GetProof, check
-      inclusion with blob.Included, and subscribe to namespace blobs with blob.Subscribe. The canonical surface for
-      rollups and applications publishing data to Celestia.
-  - aid: celestia:celestia-header-api
-    name: Celestia Node Header API
-    tags:
-      - Celestia
-      - Header
-      - JSON-RPC
-    tags_raw:
-      - Celestia
-      - Header
-      - JSONRPC
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-header-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/celestia-subscriptions-asyncapi.yml
-        type: AsyncAPI
-      - url: json-schema/celestia-extended-header-schema.json
-        type: JSONSchema
-      - url: examples/celestia-header-getbyheight-example.json
-        type: Examples
-    description: >-
-      JSON-RPC methods in the header module of celestia-node. Query ExtendedHeaders with header.LocalHead,
-      header.NetworkHead, header.GetByHeight, header.GetByHash, and header.GetRangeByHeight; track sync state with
-      header.SyncState and header.SyncWait; and subscribe to new headers with header.Subscribe.
-  - aid: celestia:celestia-da-api
-    name: Celestia Node DA API
-    tags:
-      - Celestia
-      - Data Availability
-      - JSON-RPC
-      - Rollup
-    tags_raw:
-      - Celestia
-      - DataAvailability
-      - JSONRPC
-      - Rollup
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-da-api-openapi.yml
-        type: OpenAPI
-      - url: examples/celestia-da-submit-example.json
-        type: Examples
-    description: >-
-      JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface used by
-      Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit, da.Get, da.GetIDs,
-      da.GetProofs, da.Commit, da.Validate, and da.MaxBlobSize.
-  - aid: celestia:celestia-share-api
-    name: Celestia Node Share API
-    tags:
-      - Celestia
-      - Data Availability
-      - JSON-RPC
-      - Share
-    tags_raw:
-      - Celestia
-      - DataAvailability
-      - JSONRPC
-      - Share
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-share-api-openapi.yml
-        type: OpenAPI
-      - url: examples/celestia-share-getnamespacedata-example.json
-        type: Examples
-    description: >-
-      JSON-RPC methods in the share module of celestia-node. Provides direct access to Celestia's share-level data, the
-      extended data square (EDS), namespaced shares, and share proofs via share.SharesAvailable, share.GetShare,
-      share.GetEDS, share.GetNamespaceData, share.GetRange, and share.GetSamples.
-  - aid: celestia:celestia-state-api
-    name: Celestia Node State API
-    tags:
-      - Celestia
-      - JSON-RPC
-      - PayForBlobs
-      - States
-    tags_raw:
-      - Celestia
-      - JSONRPC
-      - PayForBlobs
-      - State
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-state-api-openapi.yml
-        type: OpenAPI
-      - url: examples/celestia-state-submitpayforblob-example.json
-        type: Examples
-    description: >-
-      JSON-RPC methods in the state module of celestia-node. Exposes state-level operations including account balances,
-      transfers, delegations, and most importantly state.SubmitPayForBlob, the canonical entrypoint for submitting
-      PayForBlobs transactions to the celestia-app state machine.
-  - aid: celestia:celestia-das-api
-    name: Celestia Node DAS API
-    tags:
-      - Celestia
-      - DAS
-      - DataAvailabilitySampling
-      - JSON-RPC
-    tags_raw:
-      - Celestia
-      - DAS
-      - DataAvailabilitySampling
-      - JSONRPC
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-das-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/celestia-subscriptions-asyncapi.yml
-        type: AsyncAPI
-    description: >-
-      JSON-RPC methods in the das module of celestia-node. Operational introspection over the Data Availability Sampling
-      subsystem that light nodes run to probabilistically verify block data availability. Exposes das.SamplingStats and
-      das.WaitCatchUp.
-  - aid: celestia:celestia-fraud-api
-    name: Celestia Node Fraud API
-    tags:
-      - Celestia
-      - FraudProof
-      - JSON-RPC
-    tags_raw:
-      - Celestia
-      - FraudProof
-      - JSONRPC
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-fraud-api-openapi.yml
-        type: OpenAPI
-      - url: openapi/celestia-subscriptions-asyncapi.yml
-        type: AsyncAPI
-    description: >-
-      JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription for the
-      BadEncoding fraud proof type used to slash bridge nodes that propagate incorrectly erasure-coded blocks. Methods
-      include fraud.Get and fraud.Subscribe.
-  - aid: celestia:celestia-p2p-api
-    name: Celestia Node P2P API
-    tags:
-      - Celestia
-      - JSON-RPC
-      - LibP2P
-      - P2P
-    tags_raw:
-      - Celestia
-      - JSONRPC
-      - LibP2P
-      - P2P
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-p2p-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      JSON-RPC methods in the p2p module of celestia-node. libp2p-level introspection and control over the Celestia DA
-      network including peer info, NAT status, connection management, bandwidth stats, pubsub topics, and the
-      private/protected peer lists.
-  - aid: celestia:celestia-node-api
-    name: Celestia Node Admin API
-    tags:
-      - Administrative
-      - Authentication
-      - Celestia
-      - JSON-RPC
-    tags_raw:
-      - Administrative
-      - Auth
-      - Celestia
-      - JSONRPC
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-node-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      JSON-RPC methods in the node module of celestia-node. Provides administrative introspection over the running node
-      including node.Info, node.Ready, node.LogLevelSet, and the auth-token issuance methods node.AuthNew and
-      node.AuthVerify used to delegate capability-scoped access to other API modules (public, read, write, admin).
-  - aid: celestia:celestia-blobstream-api
-    name: Celestia Node Blobstream API
-    tags:
-      - Blobstream
-      - Bridge
-      - Celestia
-      - EVM
-      - JSON-RPC
-    tags_raw:
-      - Blobstream
-      - Bridge
-      - Celestia
-      - EVM
-      - JSONRPC
-    humanURL: https://node-rpc-docs.celestia.org/
-    properties:
-      - url: https://node-rpc-docs.celestia.org/
-        type: Documentation
-      - url: openapi/celestia-blobstream-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      JSON-RPC methods in the blobstream module of celestia-node. Generates inclusion proofs against Blobstream data
-      commitments so EVM chains can verify, via the Blobstream(X) bridge contracts, that a given blob was published to
-      Celestia at a specific height. Methods include blobstream.GetDataRootTupleRoot,
-      blobstream.GetDataRootTupleInclusionProof, and blobstream.GetShareProof.
+- aid: celestia:celestia-blob-api
+  name: Celestia Node Blob API
+  tags:
+  - Blob
+  - Celestia
+  - Data Availability
+  - JSON-RPC
+  tags_raw:
+  - Blob
+  - Celestia
+  - DataAvailability
+  - JSONRPC
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-blob-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/celestia-subscriptions-asyncapi.yml
+    type: AsyncAPI
+  - url: json-schema/celestia-blob-schema.json
+    type: JSONSchema
+  - url: json-schema/celestia-namespace-schema.json
+    type: JSONSchema
+  - url: json-structure/celestia-blob-structure.json
+    type: JSONStructure
+  - url: json-ld/celestia-context.jsonld
+    type: JSONLD
+  - url: examples/celestia-blob-submit-example.json
+    type: Examples
+  - url: examples/celestia-blob-get-example.json
+    type: Examples
+  description: >-
+    JSON-RPC methods in the blob module of celestia-node. Submit blobs to one or more namespaces with
+    blob.Submit, retrieve them by height with blob.Get and blob.GetAll, generate inclusion proofs with
+    blob.GetProof, check inclusion with blob.Included, and subscribe to namespace blobs with blob.Subscribe.
+    The canonical surface for rollups and applications publishing data to Celestia.
+- aid: celestia:celestia-header-api
+  name: Celestia Node Header API
+  tags:
+  - Celestia
+  - Header
+  - JSON-RPC
+  tags_raw:
+  - Celestia
+  - Header
+  - JSONRPC
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-header-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/celestia-subscriptions-asyncapi.yml
+    type: AsyncAPI
+  - url: json-schema/celestia-extended-header-schema.json
+    type: JSONSchema
+  - url: examples/celestia-header-getbyheight-example.json
+    type: Examples
+  description: >-
+    JSON-RPC methods in the header module of celestia-node. Query ExtendedHeaders with header.LocalHead,
+    header.NetworkHead, header.GetByHeight, header.GetByHash, and header.GetRangeByHeight; track sync
+    state with header.SyncState and header.SyncWait; and subscribe to new headers with header.Subscribe.
+- aid: celestia:celestia-da-api
+  name: Celestia Node DA API
+  tags:
+  - Celestia
+  - Data Availability
+  - JSON-RPC
+  - Rollup
+  tags_raw:
+  - Celestia
+  - DataAvailability
+  - JSONRPC
+  - Rollup
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-da-api-openapi.yml
+    type: OpenAPI
+  - url: examples/celestia-da-submit-example.json
+    type: Examples
+  description: >-
+    JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface
+    used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit,
+    da.Get, da.GetIDs, da.GetProofs, da.Commit, da.Validate, and da.MaxBlobSize.
+- aid: celestia:celestia-share-api
+  name: Celestia Node Share API
+  tags:
+  - Celestia
+  - Data Availability
+  - JSON-RPC
+  - Share
+  tags_raw:
+  - Celestia
+  - DataAvailability
+  - JSONRPC
+  - Share
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-share-api-openapi.yml
+    type: OpenAPI
+  - url: examples/celestia-share-getnamespacedata-example.json
+    type: Examples
+  description: >-
+    JSON-RPC methods in the share module of celestia-node. Provides direct access to Celestia's share-level
+    data, the extended data square (EDS), namespaced shares, and share proofs via share.SharesAvailable,
+    share.GetShare, share.GetEDS, share.GetNamespaceData, share.GetRange, and share.GetSamples.
+- aid: celestia:celestia-state-api
+  name: Celestia Node State API
+  tags:
+  - Celestia
+  - JSON-RPC
+  - PayForBlobs
+  - States
+  tags_raw:
+  - Celestia
+  - JSONRPC
+  - PayForBlobs
+  - State
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-state-api-openapi.yml
+    type: OpenAPI
+  - url: examples/celestia-state-submitpayforblob-example.json
+    type: Examples
+  description: >-
+    JSON-RPC methods in the state module of celestia-node. Exposes state-level operations including account
+    balances, transfers, delegations, and most importantly state.SubmitPayForBlob, the canonical entrypoint
+    for submitting PayForBlobs transactions to the celestia-app state machine.
+- aid: celestia:celestia-das-api
+  name: Celestia Node DAS API
+  tags:
+  - Celestia
+  - DAS
+  - DataAvailabilitySampling
+  - JSON-RPC
+  tags_raw:
+  - Celestia
+  - DAS
+  - DataAvailabilitySampling
+  - JSONRPC
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-das-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/celestia-subscriptions-asyncapi.yml
+    type: AsyncAPI
+  description: >-
+    JSON-RPC methods in the das module of celestia-node. Operational introspection over the Data Availability
+    Sampling subsystem that light nodes run to probabilistically verify block data availability. Exposes
+    das.SamplingStats and das.WaitCatchUp.
+- aid: celestia:celestia-fraud-api
+  name: Celestia Node Fraud API
+  tags:
+  - Celestia
+  - FraudProof
+  - JSON-RPC
+  tags_raw:
+  - Celestia
+  - FraudProof
+  - JSONRPC
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-fraud-api-openapi.yml
+    type: OpenAPI
+  - url: openapi/celestia-subscriptions-asyncapi.yml
+    type: AsyncAPI
+  description: >-
+    JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription
+    for the BadEncoding fraud proof type used to slash bridge nodes that propagate incorrectly erasure-coded
+    blocks. Methods include fraud.Get and fraud.Subscribe.
+- aid: celestia:celestia-node-api
+  name: Celestia Node Admin API
+  tags:
+  - Administrative
+  - Authentication
+  - Celestia
+  - JSON-RPC
+  tags_raw:
+  - Administrative
+  - Auth
+  - Celestia
+  - JSONRPC
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-node-api-openapi.yml
+    type: OpenAPI
+  description: >-
+    JSON-RPC methods in the node module of celestia-node. Provides administrative introspection over the
+    running node including node.Info, node.Ready, node.LogLevelSet, and the auth-token issuance methods
+    node.AuthNew and node.AuthVerify used to delegate capability-scoped access to other API modules (public,
+    read, write, admin).
+- aid: celestia:celestia-blobstream-api
+  name: Celestia Node Blobstream API
+  tags:
+  - Blobstream
+  - Bridge
+  - Celestia
+  - EVM
+  - JSON-RPC
+  tags_raw:
+  - Blobstream
+  - Bridge
+  - Celestia
+  - EVM
+  - JSONRPC
+  humanURL: https://node-rpc-docs.celestia.org/
+  properties:
+  - url: https://node-rpc-docs.celestia.org/
+    type: Documentation
+  - url: openapi/celestia-blobstream-api-openapi.yml
+    type: OpenAPI
+  description: >-
+    JSON-RPC methods in the blobstream module of celestia-node. Generates inclusion proofs against Blobstream
+    data commitments so EVM chains can verify, via the Blobstream(X) bridge contracts, that a given blob
+    was published to Celestia at a specific height. Methods include blobstream.GetDataRootTupleRoot, blobstream.GetDataRootTupleInclusionProof,
+    and blobstream.GetShareProof.
+- aid: celestia:celestia-p2-p-api
+  name: Celestia P2 P API
+  description: libp2p peer, connection, NAT, and pubsub control.
+  humanURL: https://node-rpc-docs.celestia.org/
+  tags:
+  - P2 P
+  properties:
+  - type: OpenAPI
+    url: openapi/celestia-p2-p-api-openapi.yml
+  - type: Documentation
+    url: https://node-rpc-docs.celestia.org/
 common:
   - type: Website
     url: https://www.celestia.org/
