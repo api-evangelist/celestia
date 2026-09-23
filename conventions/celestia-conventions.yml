@@ -1,0 +1,144 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.celestia.org/llms-full.txt,
+  https://docs.celestia.org/build/rpc/node-api.md,
+  openapi/celestia-node-api-openrpc.json
+description: >-
+  Cross-cutting runtime semantics for the Celestia Node API. This is a JSON-RPC 2.0 surface
+  served by a node the consumer runs, not a hosted REST API, and several conventions that
+  would be product decisions elsewhere are consequences of that: there is one HTTP path,
+  no pagination, no request-id header, and the "rate limit" is a knob in the operator's own
+  config.toml. The write surface commits transactions to a public blockchain, which makes
+  the reversibility answer unusually stark and worth reading before an agent is pointed at it.
+protocol:
+  style: JSON-RPC 2.0
+  transport: HTTP POST plus WebSocket for subscriptions
+  path: /
+  default_endpoint: http://127.0.0.1:26658
+  content_type: application/json
+  param_structure: by-position
+  note: >-
+    Every method is invoked as a JSON-RPC envelope POSTed to the node root. The OpenAPI
+    documents in this repository model that faithfully as a single POST / operation per
+    module; the provider's own machine-readable contract is the OpenRPC document.
+authentication:
+  style: bearer-token
+  header: 'Authorization: Bearer <token>'
+  issuance: >-
+    `celestia <node_type> auth <level> --p2p.network <network>` on the machine running the
+    node, or node.AuthNew over an already-authorized connection.
+  levels:
+  - public
+  - read
+  - write
+  - admin
+  level_declared_in_spec: true
+  level_distribution:
+    read: 41
+    write: 12
+    admin: 27
+  revocation: >-
+    NOT SUPPORTED. The documentation states plainly: "Each time you run this, you will
+    receive a new token. It's not possible to revoke tokens once they are issued." A leaked
+    admin token cannot be withdrawn; the remedy is to rotate the node's JWT signing key.
+  cross_reference: authentication/celestia-authentication.yml
+idempotency:
+  supported: false
+  coverage: none
+  header: null
+  scope: []
+  note: >-
+    No Idempotency-Key header, no request-deduplication window, no replay protection at the
+    RPC layer. A retried blob.Submit or state.Transfer is a second transaction: it is
+    re-signed with a fresh sequence number, broadcast, and charged again. Deduplication, if
+    a consumer needs it, has to be built above the API — by tracking the returned height and
+    commitment before retrying, or by checking state.Balance and blob.Included first. This
+    is the single most important thing an agent integrator must know about this surface.
+  agent_guidance: >-
+    Treat every state.* and blob.Submit call as at-most-once. On a timeout, do not retry
+    blind: query blob.Included or the account sequence to establish whether the first
+    attempt landed.
+reversibility:
+  grade: na
+  mechanism: none
+  note: >-
+    There is no reversal operation anywhere in the contract — no cancel, refund, void,
+    reverse, undo, rollback or restore method exists among the 80 published methods. This
+    is not an omission: a blob published to Celestia and a PayForBlobs transaction included
+    in a block are final by the network's design, and the data-availability guarantee that
+    makes Celestia useful is precisely the guarantee that a published blob cannot be
+    withdrawn. Fees paid in TIA are consumed whether or not the caller wanted the result.
+  windows: []
+  write_surface:
+  - operation: blob.Submit
+    reversal: none
+    finality: >-
+      Irreversible on inclusion. Returns the height; the (height, namespace, commitment)
+      tuple is the only handle to the data afterwards.
+  - operation: state.SubmitPayForBlob
+    reversal: none
+    finality: Irreversible on inclusion.
+  - operation: state.Transfer
+    reversal: none
+    finality: Irreversible on inclusion.
+  - operation: state.Delegate
+    reversal: partial
+    finality: >-
+      Delegation can be undone with state.Undelegate, but that is a protocol-level unbonding
+      that takes the network's unbonding period, not a reversal of the original transaction.
+      Celestia's docs do not state the unbonding period on the API reference pages, so no
+      window is asserted here.
+  agent_guidance: >-
+    Nothing on this API can be taken back. An agent must establish intent before calling,
+    not after, and should rehearse against the Mocha testnet with faucet funds — see
+    sandbox/celestia-sandbox.yml — rather than against Mainnet Beta.
+dry_run_mode:
+  supported: false
+  note: >-
+    No dry-run, simulate or validate-only flag on the write methods. The nearest available
+    rehearsal is a pre-flight check — state.BalanceForAddress for the chosen signer, and
+    da.MaxBlobSize (deprecated) or the documented 16 MiB request cap for size — followed by
+    a real submission on a testnet.
+pagination:
+  style: none
+  note: >-
+    No paginated collection endpoints. Range reads are explicit and bounded by the caller:
+    header.GetRangeByHeight takes a from/to pair, share.GetRange takes start/end share
+    indices, and blob.GetAll is scoped to one height and namespace set.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No X-Request-Id or equivalent. JSON-RPC correlation is the caller's own `id` field in
+    the request envelope, echoed in the response.
+versioning:
+  cross_reference: lifecycle/celestia-lifecycle.yml
+  summary: Versioned with the node binary; no version segment in the path or a header.
+error_envelope:
+  format: json-rpc-2.0
+  rfc9457: false
+  shape: '{"jsonrpc":"2.0","id":<id>,"error":{"code":<int>,"message":<string>}}'
+  cross_reference: errors/celestia-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: 429
+  cross_reference: rate-limits/celestia-rate-limits.yml
+  note: >-
+    The server returns 429 Too Many Requests when the operator has enabled per-IP rate
+    limiting, but publishes no RateLimit-* or Retry-After headers, so a client cannot read
+    its remaining budget — only discover the wall by hitting it.
+payload_limits:
+  max_request_body: 16 MiB
+  max_concurrent_connections: 500
+  configurable: false
+  source: https://docs.celestia.org/llms-full.txt
+  note: Enforced by the RPC server since v0.31.3 and not adjustable in config.toml.
+subscriptions:
+  transport: websocket
+  methods:
+  - blob.Subscribe
+  - header.Subscribe
+  cross_reference: openapi/celestia-subscriptions-asyncapi.yml
+  note: >-
+    fraud.Subscribe was removed in v0.31.3 and is no longer part of this set; the AsyncAPI
+    document in this repository still carries it.

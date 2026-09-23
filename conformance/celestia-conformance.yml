@@ -1,0 +1,136 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  openapi/celestia-node-api-openrpc.json,
+  well-known/celestia-api-catalog.json,
+  well-known/celestia-agent-skills-index.json,
+  https://docs.celestia.org/llms.txt,
+  https://docs.celestia.org/llms-full.txt
+description: >-
+  Cross-cutting and domain standards the Celestia Node API surface actually conforms to,
+  each with the evidence that establishes it. Celestia conforms to none of the usual
+  enterprise API standards — no OAuth 2, no OIDC, no SCIM, no OData, no RFC 9457 — and that
+  is the correct answer for a JSON-RPC protocol node rather than a gap. What it does conform
+  to, and unusually well, is the machine-discoverability layer: RFC 9727, llms.txt and the
+  agentskills.io discovery schema are all served for real.
+conformance:
+- id: json-rpc-2.0
+  name: JSON-RPC 2.0
+  conforms: true
+  evidence: >-
+    Every method in openrpc-v0.31.4.json is invoked as a JSON-RPC 2.0 envelope POSTed to the
+    node root; request and response examples throughout docs.celestia.org carry
+    "jsonrpc":"2.0".
+- id: openrpc
+  name: OpenRPC 1.2.6
+  conforms: true
+  evidence: >-
+    openapi/celestia-node-api-openrpc.json declares "openrpc":"1.2.6" and describes 80
+    methods across nine modules with params, result and example values.
+- id: rfc9727
+  name: RFC 9727 API Catalog
+  conforms: true
+  evidence: >-
+    https://docs.celestia.org/.well-known/api-catalog returns 200 with a valid linkset
+    carrying anchor, service-desc, service-doc, describedby, status and source-code
+    relations. Saved verbatim at well-known/celestia-api-catalog.json.
+- id: rfc8615
+  name: RFC 8615 well-known URIs
+  conforms: true
+  evidence: >-
+    Serves /.well-known/api-catalog and /.well-known/agent-skills/index.json. Does NOT serve
+    security.txt, openid-configuration, oauth-authorization-server or an agent card on any
+    host probed.
+- id: llms-txt
+  name: llms.txt
+  conforms: true
+  evidence: >-
+    https://docs.celestia.org/llms.txt (200, 7,451 bytes) and https://celestia.org/llms.txt
+    (200, 4,083 bytes), plus section indexes at /build/llms.txt, /learn/llms.txt and
+    /operate/llms.txt, and a 400 KB /llms-full.txt single-file context snapshot.
+- id: agentskills-discovery-0.2.0
+  name: agentskills.io discovery 0.2.0
+  conforms: true
+  evidence: >-
+    https://docs.celestia.org/.well-known/agent-skills/index.json declares
+    "$schema":"https://schemas.agentskills.io/discovery/0.2.0/schema.json" and one skill-md
+    entry whose sha256 digest matches the served SKILL.md byte for byte (verified
+    2026-09-17).
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence: >-
+    The only scheme in the contract is an HTTP bearer token minted by the local `celestia
+    auth` CLI. No authorization server, no token endpoint, no scopes, and
+    /.well-known/oauth-authorization-server 404s on every host.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404 on every Celestia host probed.
+- id: rfc9457
+  name: RFC 9457 Problem Details
+  conforms: false
+  evidence: >-
+    Errors are JSON-RPC error objects, not application/problem+json. The OpenRPC declares
+    zero errors[] entries across all 80 methods.
+- id: rfc8594
+  name: RFC 8594 Sunset header
+  conforms: false
+  evidence: >-
+    No Sunset or Deprecation header contract is published. Deprecation is expressed as
+    deprecated:true inside the OpenRPC and as prose in release notes.
+- id: idempotency
+  name: Idempotency keys
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or replay window anywhere in the contract or the docs. See
+    conventions/celestia-conventions.yml.
+- id: pagination
+  name: Standard pagination
+  conforms: false
+  evidence: >-
+    No paginated collections. Ranges are explicit caller-supplied bounds
+    (header.GetRangeByHeight, share.GetRange).
+domain_standards:
+- id: modular-da-interface
+  name: Modular Data Availability interface
+  conforms: true
+  deprecated: true
+  evidence: >-
+    The da.* module in openrpc-v0.31.4.json (da.Submit, da.Get, da.GetIDs, da.GetProofs,
+    da.Commit, da.Validate, da.MaxBlobSize, da.SubmitWithOptions) is celestia-node's
+    implementation of the generic DA interface consumed by Rollkit, Optimism Alt-DA and
+    Arbitrum Nitro DAS — an integrator who already speaks that interface needs no
+    Celestia-specific connector. All eight methods now carry deprecated:true in the
+    provider's own contract, so conformance is real but on a retiring surface.
+- id: cosmos-sdk
+  name: Cosmos SDK / CometBFT consensus interfaces
+  conforms: true
+  evidence: >-
+    celestia-app is a Cosmos SDK application over a CometBFT fork (celestia-core), exposing
+    the standard Cosmos gRPC (:9090), REST (:1317) and CometBFT RPC (:26657) surfaces, and
+    the celestia-appd CLI carries the standard keys/query/tx command tree. Documented at
+    https://docs.celestia.org/build/rpc/clients.md.
+- id: ibc
+  name: IBC (Inter-Blockchain Communication)
+  conforms: true
+  evidence: >-
+    https://docs.celestia.org/learn/features/bridging/ibc.md names IBC as one of the two
+    supported cross-chain standards on Celestia, alongside Hyperlane.
+- id: libp2p
+  name: libp2p peer addressing and pubsub
+  conforms: true
+  evidence: >-
+    The p2p module's 22 methods are libp2p peer, connection, NAT, bandwidth and pubsub
+    control, and node identity is a libp2p peer ID used in standard multiaddrs.
+regulatory:
+  regime: none
+  note: >-
+    Celestia is public permissionless infrastructure with no customer accounts, no
+    personal data processing under contract and no financial-services licensing claim.
+    No regulatory regime applies and none is asserted.
+compliance_published: false
+compliance_note: >-
+  No SOC 2, ISO 27001, PCI DSS, HIPAA or FedRAMP attestation is published, so no Compliance
+  pointer is emitted for this record. The published assurance evidence is the twelve
+  third-party security audits catalogued in security/celestia-trust-center.yml.

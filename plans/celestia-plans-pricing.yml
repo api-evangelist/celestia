@@ -1,0 +1,45 @@
+generated: '2026-09-17'
+method: searched
+source: https://celestia.org/llms.txt, https://docs.celestia.org/llms-full.txt
+description: >-
+  Celestia publishes no plans, tiers or price list, and this is a structural fact about the
+  product rather than a gap in its marketing. There is no vendor account, no API key issued
+  by Celestia, and no metered billing relationship: access to the Node API is access to a
+  node the consumer runs, and the only thing that costs money is the on-chain fee paid in
+  TIA when a PayForBlobs transaction is submitted. celestia.org publishes no /pricing page —
+  its own llms.txt site index lists every public page and none of them is a pricing page.
+plan_count: 0
+pricing_model: protocol-fee
+currency: TIA
+billing:
+  vendor_invoice: false
+  api_key_issued_by_vendor: false
+  metered_by_vendor: false
+  note: >-
+    Cost is a gas fee paid per blob-publishing transaction to the Celestia validator set,
+    denominated in utia and priced by the fee market at the time of inclusion. There is no
+    contract to sign and no account to top up with Celestia Labs.
+free_access:
+  testnets:
+  - name: Mocha
+    faucet: https://faucet.celestia-mocha.com
+    cost: free test TIA
+  - name: Arabica
+    cost: free test TIA
+  note: Full API access on testnets at no cost; see sandbox/celestia-sandbox.yml.
+enterprise:
+  contact_page: https://celestia.org/build-with-us/
+  note: >-
+    Celestia Labs publishes a "Build with Us" enterprise/partnership page. It is a contact
+    surface, not a priced tier, and no figures are published behind it.
+evidence:
+- url: https://celestia.org/llms.txt
+  status: 200
+  finding: >-
+    Provider-published site index of every public celestia.org page. No pricing page is
+    listed; the commercial-adjacent entries are Build with Us, Applications and Case Studies.
+- url: https://celestia.org/pricing
+  status: 403
+  finding: >-
+    Cloudflare managed challenge to a non-browser client, so the status alone proves
+    nothing. The llms.txt index above is the authority and it lists no such page.

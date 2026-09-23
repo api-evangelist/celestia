@@ -1,0 +1,119 @@
+generated: '2026-09-17'
+method: probed
+source: https://docs.celestia.org/.well-known/api-catalog
+description: >-
+  Probe of the RFC 8615 /.well-known/ namespace plus /llms.txt on every host this record
+  knows: the registrable domain and www, the documentation host, the blog host, the forum
+  host, and the historical Node API reference host. docs.celestia.org serves a real RFC 9727
+  api-catalog linkset pointing at the first-party OpenRPC specification, the llms.txt index,
+  the full LLM context dump, and a published Agent Skill. Every other path 404s.
+hosts:
+- host: celestia.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+    note: >-
+      Marketing-site LLM index (4,083 bytes). Not saved here; the documentation
+      llms.txt in llms/celestia-llms.txt is the developer-facing one.
+- host: www.celestia.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 200
+- host: docs.celestia.org
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    file: celestia-api-catalog.json
+    content_type: application/json
+    note: >-
+      RFC 9727 linkset. service-desc points at the Celestia Node API OpenRPC
+      specification (openrpc-v0.31.4.json); describedby points at llms.txt,
+      llms-full.txt and SKILL.md; source-code at github.com/celestiaorg/docs.
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: celestia-agent-skills-index.json
+    content_type: application/json
+    note: >-
+      agentskills.io discovery 0.2.0 index declaring one skill-md skill with a
+      sha256 digest. The digest matches the copy saved at skills/celestia.md byte
+      for byte.
+  - path: /llms.txt
+    status: 200
+    note: Saved verbatim to llms/celestia-llms.txt.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: blog.celestia.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: forum.celestia.org
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: node-rpc-docs.celestia.org
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 0
+    note: >-
+      Host does not resolve. dig A/CNAME against 8.8.8.8 returns NOERROR with zero
+      answers while docs.celestia.org resolves normally, so this is the subdomain
+      being retired rather than a local resolver failure. This host was the
+      humanURL and Documentation pointer on all ten API entries in this record;
+      those pointers have been repointed at
+      https://docs.celestia.org/build/rpc/node-api/.
+findings:
+  agent_card: none
+  api_catalog: served
+  security_txt: none
+  oauth_metadata: none
+  ai_plugin: none

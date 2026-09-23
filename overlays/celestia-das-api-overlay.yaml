@@ -1,0 +1,50 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Celestia Node Blob DAS API
+  version: 1.0.0
+extends: celestia-das-api-openapi.yml
+x-generated: '2026-09-17'
+x-method: generated
+x-source: openapi/celestia-das-api-openapi.yml, openapi/celestia-node-api-openrpc.json, https://docs.celestia.org/llms-full.txt
+x-note: Enhancements only. The underlying OpenAPI is never mutated by this overlay; the provider-authoritative
+  contract is the OpenRPC document.
+actions:
+- target: $.info
+  description: 'Record the runtime semantics documented at docs.celestia.org but absent from the contract:
+    token issuance and non-revocability, the hard request-body cap, and the fact that no write on this
+    API is reversible.'
+  update:
+    x-auth-token-issuance: celestia <node_type> auth <public|read|write|admin> --p2p.network <network>
+    x-auth-token-revocable: false
+    x-max-request-body-bytes: 16777216
+    x-max-concurrent-connections: 500
+    x-idempotency: none
+    x-reversibility: none
+    x-contract-of-record: openapi/celestia-node-api-openrpc.json (OpenRPC 1.2.6, v0.31.4, 80 methods)
+    x-source-docs: https://docs.celestia.org/build/rpc/node-api.md
+- target: $.servers[0]
+  description: 'Annotate the default endpoint. The host is genuinely localhost: the Celestia Node API
+    is served by a node the consumer runs, and there is no vendor-hosted base URL to substitute.'
+  update:
+    x-self-hosted: true
+    x-default-port: 26658
+    x-network-selector: --p2p.network <celestia|mocha|arabica>
+- target: $.paths['/'].post.responses
+  description: Add the transport-level failure responses the provider documents in prose but omits from
+    the contract. The OpenRPC declares zero errors[] entries across all 80 methods.
+  update:
+    '401':
+      description: Missing or invalid bearer token, or a token minted below the auth level this method
+        requires.
+    '413':
+      description: Request body exceeds the 16 MiB server cap introduced in celestia-node v0.31.3.
+    '429':
+      description: Per-IP rate limit exceeded. Returned only when the node operator has enabled [RPC.RateLimit];
+        no RateLimit-* or Retry-After headers are sent.
+- target: $.paths['/'].post
+  description: Record that a well-formed JSON-RPC call returns HTTP 200 even when it fails, with the failure
+    in the body.
+  update:
+    x-error-envelope: json-rpc-2.0
+    x-error-http-status: 200
+    x-error-catalog: errors/celestia-problem-types.yml

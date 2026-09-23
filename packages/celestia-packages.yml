@@ -1,0 +1,160 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  registry.npmjs.org, crates.io/api/v1/crates, proxy.golang.org, pypi.org/pypi,
+  https://github.com/celestiaorg
+description: >-
+  First-party client libraries for the Celestia Node API and the Celestia network.
+  Celestia is protocol software, not a hosted service, so its "SDKs" are the node
+  implementations and the RPC clients that talk to a node you run. Registry currency
+  was read from each registry's own metadata endpoint on 2026-09-17; every entry
+  carries a structured version and published date, or an explicit null with a reason.
+summary:
+  total: 12
+  official: 11
+  community: 1
+  registries:
+  - crates.io
+  - npm
+  - proxy.golang.org
+  - pypi
+  - github
+packages:
+- name: celestia-rpc
+  registry: crates.io
+  language: rust
+  url: https://crates.io/crates/celestia-rpc
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.1.0-rc.1
+  published: '2026-06-24'
+  note: >-
+    Async Rust client for the celestia-node JSON-RPC surface. Latest published release
+    is a release candidate; no stable 1.1.0 had been published as of the probe date.
+- name: celestia-types
+  registry: crates.io
+  language: rust
+  url: https://crates.io/crates/celestia-types
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.1.0-rc.1
+  published: '2026-06-24'
+- name: celestia-proto
+  registry: crates.io
+  language: rust
+  url: https://crates.io/crates/celestia-proto
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.1.0-rc.1
+  published: '2026-06-24'
+- name: celestia-grpc
+  registry: crates.io
+  language: rust
+  url: https://crates.io/crates/celestia-grpc
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.1.0-rc.1
+  published: '2026-06-24'
+  note: Client for the celestia-app validator gRPC surface, not the node JSON-RPC surface.
+- name: lumina-node
+  registry: crates.io
+  language: rust
+  url: https://crates.io/crates/lumina-node
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.1.0-rc.1
+  published: '2026-06-24'
+- name: lumina-node
+  registry: npm
+  language: javascript
+  url: https://www.npmjs.com/package/lumina-node
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.0.0
+  published: '2026-04-06'
+  note: Browser/Wasm light node. The Rust crate of the same name is ahead of the npm build.
+- name: lumina-node-wasm
+  registry: npm
+  language: javascript
+  url: https://www.npmjs.com/package/lumina-node-wasm
+  repository: https://github.com/celestiaorg/lumina
+  official: true
+  version: 1.0.0
+  published: '2026-04-06'
+- name: github.com/celestiaorg/celestia-node
+  registry: proxy.golang.org
+  language: go
+  url: https://pkg.go.dev/github.com/celestiaorg/celestia-node
+  repository: https://github.com/celestiaorg/celestia-node
+  official: true
+  version: v0.33.0
+  published: '2026-09-02'
+  note: >-
+    The DA node itself and the reference Go client. This is the currency benchmark for
+    every other client in this file.
+- name: github.com/celestiaorg/nmt
+  registry: proxy.golang.org
+  language: go
+  url: https://pkg.go.dev/github.com/celestiaorg/nmt
+  repository: https://github.com/celestiaorg/nmt
+  official: true
+  version: v0.24.5
+  published: '2026-09-10'
+- name: github.com/celestiaorg/celestia-app
+  registry: proxy.golang.org
+  language: go
+  url: https://pkg.go.dev/github.com/celestiaorg/celestia-app
+  repository: https://github.com/celestiaorg/celestia-app
+  official: true
+  version: v1.14.0
+  published: '2024-07-26'
+  note: >-
+    proxy.golang.org @latest resolves to v1.14.0 because releases from v2 onward are
+    published as +incompatible-free major-version modules under /v2, /v3 … paths.
+    GitHub releases for this repo are current (v9.0.8 on 2026-09-15); the Go module
+    proxy answer is a module-path artifact, not abandonment.
+- name: github.com/celestiaorg/celestia-openrpc
+  registry: proxy.golang.org
+  language: go
+  url: https://pkg.go.dev/github.com/celestiaorg/celestia-openrpc
+  repository: https://github.com/celestiaorg/celestia-openrpc
+  official: true
+  version: v0.5.0
+  published: '2024-08-28'
+  deprecated: true
+  note: >-
+    ARCHIVED. The GitHub repository is archived (read-only, last push 2024-11-15) and
+    the last module release is from 2024-08-28, two years behind celestia-node v0.33.0.
+    This is the dependency-free Go OpenRPC client that apis.yml still advertises as an
+    SDK; a consumer picking it up today gets a client for a superseded API surface.
+- name: pycelestia
+  registry: pypi
+  language: python
+  url: https://pypi.org/project/pycelestia/
+  repository: https://github.com/Alesh/pyCelestia
+  official: false
+  version: 0.1.7
+  published: '2025-05-19'
+  note: >-
+    Community package, NOT first-party — published from github.com/Alesh/pyCelestia,
+    outside the celestiaorg organization. Recorded because Celestia publishes no
+    first-party Python client and this is what a Python consumer will find.
+unpublished_first_party_repos:
+- name: celestia-ts
+  repository: https://github.com/celestiaorg/celestia-ts
+  registry: null
+  version: null
+  published: null
+  note: >-
+    apis.yml advertises this as the TypeScript client, but it is not published to npm
+    under any name we could find (celestia-ts and @celestiaorg/celestia-ts both 404 on
+    registry.npmjs.org) and the repository was last pushed 2024-06-18. Consumers must
+    vendor from source.
+- name: celestia-node-client-rs
+  repository: https://github.com/celestiaorg/celestia-node-client-rs
+  registry: null
+  version: null
+  published: null
+  note: >-
+    Rust REST client advertised in apis.yml. Not on crates.io and last pushed
+    2022-07-04. The maintained Rust path is celestia-rpc / lumina.

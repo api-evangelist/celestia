@@ -1,0 +1,232 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/celestia-node-api-openrpc.json
+description: >-
+  Entity graph for the Celestia Node API, derived from the Go type names the provider's own
+  OpenRPC document carries in every params[].description and result.description field. There
+  is no components.schemas block to read — the OpenRPC declares zero reusable schemas, and
+  each parameter carries an inline schema plus the concrete Go type as prose — so the
+  relationships below are read from those type names and from the method signatures that
+  join them, not invented. The shape of this model is unusual and worth stating plainly: the
+  join key across the whole API is not an opaque id but a three-part coordinate,
+  (height, namespace, commitment).
+primary_key:
+  name: retrieval tuple
+  fields:
+  - height
+  - namespace
+  - commitment
+  note: >-
+    Celestia's own published Agent Skill makes returning this tuple a hard requirement after
+    any submission, because it is the only handle that retrieves the data later. There is no
+    server-side blob id to look up.
+entities:
+- name: Blob
+  type: blob.Blob
+  module: blob
+  description: >-
+    The payload unit. Arbitrary bytes published under one namespace at one height, addressed
+    afterwards by its commitment.
+  fields:
+  - namespace
+  - data
+  - share_version
+  - commitment
+  operations:
+  - blob.Submit
+  - blob.Get
+  - blob.GetAll
+  - blob.Subscribe
+  relationships:
+  - belongs_to: Namespace
+    via: namespace
+  - belongs_to: ExtendedHeader
+    via: height
+  - has_one: Commitment
+    via: commitment
+  - has_one: Proof
+    via: blob.GetProof
+- name: Namespace
+  type: libshare.Namespace (da.Namespace in the deprecated da module)
+  module: blob, share, da
+  description: >-
+    The tenant key. A rollup reads only the shares carrying its own namespace, which is what
+    makes Namespaced Merkle Trees worth having.
+  operations:
+  - blob.GetAll
+  - share.GetNamespaceData
+  relationships:
+  - has_many: Blob
+    via: namespace
+  - has_many: Share
+    via: namespace
+- name: Commitment
+  type: blob.Commitment
+  module: blob
+  description: Content commitment over a blob's shares; the third element of the retrieval tuple.
+  operations:
+  - blob.Get
+  - blob.GetProof
+  - blob.Included
+  - blob.GetCommitmentProof
+  relationships:
+  - belongs_to: Blob
+    via: commitment
+- name: Proof
+  type: blob.Proof / blob.CommitmentProof
+  module: blob
+  description: Inclusion proof binding a blob or commitment to the data root at a height.
+  operations:
+  - blob.GetProof
+  - blob.GetCommitmentProof
+  - blob.Included
+  relationships:
+  - belongs_to: Blob
+    via: commitment
+  - belongs_to: ExtendedHeader
+    via: height
+- name: ExtendedHeader
+  type: header.ExtendedHeader
+  module: header
+  description: >-
+    Block header extended with the data availability header. The height it carries is the
+    first element of the retrieval tuple and the join key for everything below the block.
+  operations:
+  - header.LocalHead
+  - header.NetworkHead
+  - header.GetByHeight
+  - header.GetByHash
+  - header.GetRangeByHeight
+  - header.Subscribe
+  relationships:
+  - has_many: Blob
+    via: height
+  - has_many: Share
+    via: height
+  - has_one: ExtendedDataSquare
+    via: height
+- name: Share
+  type: libshare.Share
+  module: share
+  description: Fixed-size fragment of the extended data square; the physical unit blobs are split into.
+  operations:
+  - share.GetShare
+  - share.GetRange
+  - share.GetNamespaceData
+  - share.GetSamples
+  relationships:
+  - belongs_to: ExtendedDataSquare
+    via: height
+  - belongs_to: Namespace
+    via: namespace
+- name: ExtendedDataSquare
+  type: rsmt2d.ExtendedDataSquare
+  module: share
+  description: >-
+    The 2D Reed-Solomon erasure-coded square for one block. Light nodes sample it rather than
+    download it.
+  operations:
+  - share.GetEDS
+  - share.SharesAvailable
+  relationships:
+  - belongs_to: ExtendedHeader
+    via: height
+  - has_many: Share
+    via: index
+- name: Account
+  type: state.AccAddress / state.ValAddress
+  module: state
+  description: Bech32 celestia1… account, or celestiavaloper1… validator operator address.
+  operations:
+  - state.AccountAddress
+  - state.Balance
+  - state.BalanceForAddress
+  - state.Transfer
+  - state.Delegate
+  - state.Undelegate
+  relationships:
+  - has_one: Balance
+    via: address
+  - has_many: TxResponse
+    via: signer
+- name: Balance
+  type: state.Balance
+  module: state
+  description: TIA balance for an account, denominated in utia.
+  operations:
+  - state.Balance
+  - state.BalanceForAddress
+  relationships:
+  - belongs_to: Account
+    via: address
+- name: TxResponse
+  type: state.TxResponse
+  module: state
+  description: >-
+    Result of any state-mutating call. Nine of the sixteen state methods return this and
+    nine take a *state.TxConfig, which is the fee/gas/signer envelope for the write.
+  operations:
+  - state.SubmitPayForBlob
+  - state.Transfer
+  - state.Delegate
+  relationships:
+  - belongs_to: Account
+    via: signer
+  - belongs_to: ExtendedHeader
+    via: height
+- name: TxConfig
+  type: state.TxConfig
+  module: state
+  description: >-
+    Per-call fee, gas, key_name and signer_address options. key_name or signer_address
+    selects which key in the node's keyring signs; signer_address wins if both are set.
+  used_by_operations: 9
+- name: Peer
+  type: peer.ID / peer.AddrInfo
+  module: p2p
+  description: libp2p peer identity and multiaddr info for node-level networking.
+  operations:
+  - p2p.Info
+  - p2p.Peers
+  - p2p.Connect
+  - p2p.PeerInfo
+- name: Permission
+  type: auth.Permission
+  module: node
+  description: >-
+    Capability set encoded into a Node API bearer token — public, read, write, admin. Not a
+    stored entity; minted into a JWT by node.AuthNew and unrevokable once issued.
+  operations:
+  - node.AuthNew
+  - node.AuthVerify
+- name: DataRootTupleRoot
+  type: DataRootTupleRoot / DataRootTupleInclusionProof
+  module: blobstream
+  description: >-
+    Commitment over a range of Celestia data roots, and the proof an EVM chain verifies
+    against the Blobstream bridge contract.
+  operations:
+  - blobstream.GetDataRootTupleRoot
+  - blobstream.GetDataRootTupleInclusionProof
+  relationships:
+  - belongs_to: ExtendedHeader
+    via: height range
+- name: SamplingStats
+  type: das.SamplingStats
+  module: das
+  description: Operational state of the data availability sampling worker on a light node.
+  operations:
+  - das.SamplingStats
+derivation_notes:
+- >-
+  The OpenRPC declares 0 entries in components.schemas, so no schema reuse could be read
+  from the document; every relationship above comes from a Go type name repeated across
+  method signatures.
+- >-
+  The da.* module defines parallel types (da.Blob, da.ID, da.Commitment, da.Proof,
+  da.Namespace) that mirror the blob/share entities through the generic modular DA
+  interface. They are omitted as separate entities because all eight da methods are marked
+  deprecated in the contract.
+- >-
+  The fraud module's BadEncodingProof entity is absent from this model: the namespace was
+  removed in celestia-node v0.31.3 and carries no method in openrpc-v0.31.4.json.

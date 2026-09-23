@@ -1,0 +1,109 @@
+generated: '2026-09-17'
+method: derived
+source: openapi/celestia-node-api-openrpc.json, https://docs.celestia.org/llms.txt
+status: candidate
+description: >-
+  Celestia publishes NO MCP server. Its own documentation llms.txt states so in as many
+  words ("Celestia does not currently publish an official MCP server for this documentation
+  site"), a GitHub code search across the celestiaorg organization returns zero repositories
+  matching "mcp", and mcp.celestia.org does not resolve. What follows is a DERIVED candidate
+  tool list computed from the provider's first-party OpenRPC specification, offered as a
+  design starting point. Nobody ships it, and no endpoint below exists.
+deployment:
+  mode: none
+  auth: api-key
+  verified: derived
+  note: >-
+    Celestia's JSON-RPC is served by a node the consumer runs themselves (default
+    127.0.0.1:26658) and authenticated with a bearer token minted by the local
+    `celestia <node_type> auth <level>` CLI. There is no vendor-hosted endpoint for an
+    MCP server to sit in front of, which is a structural reason for the absence rather
+    than an oversight: any MCP server for Celestia would be local-stdio by construction,
+    pointed at the operator's own node.
+evidence:
+- url: https://docs.celestia.org/llms.txt
+  status: 200
+  finding: >-
+    "Celestia does not currently publish an official MCP server for this documentation site."
+- url: https://api.github.com/search/repositories?q=org:celestiaorg+mcp
+  status: 200
+  finding: total_count 0
+- url: https://mcp.celestia.org/mcp
+  status: 0
+  finding: host does not resolve
+candidate_tools:
+  source_spec: openapi/celestia-node-api-openrpc.json
+  spec_version: v0.31.4
+  method_count: 80
+  note: >-
+    Auth level is taken from each method's own description field in the OpenRPC document,
+    where Celestia records it as "Auth level: read|write|admin". Tools are grouped by
+    module; the module is the natural MCP tool namespace.
+  modules:
+  - module: blob
+    methods: 7
+    auth_levels:
+      read: 6
+      write: 1
+    marquee:
+    - blob.Submit
+    - blob.Get
+    - blob.GetAll
+    - blob.GetProof
+    - blob.Included
+  - module: header
+    methods: 10
+    auth_levels:
+      read: 10
+    marquee:
+    - header.NetworkHead
+    - header.GetByHeight
+    - header.SyncState
+  - module: share
+    methods: 7
+    auth_levels:
+      read: 7
+    marquee:
+    - share.GetNamespaceData
+    - share.SharesAvailable
+    - share.GetRange
+  - module: state
+    methods: 16
+    auth_levels:
+      read: 7
+      write: 9
+    marquee:
+    - state.SubmitPayForBlob
+    - state.Balance
+    - state.Transfer
+  - module: p2p
+    methods: 22
+    auth_levels:
+      admin: 22
+    note: >-
+      Entirely admin-level libp2p node control. A sensible MCP server would exclude this
+      module outright rather than expose peer/NAT/bandwidth control to an agent.
+  - module: node
+    methods: 6
+    auth_levels:
+      admin: 5
+      read: 1
+  - module: da
+    methods: 8
+    auth_levels:
+      read: 6
+      write: 2
+    deprecated: true
+    note: >-
+      Every method in this module carries deprecated:true in the provider's OpenRPC, and
+      Celestia's own published Agent Skill instructs agents to "treat da.Submit* as
+      deprecated compatibility paths" and prefer blob.Submit. A candidate tool set should
+      not surface them.
+  - module: blobstream
+    methods: 2
+    auth_levels:
+      read: 2
+  - module: das
+    methods: 2
+    auth_levels:
+      read: 2

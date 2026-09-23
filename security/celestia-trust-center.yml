@@ -1,0 +1,60 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.celestia.org/learn/audits.md
+description: >-
+  Celestia operates no trust centre in the SaaS sense — there is no trust.celestia.org, no
+  SOC 2, ISO 27001, PCI or HIPAA attestation, and no compliance portal, because it is not a
+  processor holding customer data under contract. What it publishes instead is the
+  equivalent assurance surface for protocol software: a maintained public page listing every
+  third-party security audit of the stack, each linked to its full report. Recorded here
+  because that IS the provider's published assurance evidence, and because saying "no trust
+  centre" without it would misread the posture.
+trust_center_url: null
+assurance_page: https://docs.celestia.org/learn/audits.md
+certifications: []
+certifications_note: >-
+  No certifications published. None are asserted here; inventing one would be the exact
+  failure this pipeline forbids.
+third_party_audits:
+- software: OP Stack
+  auditor: OtterSec
+  report: https://docs.celestia.org/audits/Celestia_OP_Stack_Audit.pdf
+- software: Nitro
+  auditor: OtterSec
+  report: https://github.com/celestiaorg/nitro/blob/celestia-v2.3.3/audits/celestia/arbitrum_nitro_celestia_audit_report.pdf
+- software: celestia-app v2 (Lemongrass)
+  auditor: Informal Systems
+  report: https://github.com/celestiaorg/celestia-app/blob/main/docs/audit/informal-systems-v2.pdf
+- software: celestia-app v3
+  auditor: Informal Systems
+  report: https://github.com/celestiaorg/celestia-app/blob/main/docs/audit/informal-systems-authored-blobs.pdf
+- software: Blobstream SP1
+  auditor: OtterSec
+  report: https://docs.celestia.org/audits/SP1_Blobstream_Ottersec_Audit.pdf
+- software: Blobstream SP1
+  auditor: Multiple (via Succinct Labs)
+  report: https://github.com/succinctlabs/sp1/tree/dev/audits
+- software: Blobstream X
+  auditor: Informal Systems
+  report: https://docs.celestia.org/audits/Blobstream_X-Informal_Systems_Audit.pdf
+- software: Blobstream X
+  auditor: OtterSec
+  report: https://docs.celestia.org/audits/Blobstream_X-OtterSec_Audit.pdf
+- software: Blobstream X
+  auditor: Veridise
+  report: https://docs.celestia.org/audits/Blobstream_X-Veridise_Audit.pdf
+- software: Blobstream X
+  auditor: Zellic
+  report: https://docs.celestia.org/audits/Blobstream_X-Zellic_Audit.pdf
+- software: Shwap
+  auditor: OtterSec
+  report: https://docs.celestia.org/audits/celestia_shwap_audit_final.pdf
+- software: High throughput recovery
+  auditor: Informal Systems
+  report: https://github.com/celestiaorg/celestia-app/blob/main/docs/audit/informal-systems-recovery.pdf
+audit_count: 12
+distinct_auditors:
+- OtterSec
+- Informal Systems
+- Veridise
+- Zellic

@@ -1,0 +1,52 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.celestia.org/operate/data-availability/config-reference.md
+description: >-
+  Celestia publishes concrete RPC rate-limit numbers, which is unusual for a self-hosted
+  protocol API — but they are DEFAULTS FOR A LIMITER THAT SHIPS DISABLED, configured by
+  whoever runs the node, not enforced by a vendor. A consumer calling someone else's public
+  RPC endpoint cannot know what limit applies to them, and there is no header that tells
+  them. Recorded here as published defaults with that caveat attached.
+limit_count: 3
+enforcement: operator-configured
+default_state: disabled
+introduced_in: celestia-node v0.31.3
+config_block: '[RPC.RateLimit] in config.toml'
+limits:
+- name: RequestsPerSec
+  scope: per-ip
+  window: 1s
+  limit: 100
+  burst: 200
+  default_enabled: false
+  note: >-
+    Sustained per-IP request rate. `Enabled = false` by default, so an out-of-the-box node
+    enforces nothing.
+- name: CacheSize
+  scope: per-ip
+  limit: 8192
+  unit: rate-limit buckets held in memory
+  note: Caps how many distinct client IPs the limiter tracks, not a request rate.
+- name: max_request_body
+  scope: per-request
+  limit: 16
+  unit: MiB
+  configurable: false
+  note: >-
+    Hard server cap since v0.31.3. Not in config.toml and not adjustable. Larger requests
+    are rejected.
+- name: max_concurrent_connections
+  scope: per-server
+  limit: 500
+  configurable: false
+response_headers: []
+status_on_exhaustion: 429
+retry_after_header: false
+note_on_headers: >-
+  No RateLimit-*, X-RateLimit-* or Retry-After headers are documented or returned. A client
+  gets no runtime budget signal at all — it discovers the limit by receiving 429. For an
+  agent this is the difference between pacing itself and backing off blindly after failure.
+operator_guidance_from_docs: >-
+  "Leave this rate limiter disabled when the node is behind a reverse proxy because all
+  requests may appear to come from the proxy's IP address. Apply rate limiting at the proxy
+  instead."

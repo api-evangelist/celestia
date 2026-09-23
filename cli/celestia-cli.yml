@@ -1,0 +1,99 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.celestia.org/llms-full.txt,
+  https://github.com/celestiaorg/celestia-node,
+  https://github.com/celestiaorg/celestia-app
+description: >-
+  Celestia ships TWO first-party command-line binaries, and the distinction matters to an
+  integrator: `celestia` is the DA node — it runs the node and it is also the only issuer of
+  the bearer tokens the Node API requires — while `celestia-appd` is the consensus/validator
+  node, a Cosmos SDK app daemon with the usual keys/query/tx surface. Neither is a thin
+  wrapper over a hosted API; each one IS the server.
+clis:
+- name: celestia
+  binary: celestia
+  component: celestia-node
+  repository: https://github.com/celestiaorg/celestia-node
+  version: v0.33.0
+  language: go
+  license: Apache-2.0
+  install:
+  - method: install-script
+    command: bash -c "$(curl -sL https://docs.celestia.org/celestia-node.sh)"
+  - method: install-script-pinned
+    command: bash -c "$(curl -sL https://docs.celestia.org/celestia-node.sh)" -- -v v0.32.1
+  - method: docker
+    command: docker run --name celestia-node -e NODE_TYPE=light -e P2P_NETWORK=mocha ...
+    image: ghcr.io/celestiaorg/celestia-node
+  - method: source
+    command: make install
+  node_types:
+  - light
+  - bridge
+  - full
+  command_groups:
+  - group: lifecycle
+    commands:
+    - celestia <node_type> init --p2p.network <network>
+    - celestia <node_type> start --p2p.network <network> --keyring.keyname <key-name>
+    - celestia <node_type> config-update --p2p.network <network>
+  - group: auth
+    commands:
+    - celestia <node_type> auth <public|read|write|admin> --p2p.network <network>
+    note: >-
+      The ONLY way to mint a Node API bearer token. Tokens cannot be revoked once issued.
+  - group: blob
+    commands:
+    - celestia blob submit <hex-encoded namespace> <hex-encoded data> [flags]
+    - celestia blob get <height> <namespace> <commitment>
+  - group: p2p
+    commands:
+    - celestia p2p info
+  key_flows:
+  - name: Publish and retrieve a blob from the shell
+    steps:
+    - celestia light init --p2p.network mocha
+    - celestia light start --p2p.network mocha
+    - celestia light auth write --p2p.network mocha
+    - celestia blob submit <namespace> <data>
+    - celestia blob get <height> <namespace> <commitment>
+- name: celestia-appd
+  binary: celestia-appd
+  component: celestia-app
+  repository: https://github.com/celestiaorg/celestia-app
+  version: v9.0.8
+  language: go
+  license: Apache-2.0
+  install:
+  - method: install-script
+    command: bash -c "$(curl -sL https://docs.celestia.org/celestia-app.sh)"
+  - method: install-script-pinned
+    command: bash -c "$(curl -sL https://docs.celestia.org/celestia-app.sh)" -- -v v9.0.6-mocha
+  command_groups:
+  - group: keys
+    commands:
+    - celestia-appd keys add <KEY_NAME>
+    - celestia-appd keys list
+    - celestia-appd keys show <validator_account> --bech val
+    - celestia-appd keys import <KEY_NAME> <KEY_FILE>
+    - celestia-appd keys export <KEY_NAME>
+    - celestia-appd keys rename <CURRENT_KEY_NAME> <NEW_KEY_NAME>
+    - celestia-appd keys delete <KEY_NAME>
+  - group: query
+    commands:
+    - celestia-appd q bank balances <ADDRESS> --node <NODE_URI>
+    - celestia-appd q gov proposals
+    - celestia-appd query blobstream evm <validator_valoper_address>
+    - celestia-appd q auth module-account gov
+  - group: tx
+    commands:
+    - celestia-appd tx blob PayForBlobs <hex-encoded namespace> <hex-encoded data> [flags]
+    - celestia-appd tx bank send <FROM_ADDRESS> <TO_ADDRESS> <AMOUNT>
+    - celestia-appd tx gov vote <proposal id> <option>
+    - celestia-appd tx gov submit-legacy-proposal
+    - celestia-appd tx blobstream register
+  - group: maintenance
+    commands:
+    - celestia-appd tendermint reset-state
+    - celestia-appd config keyring-backend test

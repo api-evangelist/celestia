@@ -1,0 +1,100 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.celestia.org/llms-full.txt,
+  https://github.com/celestiaorg/celestia-node/releases,
+  openapi/celestia-node-api-openrpc.json,
+  https://status.celestia.org
+description: >-
+  Versioning, deprecation and operational-status posture for the Celestia Node API. Celestia
+  versions the API with the node binary rather than in the URL path: the contract shipped
+  alongside celestia-node v0.31.4 is openrpc-v0.31.4.json, and forty numbered OpenRPC
+  documents going back to v0.11.0 are kept side by side in the docs repo. There is no
+  published deprecation-window policy and no Sunset/Deprecation header contract, but the
+  OpenRPC itself carries machine-readable deprecated flags and the release notes name
+  breaking changes explicitly.
+versioning:
+  scheme: semver-on-the-node-binary
+  current_version: v0.31.4
+  current_contract: openapi/celestia-node-api-openrpc.json
+  in_url: false
+  in_header: false
+  note: >-
+    The JSON-RPC surface has no version segment. Which methods exist is a function of which
+    celestia-node release the operator is running, which makes the archived spec series the
+    only way to pin a contract.
+  spec_archive: https://github.com/celestiaorg/docs/tree/main/public/specs
+  spec_archive_count: 40
+  spec_archive_range: v0.11.0 through v0.31.4
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  machine_readable_in_spec: true
+  note: >-
+    Celestia publishes no deprecation window, notice period or Sunset/Deprecation header
+    contract. It does mark deprecations in the contract itself, and it calls out removals
+    in release notes — which is more than most, but a consumer gets no dated notice.
+  deprecated_operations:
+  - module: da
+    operations:
+    - da.Commit
+    - da.Get
+    - da.GetIDs
+    - da.GetProofs
+    - da.MaxBlobSize
+    - da.Submit
+    - da.SubmitWithOptions
+    - da.Validate
+    evidence: 'deprecated: true on all eight methods in openrpc-v0.31.4.json'
+    guidance: >-
+      Celestia's own published Agent Skill says to prefer blob.Submit and to treat
+      da.Submit* as deprecated compatibility paths. This record still carries
+      celestia:celestia-da-api as a live API entry; it is the modular DA compatibility
+      shim used by Rollkit, Optimism Alt-DA and Arbitrum Nitro, and it still functions,
+      but it is not the surface a new integration should build on.
+  removed_operations:
+  - module: fraud
+    operations:
+    - fraud.Get
+    - fraud.Subscribe
+    removed_in: celestia-node v0.31.3
+    evidence: >-
+      https://docs.celestia.org/build/rpc/node-api.md — "The `fraud` RPC namespace was
+      removed. Calls to fraud.Get and fraud.Subscribe are no longer supported." Confirmed
+      by absence from openrpc-v0.31.4.json, which carries no fraud.* method.
+    note: >-
+      This record's celestia:celestia-fraud-api entry and
+      openapi/celestia-fraud-api-openapi.yml describe a namespace that no longer exists on
+      a current node. Kept and flagged rather than deleted, because operators running
+      pre-v0.31.3 nodes still have it.
+breaking_changes_recent:
+- version: v0.31.3
+  date: '2026-08'
+  changes:
+  - fraud RPC namespace removed
+  - node.Info type field changed from integer to string ("Bridge", "Light")
+  - RPC request bodies capped at 16 MiB; larger requests rejected
+  - Go API blob.Commitment.String() returns hex instead of raw bytes
+  source: https://github.com/celestiaorg/celestia-node/releases/tag/v0.31.3
+  migration_required: true
+  migration_note: >-
+    Operators upgrading from earlier than v0.31.3 must run `celestia <node_type>
+    config-update` after replacing the binary and before starting the node, or the new
+    RPC rate-limit config fields stay at defaults and the node warns.
+status_page:
+  url: https://status.celestia.org
+  provider: incident.io
+  http_status: 200
+  verified: '2026-09-17'
+  note: Public network status page for celestia-network; no authentication required.
+support:
+  forum: https://forum.celestia.org
+  discord: https://discord.com/invite/YsnTPcSfWQ
+  security_contact: security@celestia.org
+sla:
+  published: false
+  note: >-
+    No SLA exists and none is possible in the usual sense. Celestia is a public
+    permissionless blockchain; availability is a property of the validator set and of the
+    node the consumer runs, not a commitment by a vendor.

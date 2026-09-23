@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Celestia Node Blob P2P API
+  title: Celestia Node Blob P2 P API
   version: 0.30.x
   description: 'JSON-RPC methods in the `blob` module of celestia-node. Used to submit, retrieve,
 
@@ -8,9 +8,7 @@ info:
 
     against one or more namespaces. Blobs are the canonical payload unit for rollups
 
-    and other applications using Celestia for DA.
-
-    '
+    and other applications using Celestia for DA.'
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -21,13 +19,13 @@ servers:
 - url: http://localhost:26658
   description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-- name: P2P
+- name: P2 P
   description: libp2p peer, connection, NAT, and pubsub control.
 paths:
   /:
     post:
       tags:
-      - P2P
+      - P2 P
       summary: Invoke P2P JSON-RPC Method
       description: 'Exposes the `p2p.*` namespace including `p2p.Info`, `p2p.Peers`,
 
@@ -39,9 +37,7 @@ paths:
 
         `p2p.BandwidthForPeer`, `p2p.BandwidthForProtocol`, `p2p.ResourceState`,
 
-        `p2p.PubSubPeers`, and `p2p.PubSubTopics`.
-
-        '
+        `p2p.PubSubPeers`, and `p2p.PubSubTopics`.'
       security:
       - BearerAuth: []
       requestBody:
@@ -57,6 +53,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
+      operationId: postRoot
+      x-operation-id-source: derived
 components:
   schemas:
     JsonRpcResponse:

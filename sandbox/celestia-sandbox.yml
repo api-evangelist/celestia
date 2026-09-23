@@ -1,0 +1,64 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  https://docs.celestia.org/llms-full.txt,
+  https://docs.celestia.org/operate/networks/mocha-testnet.md
+description: >-
+  Celestia's "sandbox" is not a test mode inside a hosted API — it is a set of separate,
+  fully public networks with their own chain IDs, their own faucets, and the same API
+  surface as Mainnet Beta. An integrator selects one with a flag (--p2p.network), and the
+  same auth token, the same 80 RPC methods and the same client libraries work against it.
+  That is a stronger rehearsal story than most test modes, and it matters here because
+  nothing on the write surface is reversible: the testnets are the ONLY place to make a
+  mistake safely.
+sandbox_available: true
+selection:
+  mechanism: network flag
+  flag: --p2p.network <network>
+  note: >-
+    The same distinction is baked into the node store path, so a testnet node and a mainnet
+    node cannot share state: ~/.celestia-light-mocha-5 vs the mainnet store.
+networks:
+- name: Mainnet Beta
+  chain_id: celestia
+  role: production
+  cost: real TIA, priced by the fee market
+- name: Mocha
+  chain_id: mocha-5
+  role: public testnet
+  cost: free
+  faucet: https://faucet.celestia-mocha.com
+  faucet_docs: https://docs.celestia.org/operate/networks/mocha-testnet.md
+  note: >-
+    The recommended rehearsal network. Blobstream test deployments (Sepolia, Arbitrum
+    Sepolia, Base Sepolia, Holesky) are attested from Mocha.
+- name: Arabica
+  role: devnet
+  cost: free
+  note: Faster-moving devnet for protocol development; less stable than Mocha.
+- name: Corto
+  role: devnet
+  cost: free
+  note: >-
+    Newer devnet channel — celestia-node cuts -corto prereleases against it (v0.34.x as of
+    2026-09). Not documented as a consumer-facing testnet the way Mocha is.
+test_credentials:
+  test_keys_published: false
+  test_key_prefixes: []
+  note: >-
+    Celestia publishes NO test keys, magic addresses or fixture tokens, and there is no
+    test-vs-live key prefix to check. A tester generates their own keypair with
+    `celestia-appd keys add` and funds it from the faucet. Nothing in this file is a
+    credential; no published secret exists to record.
+fixtures:
+  time_simulation: false
+  trigger_tooling: false
+  note: >-
+    No test clocks and no event-trigger tooling. Block time is the clock, and it is the
+    real one — a test on Mocha advances at the network's actual block cadence.
+hosted_node_option:
+  available: true
+  note: >-
+    The private-blockspace quickstart documents using hosted Celestia nodes (QuickNode is
+    the named example) instead of running one locally. That is a third-party service, not a
+    Celestia Labs offering, and it does not change the API contract.

@@ -1,0 +1,97 @@
+generated: '2026-09-17'
+method: searched
+source: https://api.github.com/repos/celestiaorg/celestia-node/releases
+description: >-
+  Celestia publishes no prose changelog page. The dated change record is the GitHub release
+  series on celestia-node (the DA node and the API surface this record profiles) and
+  celestia-app (the consensus node). Releases are cut per network: unsuffixed tags are
+  Mainnet Beta, -mocha is the public testnet and -corto the newer devnet, so a single
+  version number appears three or four times with different dates.
+scheme: semver
+release_channels:
+- name: mainnet-beta
+  suffix: none
+  example: v0.33.0
+- name: mocha
+  suffix: '-mocha'
+  example: v0.33.2-mocha
+- name: corto
+  suffix: '-corto'
+  example: v0.34.2-corto
+sources:
+- component: celestia-node
+  url: https://github.com/celestiaorg/celestia-node/releases
+  current_stable: v0.33.0
+  current_stable_date: '2026-09-09'
+- component: celestia-app
+  url: https://github.com/celestiaorg/celestia-app/releases
+  current_stable: v9.0.8
+  current_stable_date: '2026-09-15'
+entries:
+- version: v0.34.2-corto
+  date: '2026-09-16'
+  channel: corto
+  prerelease: true
+  breaking: false
+- version: v0.33.2-mocha
+  date: '2026-09-16'
+  channel: mocha
+  prerelease: true
+  breaking: false
+  highlights:
+  - Security fixes
+- version: v0.33.1-mocha
+  date: '2026-09-14'
+  channel: mocha
+  prerelease: true
+  breaking: false
+  highlights:
+  - Security fix
+- version: v0.34.1-corto
+  date: '2026-09-10'
+  channel: corto
+  prerelease: true
+  breaking: false
+  highlights:
+  - Security fix
+- version: v0.33.0
+  date: '2026-09-09'
+  channel: mainnet-beta
+  prerelease: false
+  breaking: false
+  highlights:
+  - shrex-eds sync performance improvements
+- version: v0.34.0-corto
+  date: '2026-09-08'
+  channel: corto
+  prerelease: true
+  breaking: false
+  additions:
+  - Initial support for Fibre
+- version: v0.32.1
+  date: '2026-09-02'
+  channel: mainnet-beta
+  prerelease: false
+  breaking: false
+  highlights:
+  - Two notable changes plus performance improvements and security fixes
+- version: v0.31.3
+  date: '2026-08'
+  channel: mainnet-beta
+  prerelease: false
+  breaking: true
+  breaking_changes:
+  - fraud RPC namespace removed (fraud.Get, fraud.Subscribe)
+  - node.Info type field is now a string, not an integer
+  - RPC request bodies limited to 16 MiB
+  - Go blob.Commitment.String() returns hex
+  additions:
+  - Optional per-IP RPC rate limiting ([RPC.RateLimit] in config.toml)
+  - Mainnet Beta v9 support
+  migration: >-
+    Run `celestia <node_type> config-update --p2p.network <network>` after replacing the
+    binary and before starting the node.
+  url: https://github.com/celestiaorg/celestia-node/releases/tag/v0.31.3
+window: >-
+  Ten most recent celestia-node releases as of 2026-09-17, plus v0.31.3 retained out of
+  window because it is the last release carrying breaking API changes.

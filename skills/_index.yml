@@ -1,0 +1,41 @@
+generated: '2026-09-17'
+method: searched
+source: https://docs.celestia.org/.well-known/agent-skills/index.json
+description: >-
+  Celestia publishes its own Agent Skill. It is advertised in the documentation
+  llms.txt, discoverable at /.well-known/agent-skills/index.json using the
+  agentskills.io discovery 0.2.0 schema, and served with a sha256 digest. Nothing
+  here was authored by API Evangelist — the skill is the provider's file, saved
+  verbatim, and its digest was verified against the provider's own index.
+discovery:
+  index: https://docs.celestia.org/.well-known/agent-skills/index.json
+  schema: https://schemas.agentskills.io/discovery/0.2.0/schema.json
+  also_advertised_at:
+  - https://docs.celestia.org/llms.txt
+  - https://docs.celestia.org/.well-known/api-catalog
+skills:
+- name: celestia
+  file: celestia.md
+  type: skill-md
+  url: https://docs.celestia.org/.well-known/agent-skills/celestia/SKILL.md
+  description: >-
+    Route Celestia requests to the correct repo and apply canonical blob
+    submit/retrieve guidance (Go, Rust, and Node RPC) with docs guardrails.
+  digest: sha256:fe1816018cec8aa5eed2286edf3e7fd4be499818db9a000d8a96f7ce5264c08d
+  digest_verified: true
+  digest_verified_on: '2026-09-17'
+  method: searched
+  http_status: 200
+  bytes: 10016
+  covers:
+  - Repository routing across docs, celestia-node, celestia-app, celestia-core
+  - Canonical blob submit and retrieve guidance for Go, Rust and Node RPC clients
+  - 'Guardrail: prefer blob.Submit, treat da.Submit* as deprecated compatibility paths'
+  - 'Guardrail: always return the (height, namespace, commitment) retrieval tuple'
+  - Docs repo conventions when editing documentation
+notes:
+- >-
+  A second URL, https://docs.celestia.org/SKILL.md, is advertised in llms.txt and
+  in the api-catalog but is served behind a Cloudflare managed challenge (HTTP 403
+  to a non-browser client). The /.well-known/agent-skills/ copy answers 200 to the
+  same client and is the one saved here.

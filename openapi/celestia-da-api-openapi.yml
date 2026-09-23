@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Celestia Node Blob DA API
   version: 0.30.x
@@ -8,9 +8,7 @@ info:
 
     against one or more namespaces. Blobs are the canonical payload unit for rollups
 
-    and other applications using Celestia for DA.
-
-    '
+    and other applications using Celestia for DA.'
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -35,9 +33,7 @@ paths:
 
         modular DA interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS,
 
-        and other rollup frameworks.
-
-        '
+        and other rollup frameworks.'
       security:
       - BearerAuth: []
       requestBody:
@@ -53,6 +49,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/JsonRpcResponse'
+      operationId: postRoot
+      x-operation-id-source: derived
 components:
   schemas:
     JsonRpcResponse:

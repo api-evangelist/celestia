@@ -1,0 +1,88 @@
+generated: '2026-09-17'
+method: searched
+source: >-
+  openapi/celestia-node-api-openrpc.json,
+  https://docs.celestia.org/build/private-blockspace/quickstart.md,
+  https://docs.celestia.org/operate/consensus-validators/validator-node.md,
+  https://docs.celestia.org/operate/data-availability/config-reference.md
+description: >-
+  Error semantics for the Celestia Node API. The surface is JSON-RPC 2.0, so the envelope is
+  the JSON-RPC error object rather than RFC 9457 problem+json, and the HTTP status on a
+  well-formed call is 200 with the failure carried in the body. Celestia does NOT publish a
+  numbered error registry for the RPC surface: its OpenRPC document declares zero errors[]
+  entries across all 80 methods, so application-level failures reach a client as a free-text
+  message string with the JSON-RPC generic code. What is documented is a small set of
+  named failure messages in the troubleshooting and quickstart pages, captured below.
+format: json-rpc-2.0
+rfc9457: false
+envelope:
+  shape: '{"jsonrpc":"2.0","id":<id>,"error":{"code":<integer>,"message":<string>,"data":<any>}}'
+  http_status_on_application_error: 200
+  note: >-
+    A JSON-RPC transport that answers 200 with an error body is the single most common way
+    an agent mistakes a failure for a success. Read the `error` key, not the status line.
+gap:
+  registry_published: false
+  errors_declared_in_spec: 0
+  methods_in_spec: 80
+  note: >-
+    This is the clearest contract-quality gap on the surface. Every method documents its
+    params and result; not one documents what it returns when it fails. An integrator
+    cannot branch on an error code because there is no stable code to branch on — only a
+    message string that is free to change between releases.
+transport_errors:
+- code: 401
+  transport: http
+  title: Unauthorized
+  cause: Missing or invalid bearer token, or a token minted at a lower auth level than the
+    method requires.
+  remediation: >-
+    Mint a token at the right level with `celestia <node_type> auth <public|read|write|admin>
+    --p2p.network <network>`. Note that tokens cannot be revoked once issued.
+- code: 429
+  transport: http
+  title: Too Many Requests
+  cause: Per-IP RPC rate limit exceeded, when the node operator has enabled [RPC.RateLimit].
+  remediation: >-
+    Back off and retry. No RateLimit-* or Retry-After headers are returned, so the client
+    must choose its own backoff.
+  source: https://docs.celestia.org/operate/data-availability/config-reference.md
+- code: 413
+  transport: http
+  title: Request body too large
+  cause: Request body exceeds the 16 MiB server cap introduced in celestia-node v0.31.3.
+  remediation: Split the submission into multiple blobs.
+documented_failures:
+- message: account not found
+  cause: The signing account holds no funds on the target network.
+  remediation: >-
+    Fund the signer. On Mocha, use https://faucet.celestia-mocha.com. Check first with
+    state.BalanceForAddress.
+  source: https://docs.celestia.org/build/private-blockspace/quickstart.md
+- message: 'blob: not found'
+  cause: >-
+    The (height, namespace, commitment) tuple does not resolve — usually a wrong or
+    truncated commitment.
+  remediation: Call blob.GetAll for the height and namespace to recover the real commitment.
+  source: https://docs.celestia.org/build/private-blockspace/quickstart.md
+- message: grpc-status header missing
+  cause: Malformed gRPC endpoint URL when using the private-blockspace proxy.
+  remediation: 'Use https://<host>:9090 with no token appended.'
+  source: https://docs.celestia.org/build/private-blockspace/quickstart.md
+- message: TLS_CERTS_PATH required
+  cause: Certificate environment variables missing or commented out.
+  remediation: Generate the certs per the private blockspace quickstart.
+  source: https://docs.celestia.org/build/private-blockspace/quickstart.md
+- message: 'node is not persisting finalize block responses'
+  cause: >-
+    The consensus node being queried was started with discard_abci_responses = true, so
+    block results are unavailable.
+  remediation: >-
+    Query a node that persists them, or set discard_abci_responses = false under [storage]
+    in config.toml.
+  source: https://docs.celestia.org/operate/consensus-validators/validator-node.md
+agent_guidance: >-
+  Because there is no error registry, an agent integrating this API should treat any
+  response carrying an `error` key as terminal for that attempt, log the message verbatim,
+  and NOT retry write methods automatically — there is no idempotency key, so a retry after
+  an ambiguous failure can double-spend. See conventions/celestia-conventions.yml.
