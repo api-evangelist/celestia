@@ -528,7 +528,7 @@ tags:
 - Data Availability
 - Web3
 - Infrastructure
-- Open-Source
+- Open Source
 - JSON-RPC
 - Modular Blockchain
 - Rollup
@@ -545,6 +545,7 @@ tags_raw:
 - Rollups
 - Cryptography
 - DeveloperTools
+- Open-Source
 x-enrichment:
   date: '2026-09-17'
   status: enriched
