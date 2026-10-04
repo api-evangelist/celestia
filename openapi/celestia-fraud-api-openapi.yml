@@ -47,20 +47,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    JsonRpcResponse:
-      type: object
-      properties:
-        jsonrpc:
-          type: string
-        id: {}
-        result: {}
-        error:
-          type: object
-          properties:
-            code:
-              type: integer
-            message:
-              type: string
     JsonRpcRequest:
       type: object
       required:
@@ -83,6 +69,20 @@ components:
           - fraud.Subscribe
         params:
           type: array
+    JsonRpcResponse:
+      type: object
+      properties:
+        jsonrpc:
+          type: string
+        id: {}
+        result: {}
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+            message:
+              type: string
   securitySchemes:
     BearerAuth:
       type: http
