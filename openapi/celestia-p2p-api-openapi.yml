@@ -19,13 +19,13 @@ servers:
 - url: http://localhost:26658
   description: Default celestia-node JSON-RPC endpoint (light/bridge/full)
 tags:
-- name: P2 P
+- name: P2P
   description: libp2p peer, connection, NAT, and pubsub control.
 paths:
   /:
     post:
       tags:
-      - P2 P
+      - P2P
       summary: Invoke P2P JSON-RPC Method
       description: 'Exposes the `p2p.*` namespace including `p2p.Info`, `p2p.Peers`,
 

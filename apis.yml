@@ -123,7 +123,11 @@ apis:
   - url: overlays/celestia-da-api-overlay.yaml
     type: Overlay
   description: >-
-    JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit, da.Get, da.GetIDs, da.GetProofs, da.Commit, da.Validate, and da.MaxBlobSize. DEPRECATED UPSTREAM: all eight da.* methods carry deprecated:true in the provider OpenRPC v0.31.4, and Celestia's own published Agent Skill directs new work to blob.Submit.
+    JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface
+    used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit,
+    da.Get, da.GetIDs, da.GetProofs, da.Commit, da.Validate, and da.MaxBlobSize. DEPRECATED UPSTREAM:
+    all eight da.* methods carry deprecated:true in the provider OpenRPC v0.31.4, and Celestia's own published
+    Agent Skill directs new work to blob.Submit.
 - aid: celestia:celestia-share-api
   name: Celestia Node Share API
   tags:
@@ -227,7 +231,11 @@ apis:
   - url: overlays/celestia-fraud-api-overlay.yaml
     type: Overlay
   description: >-
-    JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription for the BadEncoding fraud proof type used to slash bridge nodes that propagate incorrectly erasure-coded blocks. Methods include fraud.Get and fraud.Subscribe. REMOVED UPSTREAM: the fraud RPC namespace was removed in celestia-node v0.31.3 and carries no method in the provider OpenRPC v0.31.4. Retained for operators still running earlier nodes — see lifecycle/celestia-lifecycle.yml.
+    JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription
+    for the BadEncoding fraud proof type used to slash bridge nodes that propagate incorrectly erasure-coded
+    blocks. Methods include fraud.Get and fraud.Subscribe. REMOVED UPSTREAM: the fraud RPC namespace was
+    removed in celestia-node v0.31.3 and carries no method in the provider OpenRPC v0.31.4. Retained for
+    operators still running earlier nodes — see lifecycle/celestia-lifecycle.yml.
 - aid: celestia:celestia-node-api
   name: Celestia Node Admin API
   tags:
@@ -282,23 +290,20 @@ apis:
     data commitments so EVM chains can verify, via the Blobstream(X) bridge contracts, that a given blob
     was published to Celestia at a specific height. Methods include blobstream.GetDataRootTupleRoot, blobstream.GetDataRootTupleInclusionProof,
     and blobstream.GetShareProof.
-- aid: celestia:celestia-p2-p-api
-  name: Celestia P2 P API
+- aid: celestia:celestia-p2p-api
+  name: Celestia P2P API
   description: libp2p peer, connection, NAT, and pubsub control.
   humanURL: https://docs.celestia.org/build/rpc/node-api/
   tags:
   - P2P
-  tags_raw:
-  - P2 P
   properties:
   - type: OpenAPI
-    url: openapi/celestia-p2-p-api-openapi.yml
+    url: openapi/celestia-p2p-api-openapi.yml
   - type: Documentation
     url: https://docs.celestia.org/build/rpc/node-api/
-    name: Celestia Node API reference
-  - url: overlays/celestia-p2-p-api-overlay.yaml
-    type: Overlay
 common:
+- type: Overlay
+  url: overlays/celestia-p2-p-api-overlay.yaml
 - type: Website
   url: https://www.celestia.org/
 - type: AgenticAccess
