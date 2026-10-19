@@ -1,36 +1,44 @@
 {
   "provider": "celestia",
   "sources": [
-    "celestia-blob-api-openapi.yml",
-    "celestia-blobstream-api-openapi.yml",
-    "celestia-da-api-openapi.yml",
-    "celestia-das-api-openapi.yml",
-    "celestia-fraud-api-openapi.yml",
-    "celestia-header-api-openapi.yml",
-    "celestia-node-api-openapi.yml",
-    "celestia-p2-p-api-openapi.yml",
-    "celestia-share-api-openapi.yml",
-    "celestia-state-api-openapi.yml"
+    "_original/celestia-openapi.json",
+    "celestia-blob-api-openapi.yml"
   ],
   "outputs": [
-    "celestia-blob-api-openapi.yml",
-    "celestia-blobstream-api-openapi.yml",
-    "celestia-da-api-openapi.yml",
-    "celestia-das-api-openapi.yml",
-    "celestia-fraud-api-openapi.yml",
-    "celestia-header-api-openapi.yml",
-    "celestia-node-api-openapi.yml",
-    "celestia-p2-p-api-openapi.yml",
-    "celestia-share-api-openapi.yml",
-    "celestia-state-api-openapi.yml"
+    "celestia-contact-api-openapi.yml",
+    "celestia-health-api-openapi.yml",
+    "celestia-subscribe-api-openapi.yml",
+    "celestia-blob-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 9 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [
-    "no openapi/_original/ archive: this run re-split PREVIOUSLY REFINED output, so any base URL it carries is inherited from an earlier pass rather than read from a document the provider published"
+    "celestia-blob-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. / post); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
   ],
   "notes": [
-    "apis.yml register: already-registered"
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "celestia-openapi.json: upgraded openapi 3.1.1 -> OpenAPI 3.2.0",
+    "celestia-openapi.json: tagged paths GET /api/health/ -> Health",
+    "celestia-openapi.json: tagged paths HEAD /api/health/ -> Health",
+    "celestia-openapi.json: tagged paths POST /api/contact/ -> Contact",
+    "celestia-openapi.json: tagged paths POST /api/subscribe/ -> Subscribe",
+    "celestia-openapi.json: declared missing tag: Contact",
+    "celestia-openapi.json: declared missing tag: Health",
+    "celestia-openapi.json: declared missing tag: Subscribe",
+    "superseded outputs removed: celestia-blobstream-api-openapi.yml, celestia-da-api-openapi.yml, celestia-das-api-openapi.yml, celestia-fraud-api-openapi.yml, celestia-header-api-openapi.yml \u2026",
+    "apis.yml register: written (+3 apis, 4 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "celestia-blobstream-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-da-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-das-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-fraud-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-header-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-node-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-p2p-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-share-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "celestia-state-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

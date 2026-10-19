@@ -1,0 +1,106 @@
+openapi: 3.2.0
+info:
+  title: Celestia Website Subscribe API
+  version: 1.0.0
+  description: HTTP endpoints for the Celestia marketing website. This is not the Celestia blockchain Node API. Use https://docs.celestia.org/build/rpc/node-api/ for the node JSON-RPC API, authentication, and OpenRPC schemas. Contact and newsletter submissions require user consent; newsletter subscriptions also require browser reCAPTCHA.
+servers:
+- url: https://celestia.org
+security: []
+tags:
+- name: Subscribe
+paths:
+  /api/subscribe/:
+    post:
+      operationId: subscribeToWebsiteNewsletter
+      summary: Subscribe to the newsletter
+      description: Subscribes a consenting email owner through Mailchimp after server-side reCAPTCHA verification. No API key is required from clients. Service credentials remain server-side.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionInput'
+      responses:
+        '200':
+          description: Submission accepted. Read any message for delivery caveats.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Success'
+        '400':
+          $ref: '#/components/responses/Error'
+        '405':
+          $ref: '#/components/responses/Error'
+        '408':
+          $ref: '#/components/responses/Error'
+        '500':
+          $ref: '#/components/responses/Error'
+        '429':
+          description: Upstream newsletter provider is rate limited. Wait before retrying.
+          headers:
+            Retry-After:
+              description: Provider delay in seconds or HTTP date; defaults to 60 seconds when absent.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          $ref: '#/components/responses/Error'
+      tags:
+      - Subscribe
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - hint
+      properties:
+        error:
+          type: string
+          description: Human-readable error message; retained for form clients.
+        code:
+          type: string
+          description: Stable machine-readable error identifier.
+        hint:
+          type: string
+          description: Suggested action to resolve the error.
+    Success:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          const: true
+        message:
+          type: string
+    SubscriptionInput:
+      type: object
+      required:
+      - email
+      - token
+      properties:
+        email:
+          type: string
+          format: email
+          minLength: 3
+          maxLength: 320
+          description: Email address whose owner consented to subscribe.
+        token:
+          type: string
+          minLength: 1
+          description: A fresh reCAPTCHA token obtained through the website newsletter form. Automated clients must not bypass this requirement.
+  responses:
+    Error:
+      description: Request failed. Read code and hint before retrying.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+externalDocs:
+  description: Authentication, examples, errors, and rate-limit behavior
+  url: https://celestia.org/api-docs.md

@@ -1,0 +1,12 @@
+{
+ "url": "https://celestia.org/openapi.json",
+ "final": "https://celestia.org/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=UTF-8",
+ "bytes": 8478,
+ "sha256": "34e1d98e3a823ccc99e5decbb4bc3a5240b3605cc7fac319fe6d6f849f659130",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

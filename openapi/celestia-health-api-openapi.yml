@@ -1,0 +1,72 @@
+openapi: 3.2.0
+info:
+  title: Celestia Website Health API
+  version: 1.0.0
+  description: HTTP endpoints for the Celestia marketing website. This is not the Celestia blockchain Node API. Use https://docs.celestia.org/build/rpc/node-api/ for the node JSON-RPC API, authentication, and OpenRPC schemas. Contact and newsletter submissions require user consent; newsletter subscriptions also require browser reCAPTCHA.
+servers:
+- url: https://celestia.org
+security: []
+tags:
+- name: Health
+paths:
+  /api/health/:
+    get:
+      operationId: getWebsiteHealth
+      summary: Check website liveness
+      description: Confirms that the Next.js runtime can answer requests. Does not check external services. No authentication required.
+      responses:
+        '200':
+          description: Runtime is accepting requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '405':
+          $ref: '#/components/responses/Error'
+      tags:
+      - Health
+    head:
+      operationId: headWebsiteHealth
+      summary: Check website liveness without a body
+      description: The same runtime liveness signal as GET, with an empty response body.
+      responses:
+        '200':
+          description: Runtime is accepting requests; no body.
+      tags:
+      - Health
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - hint
+      properties:
+        error:
+          type: string
+          description: Human-readable error message; retained for form clients.
+        code:
+          type: string
+          description: Stable machine-readable error identifier.
+        hint:
+          type: string
+          description: Suggested action to resolve the error.
+    Health:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          const: ok
+  responses:
+    Error:
+      description: Request failed. Read code and hint before retrying.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+externalDocs:
+  description: Authentication, examples, errors, and rate-limit behavior
+  url: https://celestia.org/api-docs.md
