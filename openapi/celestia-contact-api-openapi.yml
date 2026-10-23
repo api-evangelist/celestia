@@ -107,3 +107,9 @@ components:
 externalDocs:
   description: Authentication, examples, errors, and rate-limit behavior
   url: https://celestia.org/api-docs.md
+x-provenance:
+  method: harvested
+  publisher: Celestia
+  source: https://celestia.org/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
