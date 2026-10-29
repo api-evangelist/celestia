@@ -1,4 +1,4 @@
-# celestia (celestia)
+# Celestia
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -76,272 +76,203 @@ light nodes) — exposes a JSON-RPC API with nine modules (blob, header, share,
 state, das, fraud, p2p, node, da, blobstream), plus a modular DA interface used
 by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/celestia/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/celestia/refs/heads/main/apis.yml)
+**Areas:** Blockchain · Data Availability · Web3 · Infrastructure · Open Source · JSON-RPC · Modular Blockchain · Rollup · Cryptography · Developer Tools
 
-## Scope
+## Celestia on APIs.io
 
-- **Position:** Producing
+Everything profiled for Celestia is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/celestia/](https://apis.io/providers/celestia/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (10)
 
-- **Created:** 2026-05-24T00:00:00.000Z
-- **Modified:** 2026-05-30
+- [Celestia Node Blob API](https://apis.io/apis/celestia/celestia-blob-api/) — JSON-RPC methods in the blob module of celestia-node. Submit blobs to one or more namespaces with blob.Submit, retrieve them by height with blob.Get and…
+- [Celestia Node Header API](https://apis.io/apis/celestia/celestia-header-api/) — JSON-RPC methods in the header module of celestia-node. Query ExtendedHeaders with header.LocalHead, header.NetworkHead, header.GetByHeight,…
+- [Celestia Node DA API](https://apis.io/apis/celestia/celestia-da-api/) — JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro…
+- [Celestia Node Share API](https://apis.io/apis/celestia/celestia-share-api/) — JSON-RPC methods in the share module of celestia-node. Provides direct access to Celestia's share-level data, the extended data square (EDS), namespaced…
+- [Celestia Node State API](https://apis.io/apis/celestia/celestia-state-api/) — JSON-RPC methods in the state module of celestia-node. Exposes state-level operations including account balances, transfers, delegations, and most…
+- [Celestia Node DAS API](https://apis.io/apis/celestia/celestia-das-api/) — JSON-RPC methods in the das module of celestia-node. Operational introspection over the Data Availability Sampling subsystem that light nodes run to…
+- [Celestia Node Fraud API](https://apis.io/apis/celestia/celestia-fraud-api/) — JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription for the BadEncoding fraud proof type used to slash…
+- [Celestia Node Admin API](https://apis.io/apis/celestia/celestia-node-api/) — JSON-RPC methods in the node module of celestia-node. Provides administrative introspection over the running node including node.Info, node.Ready,…
+- [Celestia Node Blobstream API](https://apis.io/apis/celestia/celestia-blobstream-api/) — JSON-RPC methods in the blobstream module of celestia-node. Generates inclusion proofs against Blobstream data commitments so EVM chains can verify, via the…
+- [Celestia P2P API](https://apis.io/apis/celestia/celestia-p2p-api/) — libp2p peer, connection, NAT, and pubsub control.
 
-## APIs
+### Published properties
 
-### Celestia Node Blob API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-JSON-RPC methods in the blob module of celestia-node. Submit blobs to one or more namespaces with blob.Submit, retrieve them by height with blob.Get and blob.GetAll, generate inclusion proofs with blob.GetProof, check inclusion with blob.Included, and subscribe to namespace blobs with blob.Subscribe. The canonical surface for rollups and applications publishing data to Celestia.
+#### MCP servers (1)
 
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [Derived candidate only — Celestia publishes no MCP server](https://apis.io/servers/celestia/derived-candidate-only-celestia-publishes-no-mcp-server/)
 
-- Blob
-- Celestia
-- DataAvailability
-- JSONRPC
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-blob-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-blob-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-blob-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](openapi/celestia-subscriptions-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](json-schema/celestia-blob-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/celestia-namespace-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Structure](json-structure/celestia-blob-structure.json)
-- [JSON-LD](json-ld/celestia-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [Example](examples/celestia-blob-submit-example.json)
-- [Example](examples/celestia-blob-get-example.json)
+- [Celestia Agentic Access](https://apis.io/agentic-access/celestia/celestia-agentic-access/)
 
-### Celestia Node Header API
+#### JSON Schema (3)
 
-JSON-RPC methods in the header module of celestia-node. Query ExtendedHeaders with header.LocalHead, header.NetworkHead, header.GetByHeight, header.GetByHash, and header.GetRangeByHeight; track sync state with header.SyncState and header.SyncWait; and subscribe to new headers with header.Subscribe.
+The data models the API reads and writes.
 
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
+- [Celestia Blob](https://apis.io/schemas/celestia/celestia-blob/)
+- [Celestia Extended Header](https://apis.io/schemas/celestia/celestia-extended-header/)
+- [Celestia Namespace](https://apis.io/schemas/celestia/celestia-namespace/)
 
-#### Tags
+#### JSON Structure (1)
 
-- Celestia
-- Header
-- JSONRPC
+Data models expressed in JSON Structure.
 
-#### Properties
+- [Celestia Blob Structure](https://apis.io/json-structure/celestia/celestia-blob-structure/)
 
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-header-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-header-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-header-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](openapi/celestia-subscriptions-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](json-schema/celestia-extended-header-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Example](examples/celestia-header-getbyheight-example.json)
+#### JSON-LD (1)
 
-### Celestia Node DA API
+Linked-data contexts for the provider's vocabulary.
 
-JSON-RPC methods in the da module of celestia-node implementing the modular Data Availability interface used by Rollkit, Optimism Alt-DA, Arbitrum Nitro DAS, and other rollup frameworks. Exposes da.Submit, da.Get, da.GetIDs, da.GetProofs, da.Commit, da.Validate, and da.MaxBlobSize.
+- [Celestia Context](https://apis.io/jsonld/celestia/celestia-context/)
 
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
+#### Vocabulary (1)
 
-#### Tags
+The provider's domain terms, defined.
 
-- Celestia
-- DataAvailability
-- JSONRPC
-- Rollup
+- [Celestia Vocabulary](https://apis.io/vocabularies/celestia/celestia-vocabulary/)
 
-#### Properties
+#### Examples (6)
 
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-da-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-da-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-da-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Example](examples/celestia-da-submit-example.json)
+Example requests and responses.
 
-### Celestia Node Share API
+- [Celestia Blob Get Example](https://apis.io/examples/celestia/celestia-blob-get-example/)
+- [Celestia Blob Submit Example](https://apis.io/examples/celestia/celestia-blob-submit-example/)
+- [Celestia Da Submit Example](https://apis.io/examples/celestia/celestia-da-submit-example/)
+- [Celestia Header Getbyheight Example](https://apis.io/examples/celestia/celestia-header-getbyheight-example/)
+- [Celestia Share Getnamespacedata Example](https://apis.io/examples/celestia/celestia-share-getnamespacedata-example/)
+- [Celestia State Submitpayforblob Example](https://apis.io/examples/celestia/celestia-state-submitpayforblob-example/)
 
-JSON-RPC methods in the share module of celestia-node. Provides direct access to Celestia's share-level data, the extended data square (EDS), namespaced shares, and share proofs via share.SharesAvailable, share.GetShare, share.GetEDS, share.GetNamespaceData, share.GetRange, and share.GetSamples.
+#### Collections (11)
 
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
+Postman and Open Collection request collections.
 
-#### Tags
+- [Celestia Node Blob API](https://apis.io/collections/celestia/open-celestia-blob-api/)
+- [Celestia Node Blob Blobstream API](https://apis.io/collections/celestia/open-celestia-blobstream-api/)
+- [Celestia Node Blob DA API](https://apis.io/collections/celestia/open-celestia-da-api/)
+- [Celestia Node Blob DAS API](https://apis.io/collections/celestia/open-celestia-das-api/)
+- [Celestia Node Blob Fraud API](https://apis.io/collections/celestia/open-celestia-fraud-api/)
+- [Celestia Node Blob Header API](https://apis.io/collections/celestia/open-celestia-header-api/)
+- [Celestia Blob Node API](https://apis.io/collections/celestia/open-celestia-node-api/)
+- [Celestia Node Blob P2P API](https://apis.io/collections/celestia/open-celestia-p2p-api/)
+- [Celestia Node Blob Share API](https://apis.io/collections/celestia/open-celestia-share-api/)
+- [Celestia Node Blob State API](https://apis.io/collections/celestia/open-celestia-state-api/)
+- [Celestia Node Subscriptions](https://apis.io/collections/celestia/open-celestia-subscriptions-asyncapi/)
 
-- Celestia
-- DataAvailability
-- JSONRPC
-- Share
+#### Overlays (10)
 
-#### Properties
+OpenAPI overlays, including conversational phrasing for each operation.
 
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-share-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-share-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-share-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Example](examples/celestia-share-getnamespacedata-example.json)
+- [Celestia Blob Api Overlay](https://apis.io/overlays/celestia/celestia-blob-api-overlay/)
+- [Celestia Blobstream Api Overlay](https://apis.io/overlays/celestia/celestia-blobstream-api-overlay/)
+- [Celestia Da Api Overlay](https://apis.io/overlays/celestia/celestia-da-api-overlay/)
+- [Celestia Das Api Overlay](https://apis.io/overlays/celestia/celestia-das-api-overlay/)
+- [Celestia Fraud Api Overlay](https://apis.io/overlays/celestia/celestia-fraud-api-overlay/)
+- [Celestia Header Api Overlay](https://apis.io/overlays/celestia/celestia-header-api-overlay/)
+- [Celestia Node Api Overlay](https://apis.io/overlays/celestia/celestia-node-api-overlay/)
+- [Celestia P2 P Api Overlay](https://apis.io/overlays/celestia/celestia-p2-p-api-overlay/)
+- [Celestia Share Api Overlay](https://apis.io/overlays/celestia/celestia-share-api-overlay/)
+- [Celestia State Api Overlay](https://apis.io/overlays/celestia/celestia-state-api-overlay/)
 
-### Celestia Node State API
+#### Governance rules (2)
 
-JSON-RPC methods in the state module of celestia-node. Exposes state-level operations including account balances, transfers, delegations, and most importantly state.SubmitPayForBlob, the canonical entrypoint for submitting PayForBlobs transactions to the celestia-app state machine.
+Spectral rulesets for the provider's contracts.
 
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
+- [Celestia — jsonschema rules](https://apis.io/rules/celestia/celestia-jsonschema-spectral-rules/)
+- [Celestia API Rules](https://apis.io/rules/celestia/celestia-rules/)
 
-#### Tags
+#### Security (4)
 
-- Celestia
-- JSONRPC
-- PayForBlobs
-- State
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Celestia Authentication](https://apis.io/security/celestia/celestia-authentication/)
+- [Celestia Domain Security](https://apis.io/security/celestia/celestia-domain-security/)
+- [Celestia Trust Center](https://apis.io/security/celestia/celestia-trust-center/)
+- [Celestia Vulnerability Disclosure](https://apis.io/security/celestia/celestia-vulnerability-disclosure/)
 
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-state-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-state-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-state-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Example](examples/celestia-state-submitpayforblob-example.json)
+#### Plans and pricing (1)
 
-### Celestia Node DAS API
+Published plans, tiers and prices.
 
-JSON-RPC methods in the das module of celestia-node. Operational introspection over the Data Availability Sampling subsystem that light nodes run to probabilistically verify block data availability. Exposes das.SamplingStats and das.WaitCatchUp.
+- [Celestia Plans Pricing](https://apis.io/plans/celestia/celestia-plans-pricing/)
 
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Celestia
-- DAS
-- DataAvailabilitySampling
-- JSONRPC
+- [Celestia Rate Limits](https://apis.io/rate-limits/celestia/celestia-rate-limits/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-das-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-das-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-das-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](openapi/celestia-subscriptions-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Celestia Node Fraud API
-
-JSON-RPC methods in the fraud module of celestia-node. Exposes fraud proof retrieval and subscription for the BadEncoding fraud proof type used to slash bridge nodes that propagate incorrectly erasure-coded blocks. Methods include fraud.Get and fraud.Subscribe.
-
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
-
-#### Tags
-
-- Celestia
-- FraudProof
-- JSONRPC
-
-#### Properties
-
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-fraud-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-fraud-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-fraud-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](openapi/celestia-subscriptions-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-
-### Celestia Node P2P API
-
-JSON-RPC methods in the p2p module of celestia-node. libp2p-level introspection and control over the Celestia DA network including peer info, NAT status, connection management, bandwidth stats, pubsub topics, and the private/protected peer lists.
-
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
-
-#### Tags
-
-- Celestia
-- JSONRPC
-- LibP2P
-- P2P
-
-#### Properties
-
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-p2p-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-p2p-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-p2p-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Celestia Node Admin API
-
-JSON-RPC methods in the node module of celestia-node. Provides administrative introspection over the running node including node.Info, node.Ready, node.LogLevelSet, and the auth-token issuance methods node.AuthNew and node.AuthVerify used to delegate capability-scoped access to other API modules (public, read, write, admin).
-
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
-
-#### Tags
-
-- Administrative
-- Auth
-- Celestia
-- JSONRPC
-
-#### Properties
-
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-node-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-node-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-node-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Celestia Node Blobstream API
-
-JSON-RPC methods in the blobstream module of celestia-node. Generates inclusion proofs against Blobstream data commitments so EVM chains can verify, via the Blobstream(X) bridge contracts, that a given blob was published to Celestia at a specific height. Methods include blobstream.GetDataRootTupleRoot, blobstream.GetDataRootTupleInclusionProof, and blobstream.GetShareProof.
-
-- **Human URL:** [https://node-rpc-docs.celestia.org/](https://node-rpc-docs.celestia.org/)
-
-#### Tags
-
-- Blobstream
-- Bridge
-- Celestia
-- EVM
-- JSONRPC
-
-#### Properties
-
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [OpenAPI](openapi/celestia-blobstream-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/celestia-blobstream-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/celestia-blobstream-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [Portal](https://celestia.org)
+- [Website](https://www.celestia.org/)
 - [Documentation](https://docs.celestia.org)
-- [Documentation](https://node-rpc-docs.celestia.org/)
-- [Getting Started](https://docs.celestia.org/learn/celestia-101/data-availability/)
-- [Getting Started](https://docs.celestia.org/build/quick-start)
+- [Getting started](https://docs.celestia.org/learn/celestia-101/data-availability/)
+- [API reference](https://docs.celestia.org/build/rpc/node-api/)
+- [Support](https://forum.celestia.org)
 - [Blog](https://blog.celestia.org)
-- [Forum](https://forum.celestia.org)
-- [Forum](https://discord.com/invite/YsnTPcSfWQ)
-- [Twitter](https://x.com/CelestiaOrg)
-- [GitHub Organization](https://github.com/celestiaorg)
-- [SDK](https://github.com/celestiaorg/celestia-node)
-- [SDK](https://github.com/celestiaorg/celestia-app)
-- [SDK](https://github.com/celestiaorg/celestia-core)
-- [SDK](https://github.com/celestiaorg/celestia-openrpc)
-- [SDK](https://github.com/celestiaorg/celestia-ts)
-- [SDK](https://github.com/celestiaorg/celestia-node-client-rs)
-- [SDK](https://docs.rs/celestia-rpc)
-- [SDK](https://github.com/celestiaorg/lumina)
-- [Tool](https://github.com/celestiaorg/nmt)
-- [Tool](https://github.com/celestiaorg/rsmt2d)
-- [Tool](https://github.com/celestiaorg/go-square)
-- [Tool](https://github.com/celestiaorg/blobstream-contracts)
-- [Tool](https://github.com/celestiaorg/orchestrator-relayer)
-- [Integration](https://github.com/celestiaorg/op-alt-da)
-- [Integration](https://github.com/celestiaorg/nitro-das-celestia)
-- [Integration](https://github.com/rollkit/celestia-da)
-- [Specification](https://github.com/celestiaorg/celestia-specs)
-- [Specification](https://github.com/celestiaorg/CIPs)
-- [Documentation](https://github.com/celestiaorg/docs)
-- [Code Examples](https://github.com/celestiaorg/awesome-celestia)
-- [Documentation](https://github.com/celestiaorg/networks)
-- [Tool](https://github.com/celestiaorg/helm-charts)
-- [License](https://www.apache.org/licenses/LICENSE-2.0)
-- [Features](undefined)
+- [Terms of service](https://celestia.org/tos/)
+- [Privacy policy](https://celestia.org/privacy/)
+- [GitHub](https://github.com/celestiaorg)
+- [Status](https://status.celestia.org)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 63.8** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 60.6 |
+| Contract governance | 31.8 |
+| Operational transparency | 86.8 |
+| Developer ergonomics | 95.2 |
+| Access clarity | 28.9 |
+
+**Agent readiness 35.6** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | yes |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/celestia/](https://apis.io/providers/celestia/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Celestia: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/celestia/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
